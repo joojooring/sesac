@@ -1,0 +1,10 @@
+SESAC 1st Day
+cd : chagedirectory
+mkdir : makedirectory
+git config : git에 대한 설정파일 수정하겠다
+전체에게 공유하겠다 global
+visual studio (vs) 에서 하는 건 컴퓨터에서만 바꿈 (loccal 저장소)
+내 로컬에 있는걸 github(remote원격저장소)에 저장해야됨
+현재 위치한 모든걸 올리겠다하는게 .
+vs 파일저장하려면 ctrl + s
+end가 나오면 ctrl + q

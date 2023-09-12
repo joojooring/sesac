@@ -1,0 +1,6 @@
+git status
+git add . 
+git status
+git commit -m"안녕안녕"
+git log
+git push origin main

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML 태그 수업 2</title>
+</head>
+<body>
+    <!-- 상대경로지정방법
+        컴퓨터의 현재 위치는 C:\Users\SBA_USER\Desktop\github\sesac\HTMLCSSJS
+        . : 현재 위치를 의미
+        ./ : 현재 위치에 있는 하위에 있는 위치로 이동
+        ../ : 이전경로(부모위치) 한 단계 앞에 있는 위치로 이동
+        ../HTMLCSSJS : 이경로는 존재하는 경로임
+
+    -->
+    <img src="./hamtori.webp" 
+    alt="햄토리입니다." 
+    title="햄스터"  
+    <!--이미지에 커서를 댔을때 뜨는 글자-->
+
+    width="100" 
+    height="100"/>
+
+    <a href="./01_HTML.HTML">html파일</a>
+    <a href="https://www.naver.com/" target="_blank">네이버</a>
+
+
+    <h2>회원가입</h2>
+    <form>
+        이름 : <input type="text" name="name" />
+        <br />
+        이메일 : <input type="text" name="email" />
+        <br />
+        비밀번호 : <input type="password" name="pw" />
+        <br />
+        비밀번호 확인 : <input type="password" name="pw_check" />
+
+        <input type="button" value="제출" />
+        <button>제출</button>
+        <br />
+        취미를 선택하세요.
+        <input type="checkbox" name="hobby" value="축구" /> 축구
+        <input type="checkbox" name="hobby" value="야구" /> 야구
+        <input type="checkbox" name="hobby" value="농구" /> 농구
+        <br />
+
+        성별을 선택하세요.
+        <input type="radio" name="gender" value="남성"/> 남성
+        <input type="radio" name="gender" value="여성"/> 여성
+        <br />
+
+        15세 이상인가요?
+        <input type="radio" name="is_older_15" value="예"/> 예
+        <input type="radio" name="is_older_15" value="아니요"/> 아니요
+
+       <br />
+        생년월일
+       <input type="date" name="birth" /> 
+
+       <br />
+       색 : 
+       <input type="color" name="color" />
+       <br />
+       range :
+       <input type="range" name="range" min="0" max="10" step="2"/>
+       <br />
+       file : 
+       <input type="file" name="img" />
+
+    <select name="select_option">
+        <optgroup label="옵션1~2">
+            <option value="option1">옵션 1</option>
+            <option value="option2">옵션 2</option>
+        </optgroup>
+        <optgroup label="옵션3~4">
+            <option value="option3">옵션 3</option>
+            <option value="option4">옵션 4</option>
+        </optgroup>
+ 
+    </select>
+
+
+
+
+<!--form태그는 input을 감싸는 태그-->
+<!--input태그 종료태그가 없음 끝에 /-->
+<!--type의 기본값은 "text"-->
+<!--input type="button" name을 입력 안해도 됨 / value를 이용해서 모양바꾸기-->
+<!--버튼은 input태그말고 <button>태그로 해도됨-->
+<!--체크박스를 만들때는 name이 같아야되고 value를 지정해줘야 됨-->
+<!--radio는 둘 중 하나만 선택가능하게-->
+<!--value 사용자가 입력한 값이 담기게되면 value는 적을 필요가 없음-->
+<!--사용자마다 기본 테마색이 다르게해주려면 color 이용-->
+<!--select 태그 안에는 option태그가 무조건 옴 거기에 value도 꼭 쓰기-->
+<!--select에는 name태그 쓰기-->
+
+    </form>
+</body>
+</html>

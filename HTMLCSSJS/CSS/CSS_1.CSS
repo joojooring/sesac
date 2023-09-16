@@ -1,34 +1,49 @@
-/* 전체 선택자 */
-* {
+전체 선택자
+/* * {
     color:red;
-}
+} */
 
 
 /* 태그 선택자 */
-div {
+/* div {
     background-color: aqua;
 
-}
+} */
 
 
 /* 클래스 선택자 */
-.orange {
+/* .orange {
     color:orange
 }
 .bg-red{
     background-color: ivory;
-}
+} */
 
 
 /* 아이디 선택자 */
-#red{
+/* #red{
     color:red
-}
+} */
 
-#list_1{
+/* #list_1{
 
-}
+} */
 
-.list_1{
+/* .list_1{
 
+} */
+
+/* div .apple{
+    color: rgb(83, 14, 14);
+} */
+
+/* 자식선택자 */
+/* div > .apple {
+    color:pink
+} */
+
+/* 인접 형제 선택자 */
+
+h1 ~ ul {
+    font-size: 20px;
 }

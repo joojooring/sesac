@@ -1,0 +1,75 @@
+/* .tooth{
+    background-color: wghite; 
+    color:black;
+    height: 20px;
+    margin:5px;
+    text-align: center;
+    line-height: 100px;
+}
+
+.tooth2{
+    background-color: grey; 
+    color:black;
+    height: 20px;
+    margin:5px;
+    text-align: center;
+    line-height: 100px;
+} */
+
+/**
+ * /* common
+ *
+ * @format
+ */
+
+ * {
+    box-sizing: border-box;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  header {
+    width: 100%;
+    height: 60px;
+    background-color: #ddd;
+    padding: 0 20px;
+    margin-bottom: 50px;
+  }
+  
+  /* TODO: header1 ~ 4까지 완성해주세요! 
+      - 편의를 위해 header2 ~ 4는 display: none 처리를 해두었습니다.
+      - 해당 header 작업할 때 display: none 코드를 지워서 작업하면 됩니다!
+  */
+  /* header1 */
+  .header1 {
+  }
+  
+  /* header2 */
+  .header2 {
+    display: none;
+  }
+  
+  /* header3 */
+  .header3 {
+    display: none;
+  }
+  
+  /* header4 */
+  .header4 {
+    display: none;
+  }

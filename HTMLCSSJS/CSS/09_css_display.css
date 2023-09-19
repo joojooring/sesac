@@ -1,0 +1,183 @@
+/* .div{
+    display:block
+} */
+
+.box{
+    background-color: black; 
+    color:white;
+    width: 100px; 
+    height: 100px;
+    margin:5px;
+    text-align: center;
+    line-height: 100px;
+}
+
+
+/* 인라인요소 width,height, margin(top,bottom)  */
+/* inline-block은 inline과 block의 특징을 합쳐놓음 (inline에서는 컨텐츠의 크기만큼만 공간을 차지) / block에서는 width height margin정상작동 */
+
+
+
+.d-inline-block{
+    display:inline-block;
+    padding:20px; 
+    
+}
+
+
+/*display에서 flex는 자식요소를 inline요소로 만들어줌 */
+
+.container{
+    display:flex;
+    height:400px;
+    flex-direction:column-reverse;
+}
+
+/* flex-wrap : 줄을 바꿔줌,
+justify-content : 여백 정렬방법 주축에대한 정렬*/
+
+.container2{
+    display:flex;
+    
+}
+
+
+.container888{
+    display:flex;
+    flex-direction: column;
+    width:400px;
+    height:400px;
+    background-color: blue;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+.container999{
+    display:flex;
+    flex-direction: column;
+    width:400px;
+    height:400px;
+    background-color: blue;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content:flex-end;
+    margin-top:20px;
+}
+/*  */
+/*  */
+
+.baby{
+    display:flex;
+    width:500px;
+    height:500px;
+    background-color: blue;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items:center;
+    align-content: center;
+}
+
+
+.abc{
+    background-color:pink; 
+    color:white;
+    width: 100px; 
+    height: 100px;
+    margin:5px;
+    text-align: center;
+    line-height: 100px;
+}
+
+.baby3{
+    display:flex;
+    width:500px;
+    height:500px;
+    background-color: blue;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items:stretch;
+    align-content: space-around;
+    
+}
+
+
+.abc{
+    background-color:pink; 
+    color:white;
+    width: 100px; 
+    height: 100px;
+    margin:5px;
+    text-align: center;
+    line-height: 100px;
+}
+
+.baby2{
+    display:flex;
+    width:500px;
+    height:500px;
+    background-color: blue;
+}
+
+
+.abc{
+    background-color:pink; 
+    color:white;
+    width: 100px; 
+    height: 100px;
+    margin:5px;
+    text-align: center;
+    line-height: 100px;
+    display:flex;
+    justify-content: space-evenly;
+    align-items:center;
+    align-content: center;
+}
+
+
+
+
+
+/*  */
+/*  */
+/*  */
+.main-container1{
+    width: 500px; 
+    height: 500px;
+    display:flex;
+    flex-direction:row;
+    margin: bottom 20px;
+}
+.item1{
+    width: 100px; 
+    height: 100px;
+    background-color: pink;
+}
+.item2{
+    width: 100px; 
+    height: 100px;
+    background-color: skyblue;
+}
+.item3{
+    width: 100px; 
+    height: 100px;
+    background-color: coral;
+}
+
+.main-container2{
+    width: 500px; 
+    height: 500px;
+    display:flex;
+    flex-direction:row-reverse;
+    margin: bottom 20px;
+}
+
+.main-container1{
+    width: 500px; 
+    height: 500px;
+    display:flex;
+    flex-direction:column;
+    margin: bottom 20px;
+}

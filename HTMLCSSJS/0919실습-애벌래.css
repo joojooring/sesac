@@ -1,0 +1,63 @@
+.container{
+    position:relative;
+}
+
+
+.circle{
+    width:100px;
+    height:100px;
+    /* 원을 만드려면 border-radius */
+    border-radius:50px;
+    position:absolute;
+}
+
+.circle1{
+    background-color: rgb(74,74,205);
+    top:0;
+    
+}
+
+.white-eye{
+    position:absolute;
+    width:30px;
+    height:30px;
+    border-radius:15px;
+    background-color: white;
+    top:20px;
+    left:20px;
+}
+
+.black-eye{
+    position:absolute;
+    width:15px;
+    height:15px;
+    border-radius:10px;
+    background-color: black;
+    top:4px;
+    left:4px;
+}
+
+.circle2{
+    background-color: rgb(41, 41, 142);
+    top:50px;
+    left:20px;
+    
+}
+
+.circle3{
+    background-color: rgb(13, 201, 123);
+    top:100px;
+    left:40px;
+}
+
+.circle4{
+    background-color: rgb(58, 198, 46);
+    top:150px;
+    left:60px;
+    
+}
+.circle5{
+    background-color: rgb(201, 13, 179);
+    top:200px;
+    left:80px;
+}

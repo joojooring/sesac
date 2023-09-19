@@ -1,0 +1,39 @@
+img{
+    width:200px;
+}
+
+.img-skew:hover {
+    transform: skew(50deg,50deg);
+}
+
+.img-rotate:hover {
+    transform: rotateY(40deg);
+}
+
+
+.img-scale:hover {
+    transform: scale(1.5);
+}
+
+/* scale 배율 1.5배 키우겠다 */
+
+.img-translate:hover {
+    transform: translate(10px,10px);
+}
+
+.img-transform:hover {
+    width: 500px;
+    transform: perspective(150px) rotateY(40deg);
+    transition: transform 4s linear 2s;
+}
+    
+
+/* transform에 여러 함수를 적는다 */
+/* 원근법 지정할때 perspective */
+/* transition 지속시간 타이밍함수 */
+
+.img-width:hover {
+    width:500px;
+    transition: 4s;
+}
+    

@@ -1,0 +1,114 @@
+/* 전체 선택자 */
+/* * {
+    color:white;
+    background-color: gray;
+} */
+
+
+/* 태그 선택자 */
+/* span {
+    background-color: red;
+
+} */
+
+
+/* 클래스 선택자 */
+/* .second {
+    background-color: green;
+} */
+
+
+/* 아이디 선택자 */
+/* #first{
+    background-color: blue;
+} */
+
+
+ 
+/* [id^="u"]{
+    color:black;
+}
+
+[body > span]{
+    background-color: brown;
+}
+
+h1 + p{
+    color:lightskyblue
+} */
+
+/* .text + p {
+    color:red
+} */
+
+/* hover  active  focus  disabled nth-child */
+
+/* 클래스 선택자 . */
+
+/* .box{
+    width: 50px;
+    height:50px;
+    background-color: blue;
+
+} */
+
+/* .box:nth-child(2n+1 ){
+    background-color: red;
+} */
+
+/* p::first-line{
+    color: red
+} */
+
+/* p::first-letter{
+    color:yellow;
+} */
+
+/* li::marker{
+    color:blue;
+    font:60px;
+} */
+
+/* input::placeholder{
+    font-size: 50px;
+    color:yellow;
+
+} */
+
+/* p::before{
+    content:"앞에다 추가한 텍스트";
+    color:salmon;
+   font-weight: 900;
+} */
+
+/* p::after{
+    content:"뒤에다 추가한 텍스트";
+    color:white;
+    background-color: black;
+    font-weight: 900;
+ } */
+
+/* div {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width:300px;
+    height:300px;
+    color:tomato;
+    font-size:36px;
+    border:3px dashed red;
+} */
+/* p{
+    color:unset;
+    font-size:unset;
+    border:unset;
+    width:unset;
+} */
+
+div{
+    border:3px solid red;
+    padding:10px;
+    margin:20px;
+    width: 90px;
+    height: 30px;
+}

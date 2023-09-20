@@ -1,0 +1,45 @@
+.div-hover:hover {
+    background-color: red;
+}
+.div-active:active{
+    background-color:blue;
+    color:white
+}
+.input-focus.focus{
+    background-color: yellow;
+}
+.input-focus.focus{
+    
+}
+.a:visited{
+    color:red;
+    }
+
+
+.fruits h3:last-child{
+    color:red;
+
+}
+
+/*프룻츠 하위 요소의 첫번째 자식이 span이라면*/
+
+.fruits span:nth-child(2){
+color:red
+}
+
+/*프룻츠 하위 요소우ㅢ 두번째 자식이 span이라면 */
+
+.fruits-2 span:nth-child(2n){
+    color:blue;
+
+    }
+
+    .fruits-2 span:not(.wm){
+        background-color: aqua;
+    }
+
+    /*프룻츠 중에 span이 아닌걸 찾겠다*/
+
+    .fruits *:not(.wm){
+        background-color: aqua;
+    }

@@ -1,0 +1,18 @@
+h1 {
+    background-color: red; width: 50px;height: 50px;
+}
+h2 {
+    background-color: orange; width: 100px;height: 50px;
+}
+h3 {
+    background-color: yellow; width: 150px;height: 50px;
+}
+h4 {
+    background-color: green; width: 200px;height: 50px;
+}
+h5 {
+    background-color: blue; width: 250px;height: 50px;
+}
+h6 {
+    background-color: navy; width: 300px;height: 50px;
+}

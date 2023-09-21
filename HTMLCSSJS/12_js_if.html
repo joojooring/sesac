@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //if(조건1) {}
+            //조건이 true일때 실행할 코드가 {}에 옴
+
+        //else if(조건2){}
+            //조건1은 false고, 조건2가 true일 때 실행
+            //else if를 여러개 쓸 수 있음
+
+        //else {}
+        //위에 나온 조건 모두 false일때 실행할 코드가 {}에 옴
+
+
+        let name="뿡뿡이"
+
+        if(name==="joojooring"){
+            console.log("주리야 안녕")
+        }
+
+        else if(name==="joojoobab"){
+            console.log("주현아 뭐해")
+        }
+        else {
+            console.log("누구세요?")
+        }
+
+
+
+        let number = 5;
+
+        if(number > 4) {
+            console.log("d");
+            if (number>7) {
+                console.log("a");
+            } else{
+                console.log("b");
+            }
+        }
+
+        else{
+            console.log("c")
+        }
+        
+        let age = 9
+
+        if(age>=20){
+            console.log("성인");}
+                      
+            else if(17<=age){
+                console.log("고등학생")
+            }
+            else if(14<=age){
+                console.log("중학생")
+            }
+            else if(8<=age){
+                console.log("초등학생")
+            }
+            else{
+                console.log("유아")
+            }
+
+
+
+           let number99="dskf"
+            switch(number99){
+                case "a":
+                    console.log("넘버는 1");
+                    break;
+                case "b":
+                    console.log("넘버는 2");
+                    break;
+
+                case "c":
+                    console.log("넘버는 3");
+                    break;
+
+                default:
+                    console.log("몇번인지 모르겠어요.")
+                    break;
+
+
+            }
+
+
+
+    //삼항 연산자 
+    //조건 ? 참일 떄 실할 코드: 거짓일 때 실행할 코드
+    /// 한 줄로 간단히 표현할 수 있음
+
+
+    let namename ="lily" ? console.log("안녕하세요") : console.log("누구세요")
+
+    let msg = namename ="lily" ? "안녕하세요" : "누구세요?";
+    console.log(msg)
+        // 위 if문과 별개의 if문
+      
+
+
+
+let now = new Date().getHours();
+console.log(now)
+
+now >=12 ? console.log("오후") : console.log("오전")
+
+
+    </script>
+</body>
+</html>

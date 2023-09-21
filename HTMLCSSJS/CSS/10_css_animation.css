@@ -1,0 +1,65 @@
+
+.box{
+    position:relative;
+    width:100px;
+    height:100px;
+    background-color: red;
+    animation: movetoright 2s linear 1s 3 alternate;
+}
+@keyframes movetoright {
+    from{
+        left:0px
+
+    }
+    to{
+        left:100px;
+    }
+
+    0%{
+
+    }
+
+    25%{
+
+    
+    }
+
+    50%(
+
+    )
+
+    100%{
+
+    }
+}
+
+
+.box실습{
+    position:relative;
+    border-radius: 50%;
+    width:100px;
+    height:100px;
+    background-color: pink;
+    animation: move 3s linear 1s 6  ;
+}
+@keyframes move {
+ 
+    0%{ left: 0px;
+        top:0px;
+
+    }
+
+    25%{ left: 100px;
+        top:0px;
+    }
+
+    50%{left: 100px;
+        top:100px;
+
+    }
+
+    100%{left: 0px;
+        top:100px;
+
+    }
+}

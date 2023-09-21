@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>javascript</title>
+</head>
+<body>
+    <!-- JS 참조 : 내장방식, 링크방식  -->
+    <!-- 내장방식 -->
+    <!-- 링크방식 -->
+    <!-- <scrpt src="./js/index.js"></scrpt> -->
+    <script>
+        //script 태그 내부에 js 문법
+        // 콘솔에 출력을 하겠다. 콘솔은 브라우져에 나옴
+        console.log("hello");
+
+        //alert 창에 출력을 하겠다.
+        // alert("방가방가")
+
+        //키워드(var / let/ const) 변수이름 = 값;
+
+        // var name = "joojooring"; //선언과 할당을 동시에 한 문법이 var
+        // var name2="lily"; //변수의 선언부
+        
+         //변수의 값을 할당하는 부분
+        //var : 재선언 가능, 재할당 가능 _같은 이름으로 값을 또 선언할 수 있다는 뜻_
+        //원래는 변수이름이 중복되면 안되지만 var는 가능하다. 
+        //값을 바꿀 수 있다는게 재할당 가능하다는 뜻
+        
+        var name99; 
+        //name이라는 변수가 재선언됨
+        name="lily22";
+        name="lily33";
+
+        //let: 재선언 불가능, 재할당 가능
+        //그래서 var보다는 let을 많이 씀
+        //var에서 사용한 의도를 덮어씌울 수 있기 때문에 let이 낫다!
+
+        let name3 ="lily7";
+        name3 ="lily5";
+        //let name3 같은 이름을 다시 선언할 수 없음
+
+
+        const name4 ="rulrulralral";
+
+        //변경되면 안되는 값을 const 줌 : 상수!!
+        //재선언 불가능, 재할당 불가능
+        //선언하는 순간 할당을 동시에 필수로 해야됨
+
+        let age=99;
+
+        // console.log(name, name2, name3, name4, age);
+        console.log("hello"+ age)
+        console.log("hello", age)
+        console.log(name4+age)
+
+        //문자 쓰다가 변수를 쓰고 싶으면 `백틱을 쓰고 안에 ${}처럼 쓰면 됨
+        console.log(`hello ${name3} byebye`)
+
+
+        //Array 배열 데이터 : 하나의 변수에 여러개의 값을 담고 싶을 때 사용
+        //비슷한 특징을 가진 값들을 하나의 변수에 담고 싶을때
+        //여러 데이터를 순차적으로 저장
+        //typescript 자바스크립튼데 type을 지정하겠다
+
+        let fruits =["orange","pineapple","apple","banana"];
+        console.log(fruits)
+        //인덱싱 : 배열의 원소에 접근할 때 사용됨
+        //인덱싱 문법 ; 변수이름[인덱스_원소의 번호_0부터 시작]
+        // console.log(변수이름[인덱스])
+        console.log(fruits[0],)
+        console.log(fruits[1],)
+        console.log(fruits[2],)
+
+
+        //object는 하나의 사물, 사람?에 대한 정보를 저장함
+
+        let cat={
+            // key:value
+            name:"나비",
+            age:80,
+            isCute:true,
+            // mew:function(){}; //함수를 메소드라고도 함
+            
+        }
+
+        console.log(cat.name)
+        console.log(cat.age)
+        // console.log(cat.mew())
+
+        let mathScore = Number(prompt("수학점수"));
+        let engScore = Number(prompt("영어점수"));
+        let avgScore =((Number(mathScore))+ (Number(engScore)))/2;
+
+        console.log(avgScore);
+
+        //숫자를 문자열로 변환함
+        //"80"+70 => 8070
+
+        //대입연산자 = : 어떤 변수에 새로운 값을 대입하겠다
+        let num1 = 5;
+        let num2=num1;
+
+
+        //비교연산자 : (== 같다 ===같다_자료형까지 비교할 때)
+        console.log("80"==80);//true
+        console.log("80"===80);//false
+
+        //비교연산자 : (>=, >, <=, <)
+
+        console.log(70<=50);
+
+        //비교연산자 : != 같지 않다, !==
+
+        console.log("80"!=80);//같으니까 false
+        console.log("80"!==80);//자료형은 다르니까 달라서true
+        console.log("linda"!="lily");//다르니까 true !=
+      
+        //산술연산자: +,-,*,/,%(나머지),**(거듭제곱)
+        console.log(2**5);//32
+       
+        console.log(10 % 2) //% 나머지니까 0 , 몫은 안나옴, 짝수 홀수 판별시 많이 사용
+       
+        let num4=5;
+        console.log(num4 % 2 ==1) //true
+
+        //논리연산자: 두개이상의 조건을 걸고 싶을 때 !(not), &&(and),
+        // 4 < num < 8 :&& : 앞 뒤 조건 모두 true여야 true
+        //||(or :) 시프트+원화
+
+
+        console.log(num4>4 && num4<8);
+        console.log(num4>4 || num4<8);
+
+
+        // ! (not)
+        let bool=true;
+        let undef=undefined;
+        console.log(! bool) // false
+        console.log(! undef) // true
+        console.log(! false) // true
+        console.log(! null) // true
+
+        let num99=5;
+       
+        // num99=num99+1
+        num99 +=1
+        console.log(num99); //6
+
+//자기 자신에 들어있던 값을 활용해 연산 후, 다시 자신에게 할당할 때 
+
+/*let num80 =5;
+console.log(++num80); //6
+
+let num80=5, num100=5;
+let result=num80++;
+console.log(result);
+
+let num80=5, num100=5;
+let result=num80++;
+console.log(result2);
+*/
+
+// function 함수이름(){}
+
+
+//명시적 함수 선언
+function functionEx01(){
+    console.log("hello");
+}
+
+functionEx01();
+//실행시키려면 함수를 호출을 해야됨 , 함수이름적고 괄호
+
+
+
+
+//함수 표현식 선언
+const functionEx02 =function(){
+    console.log("hello");
+
+}
+
+//함수 표현식 선언
+const functionEx03 => (){
+    console.log("hello");
+}
+
+
+
+//매개변수 : 함수 외부에서 함수 내부로 값으 전달하고 싶을 때
+//반환 값 : 함수 내부의 값을 함수 외부로 전달하고 싶을 때
+
+function functionEx04() {
+    console.log("functionEx04");
+    return "hello"
+
+}
+
+        </script>
+
+    
+
+</body>
+</html>

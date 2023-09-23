@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>합계구하기</title>
+</head>
+<body>
+
+    <!-- 0~100의 숫자 중 2또는 5의 배수 총합 구하기 -->
+<!-- 나머지 연산자% -->
+<!-- 5%3 -> 2 5를 3으로 나눈 나머지인 2의 값을 반환 -->
+
+    <script>
+        // for(let i=0;i<101;i++){
+        //     if(i%2==0){
+        //         sum=sum+i
+        //     }
+        //     else(i%5==0){
+        //         sum=sum+i
+        //     }
+
+
+        //     console.log(sum=sum+i)
+        // }
+
+
+        //해보자
+
+
+        let sum =0;
+        for (let i=0; i<101; i++){
+            if(i%2==0 || i%5==0)
+            sum +=i;
+        }
+        console.log(sum);
+       
+
+
+        //10000 숫자 중 13의 배수이면서(나머지가 1~12인건 제외) && 홀수인 수(나머지가0인거 제외)는
+
+        for( let a=0; a<10001; a++){
+            if(a%13==0 && a%2==1)
+            console.log(a)
+        }
+
+        //2단부터 9단까지 
+
+        for(let i=2; i<10;i++){
+            console.log(`&{i}"단"`)
+            for(let j=1; j<10;j++){
+                console.log(`${i}x${j} = ${i*j}`)
+            }
+        }
+
+
+
+
+    </script>
+</body>
+</html>

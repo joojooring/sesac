@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS 반복문</title>
+</head>
+<body>
+    <script>
+        //배열과 for문을 함께 쓸때가 많음 -> 그래서 for of문도 나옴
+        //배열이 비슷한 특징을 가진값을 모아둔 것임
+        //for 변수 반복할식 증감식(++--)
+
+        //초기값; 조건문; 증감문
+
+        //{} 명령문(반복하고 싶은 코드)
+        for(let i=0 ; i<10  ;i++  ){
+            console.log(i, "안녕?")
+
+        }
+
+        console.log("끝")
+        // let i;
+        // for(i=0 ; i<10  ;i++  ){
+        // }
+
+        
+
+
+        let arr = [[],[]]
+        //중첩 for문
+        //안에 있는 for에는 변수가 달라야 됨 i가 아니어야 된다는 소리
+        for(let i=0; i<5 ; i++){
+            for(let j=0; j<5 ; j++){
+                console.log(`i: ${i}, j: ${j}`)
+            }
+        }
+
+
+    //초기값; 조건식;증감ㅁㅁ문
+    for(let i=0; i<10; i=i+2){
+        console.log(`i: ${i}`)
+    }
+    for(let i=10; i>0; i--){
+        console.log(`i: ${i}`)
+    }
+    for(let i=10; i>0; i=i-3){
+        console.log(`i: ${i}`)
+    }
+    </script>
+
+
+
+</body>
+</html>

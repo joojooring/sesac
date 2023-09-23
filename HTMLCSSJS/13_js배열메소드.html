@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        let str ='Happy day~!  ';
+
+       console.log("length", str.length)
+
+
+      let sliceSlice = str.slice(5,9)
+       console.log("slice", sliceSlice)
+
+
+       //메소드 체이닝  : 메소드가 반환(return)값을 가지고 있을 때 사용 가능
+       console.log('hello'.split(""))
+       console.log('hello'.split("").reverse())
+       console.log('hello'.split("").reverse().join(""))
+
+       //문자열 관련 내장 메소드
+
+       console.log("length : ",str.length)
+       console.log("대문자다 : ", str.toUpperCase())
+       console.log("소문자다 : ",str.toLowerCase())
+       console.log("몇번째 숫자니 : ",str.indexOf('p')) //0부터 세니까 2가 나옴
+       console.log("문자를 띄워보자 : ",str.slice(5,9)) //0부터 end-1까지 slicing
+       console.log("n번째 문자열 뒤부터 띄울거다 : ", str.slice(2))
+       console.log("알파벳 하나만 바꿀거다 : ",str.replace('p','a'))
+       console.log("알파벳 모두 바꿀거거다 : ",str.replaceAll('p','a'))
+       console.log("문구를 반복해줄거다 : ",str.repeat(5))
+       console.log("문자열의 양끝 space(띄워쓰기) 없애줄거다 : ", str.trim()) //앞이든 뒤든 띄워쓰기 없으면 그대로 반환
+       console.log("''로 쪼개서 스펠링으로 표현해줄거다",str.split(''))
+       console.log("스페이스 띄워쓰기 기준으로 나눠서 문자 나타낼거다 : ", str.split(' '))
+     
+       
+
+       //배열, 기본 for문 사용
+
+       let numbers=[1,2,3,4,5,6];
+       let fruits=["사과","바나나","수박","포도","파인애플"]
+
+       for(let i=0; i<numbers.length;i++){
+        console.log(numbers[i]);
+       }
+
+       for(let i=0;i<fruits.length;i++){
+        console.log(fruits[i])
+       }
+    </script>
+
+
+</body>
+</html>

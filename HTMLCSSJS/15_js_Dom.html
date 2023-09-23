@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS DOM 문서객체모델</title>
+</head>
+<body>
+    <div id="box" class="box">hello</div>
+    <div id="container" class="box item">hello</div>
+    <span>스팬태그 입니다.</span>
+    <input type="text" name="email">
+
+    <div id="box2"><b>hello</b> box2</div>
+    
+
+    <script>
+
+        let elById = document.getElementById("box")
+        console.log(elById);
+
+        let elByClass = document.getElementsByClassName("box")
+        console.log(elByClass[0]); //첫번째꺼를 가지고 오겠다
+        console.log(elByClass[1]);
+       
+        let elByTag = document.getElementsByTagName("span")
+        console.log(elByTag[0]);
+        console.log(elByTag[1]);
+
+        let elByName = document.getElementsByName("email")
+        console.log(elByName)
+
+
+        //선택자를 이용해 요소를 선택
+
+        let elBySelector = document.querySelector(".box") // selector는 선택자
+        let elBySelectorAll = document.querySelectorAll(".box")
+        
+        console.log(elBySelector)
+        console.log(elBySelectorAll)
+
+
+    let elBox2 = document.getElementById("box2")
+    //let elBox2 = document.querySelector("#box2")
+
+    console.log(elBox2.innerText) //태그는 인식을 못해서 태그자체가 텍스트로 들어감
+    console.log(elBox2.innerHTML) //태그까지 인식함
+
+elBox2.innerText="hello <b>lily</b>"
+elBox2.innerHTML="hello <b>lily</b>"
+    </script>
+</body>
+</html>

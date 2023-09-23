@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let num=5;
+        let num2=num;
+        num2 +=5;
+        console.log(num, num2)
+
+//object 객체 자료형은 값을 복사해서 전달하는게 아닌 메모리 주소 참조값(address)을 저장
+//얕은 복사 : object 객체 자료형
+
+//깊은 복사 : 기본자료형
+        let arr=[1,2,3,4,5];
+        let arr2=arr;
+        arr2.reverse()
+        console.log(arr,arr2)
+
+        let arr3=[1,2,3,4];
+        let arr4=arr3.slice(2);
+
+        arr4.reverse()
+        console.log(arr3,arr4)
+
+
+
+        let date = new Date()
+        console.log(date.getFullYear());
+        console.log(date.getMonth()+1);
+        console.log(date.getTime()) //1970년 1월 1일부터 밀리초
+        console.log(date.getDay()); // 요일 월화수목금토일 1234567
+        console.log(date.getHours());//현재시간
+        
+        //만료일
+        let expired = new Date("2023-09-22").getTime();
+        let today = new Date().getTime();
+
+
+        if (expired > today){
+            console.log("만료일이 지났어요")
+        }else{
+            console.log("사용할 수 있어요.")
+        }
+
+
+    </script>
+</body>
+</html>

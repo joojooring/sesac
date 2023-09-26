@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery연습</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <style>
+        .container{
+            width: 600px;
+            height: 400px;
+            background-color: beige;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+        }
+        .blue{
+            background-color: blue;
+        }
+        .pink{
+            background-color: pink;
+        }
+        .black{
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box blue" id="blue"></div>
+        <div class="box pink"></div>
+        <div class="box black"></div>
+    </div>
+    <input type="text" name="name" id="input" value="lily">
+    <button type="button" onclick="useVal()">val() 사용하기</button>
+
+
+    <script>
+        function useVal(){
+            $("#input").val("어떤 값을 줄까")
+            //= document.getElementById("input").value="어떤 값을 줄까"
+
+        }
+    </script>
+</body>
+</html>

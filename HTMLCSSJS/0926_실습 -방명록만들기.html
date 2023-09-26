@@ -7,8 +7,72 @@
 </head>
 <body>
 <p>방명록 입니다.</p>
-작성자 <input type="text" class="username">
-내용 <input type="text" class="contents" style="width: 500px;">
+<br />
+
+<div><b>작성자</b> <input type="text" id="username"></div>
+<div><b>내용</b> <input type="text" id="contents" style="width: 500px;"></div>
+<br />
+<button type="button" onclick="writing()" >작성</button>
+<br />
+<br />
+
+<table border="1" padding="1" width="1000px">
+    <thead>
+        <tr style="text-align: center; text-emphasis:5em ;">
+            <td>번호</td>
+            <td>작성자</td>
+            <td>내용</td>
+            <td>작성일</td>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+    let num=1;
+
+    function writing(){
+
+    let username=document.getElementById("username").value;
+    let content=document.getElementById("contents").value;
+    let date=new Date()
+    let dateString = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()} : ${date.getMinutes()}`
+
+
+    //한 행을 만들어야 되기 때문에 tr태그를 create시키기
+    let tr=document.createElement("tr")
+
+    //tr에 들어갈 td태그 4개 만들기
+    let td1=document.createElement("td")
+    td1.innerText=num;
+
+
+    let td2=document.createElement("td")
+    td2.innerText=username;
+
+
+    let td3=document.createElement("td")
+    td3.innerText=content;
+
+
+    let td4=document.createElement("td")
+    td4.innerText=dateString;
+
+
+    //td태그 4개를 tr태그의 자식요소로 추가해서 밑에 나오게끔
+
+    tr.append(td1)
+    tr.append(td2)
+    tr.append(td3)
+    tr.append(td4)
+
+    let tbody=document.querySelector("tbody");
+    tbody.append(tr);
+
+num++
+}
+</script>
+
 
 
 

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM연습</title>
+    <style>
+        .container{
+            width:600px;
+            height:400px;
+            background-color: beige;
+            display:flex;
+            flex-wrap: wrap;
+        }
+
+        .box{
+            width:100px;
+            height:100px;
+        }
+        .blue{
+            background-color:blue ;
+        }
+        .pink{
+            background-color:pink ;
+        }
+        .ivory{
+            background-color:ivory ;
+        }
+        .white{
+            background-color:white ;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box blue"></div>
+        <div class="box pink"></div>
+        <div class="box ivory"></div>
+        <div class="box white"></div>
+    </div>
+    
+    <input type="text" name="이름" />
+    <div>
+        <button type="button" onclick="twinckle()">반짝여라</button>
+        <button type="button" onclick="addPlaceholder()">placeholder추가</button>
+        <button type="button" onclick="addBox()">box추가</button>
+        <button type="button" onclick="removeBox()">box삭제</button>
+
+
+
+    </div>
+
+
+    <script>
+        let boxes = document.querySelectorAll(".box");
+        let box3= boxes[2];
+        box3.innerHTML="뭔말이야";
+        console.log(box3.classList);
+
+        function twinckle(){
+            box3.classList.toggle("ivory")
+        }
+
+        let input=document.querySelector("input");
+        function addPlaceholder(){
+            input.setAttribute("placeholder", "이름을 입력하세요");
+        
+        }
+
+        // let container = document.querySelector(".container")
+        // console.log(container.children[1])
+        
+        function addBox(){
+            // container를 선택해야 마지막에 들어갈 수 있음
+            // 추가할 요소를 만들어야 됨
+            // container의 마지막에 자식으로 추가할때(append, appendChild)
+            // container의 첫번째 자식으로 추가할때 (prepend)
+            // container의 형제로 추가할때(before, after)
+            let container2 = document.querySelector(".container");
+
+            let newBox= document.createElement("div");
+            newBox.classList.add("box");
+            newBox.classList.add("blue");
+
+            container2.append(newBox);
+            container2.prepend(newBox);
+            container2.before(newBox);
+            container2.after(newBox);
+            
+        }
+
+        function removeBox(){
+            //삭제할 요소를 선택
+
+            let pinkBox =document.querySelector(".box.pink")
+            pinkBox.remove()
+        }
+
+    </script>
+</body>
+</html>

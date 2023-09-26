@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document 객체</title>
+
+    <style>
+        .container{
+            width:600px;
+            height:400px;
+            background-color: beige;
+            display:flex;
+            flex-wrap: wrap;
+        }
+        .box{
+            width: 100px;
+            height:100px;
+            }
+        .red{
+            background-color: red;
+        }
+        .orange{
+            background-color:orange;
+        }
+        .yellow{
+            background-color:yellow;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="box red"></div>
+        <div class="box orange"></div>
+        <div class="box yellow"></div>
+
+    </div>
+    <!-- input 태그를 선택해서 placeholder 속성 추가 -->
+    <input type="text" name="이름"/>
+    <div>
+        <button type="button" onclick="twinckle()">반짝여라</button>
+        <button type="button" onclick="addPlaceholder()">placeholder추가</button>
+        <button type="button" onclick="addBox()">box추가</button>
+        <button type="button" onclick="removeBox()">box삭제</button>
+
+
+    </div>
+
+
+    <script>
+        const boxes = document.querySelectorAll(".box");
+        const box1 = boxes[0];
+        box1.innerHTML ="안녕";
+
+        console.log(box1.classList);
+        //query는 선택자가 있어야됨 (".~")
+        //요소들이 많으면 무조건 배열로 작성해야됨 []
+
+        //box1.classList.add()
+       // box1.classList.remove("red")
+
+       /* function twinckle(){
+            if(box1.classList.contains("red"))
+            box1.classList.remove("red")
+            else box1.classList.add("red")
+        }
+        =
+        */
+        function twinckle(){
+            box1.classList.toggle("red")
+        }
+
+        const input =document.querySelector("input");
+        function addPlaceholder(){
+            input.setAttribute("placeholder","이름을 입력하세요.");
+            input.setAttribute("id","input_name");
+
+        }
+        //특정 요소의 자식 요소들에 접근
+        const container = document.querySelector(".container")
+        console.log(container.children[1]) //children 배열을 반환
+
+        ///특정 요소의 부모 요소에 접근
+        console.log(box1.parentNode) //parentNode는 기본적으로 하나의 요소만 반환
+
+
+        //특정 요소의 형제 요소에 접근
+        console.log(box1.nextElementSibling) //다음 형제 요소 하나
+        console.log(boxes[1].previousElementSibling) //이전 형제 요소 하나
+        
+
+        function addBox(){
+          // container를 선택해야 마지막에 들어갈 수 있음
+          const container2 = document.querySelector(".container");
+
+          // 추가할 요소를 만들어야 됨
+          const newBox= document.createElement("div");
+          newBox.classList.add("box");
+          newBox.classList.add("red");
+         // = newBox.className="box red";
+            
+
+          // container의 마지막 자식으로 추가(append, appendChild)
+            //append : 문자열도 인자로 넘길 수 있음
+            //appendChild : 특정 node객체만 넘길 수 있음
+
+         // container2.appendChild(newBox);
+         container2.append("newBox");
+
+          //container에 첫번째 자식으로 추가 (prepend)
+          container2.prepend(newBox);
+
+
+          //container에 형제로 추가 (before, after)
+          //container2.before(newBox);
+          //container2.after(newBox);
+        }
+          function removeBox(){
+            //삭제하고 싶은 요소 선택
+            const orangeBox = document.querySelector(".box.orange");
+            orangeBox.remove()
+
+            const container2 = document.querySelector(".container");
+           container2.removeChild(container2.children[0]);
+
+
+          }
+    
+
+    </script>
+</body>
+</html>

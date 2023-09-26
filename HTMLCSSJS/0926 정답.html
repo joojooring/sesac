@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+
+    <div>값1 : <input type="number" id="value1"> </div>
+    <div>값2: <input type="text" id="value2" /></div>
+    <div>연산자: <input type="text" id="operator" /></div>
+    <div>결과: <input type="text" id="result" readonly /></div>
+
+    <button type="button" onclick="calculate()">계산하기</button>
+    <!-- <button type="button" onclick="reset()">초기화</button> -->
+    <!-- form태그 안에 있는 input의 reset은 전체적으로 리셋해줌 -->
+    <input type="reset" value="초기화" />
+
+    </form>
+    <script>
+        function calculate(){
+
+            let value1=Number(document.getElementById("value1").value);
+            
+            let value2=Number(document.getElementById("value2").value);
+          
+            let operator=document.getElementById("operator").value;
+           
+
+
+            let result = value1+value2;
+            switch(operator){
+                case "+":
+                    result=value1+value2;
+                    break;
+                case "-":
+                    result=value1-value2;
+                    break;    
+                case "*":
+                    result=value1*value2;
+                    break;    
+                case "/":
+                    result=value1/value2;
+                    break;    
+            }
+
+            document.getElementById("result").value=result;
+        }
+
+
+        function reset(){
+            document.getElementById("value1").value=""
+            document.getElementById("value2").value=""
+            document.getElementById("operator").value=""
+            document.getElementById("result").value=""
+
+
+        }
+    </script>
+
+
+</body>
+</html>

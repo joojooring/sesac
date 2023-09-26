@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>방명록 만들기 실습 정답</title>
+</head>
+<body>
+<div>방명록입니다.</div>
+<div>
+    <div>작성자: <input type="text" name="name" /></div>
+    <div>내용: <input type="text" name="content" /></div>
+    <button type="button" onclick="addRow()">작성</button>
+</div>
+    
+<table border="1" cellspacing="0">
+    <thead>
+        <tr></tr>
+            <th>번호</th>
+            <th>작성자</th>
+            <th>내용</th>
+            <th>작성일</th>
+
+    </thead>
+</table>
+
+<script>
+
+    let num=1;
+
+    function addRow(){
+        //input 2개의 값을 가져와야 됨.
+        //번호, 작성일에 대한게 만들어 져야됨 - tbody의 children갯수가 번호가 되겠음 -> tbody선택 tbody.children.length
+        //한 행을 만들어야 되므로 tr태그 만들기
+        //tr에 들어갈 td태그 4개 필요
+        //td태그 4개를 tr태그의 자식요소로 추가
+        //tr태그를 tbody태그의 자식요소로 추가
+        
+
+        let name = document.querySelector("[name=name]").value;
+        let content = document.querySelector("[name=content]").value;
+
+        let date = new Date()
+        //let dateString = `${date.getFullYear()}`-
+
+        let tr = document.createElement("tr");
+
+        let td1 = document.createElement("td");
+        td1.innerText=num;
+
+        let td2 = document.createElement("td");
+        td2.innerText=name;
+
+        let td3 = document.createElement("td");
+        td3.innerText=content;
+
+        let td4 = document.createElement("td");
+        td4.innerText=dateString;
+
+
+        tr.append(td1)
+        tr.append(td2)
+        tr.append(td3)
+        tr.append(td4)
+
+        let tbody=document.querySelector("tbody")
+        //쿼리셀렉터는 위에 하나만 선택해주기때문에 남발하면 안됨
+
+        tbody.append(tr);
+        
+
+        num++;
+
+
+
+
+
+    }
+
+</script>
+</body>
+</html>

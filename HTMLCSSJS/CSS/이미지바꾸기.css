@@ -1,0 +1,21 @@
+.box{
+    border: 7px solid rgb(247, 222, 59);
+    display: flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    position:relative;
+    margin: 0;
+     width: 400px; 
+     height: 400px; 
+     border-radius: 10%; 
+     text-align: center;
+     /* padding-top: 150px; */
+     font-size: 60px;
+     font-family: cursive ;
+}
+
+.button1{
+    
+}

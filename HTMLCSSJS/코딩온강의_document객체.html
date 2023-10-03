@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document객체</title>
+
+    <!-- Document객체는 XML 이나 HTML문서에 접근하기 위한 일종의 인터페이스 -->
+    <!-- 문서 내의 모든 요소를 정의하고 각각의 요소에 접근하는 방법을 제공  -->
+    <!-- HTML문서는 각각의 node와 object의 집합으로 문서를 표현  -->
+    <!-- DOM은 HTML코드를 해석해서 트리형태로 문서 생성 -->
+    <!-- 계층적인 부모-자식 관계가 형성 -->
+    <!-- DOM을 이용해서 HTML의 요소의 속성을 추가,제거,변경 가능 -->
+    <!-- DOM을 이용해서 CSS스타일 변경, 이벤트 반응 -->
+    
+
+    <!-- DOM API : HTML 요소들을 JS에서 제어하기 위한 명령들 -->
+
+    <!-- // 요소 선택 메서드
+    document.querySelector(CSS 선택자)
+    document.querySelectorAll(CSS 선택자)
+
+    document.getElementById(아이디 속성값)
+    document.getElementsByClassName(클래스 속성값)
+    document.getElementsByTagName(태그 이름)
+    document.getElementsByName(name 속성값) -->
+
+
+</head>
+<body>
+    <div class="box">1</div>
+    
+
+    <div id="box">안녕내사랑그대여~~</div>
+    <input type="button" name="one" value="one" />
+    <input type="button" name="two" value="two" />
+    <input type="button" name="one" value="three" id="three" />
+    <input type="checkbox" name="one" id="check">
+
+
+    <script>
+    let boxEls = document.querySelectorAll(".box");
+      console.log(boxEls);
+
+    let boxbox =
+      document.getElementsByTagName("div");
+      console.log(boxbox);
+    
+    let inputName = document.getElementsByName("one");
+    console.log(inputName);
+    
+
+    let box = document.querySelector(".box")
+    //요소 생성
+    let element = document.createElement('p');
+
+    //요소 삽입 - 추가기능
+    box.append(element);
+    </script>
+    
+</body>
+</html>

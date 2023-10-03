@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>InnerText</title>
+  </head>
+  <body>
+    <div class="box">
+      <span>안녕하세요</span>
+      <span style="display: none">숨겨진 텍스트</span>
+
+      <span id="span1">1</span>
+      <span id="span2">2</span>
+      <span id="span3">3</span>
+    </div>
+    <script>
+      const box = document.querySelector(".box");
+      let sapn1 = document.querySelector("#span1");
+      let sapn2 = document.querySelector("#span2");
+    
+    //   let boxE1 = document.querySelector(".box")
+    //   console.log(boxE1);
+    //   boxE1.addEventListener("click",function()){
+    //     alert("click!");
+    //   }
+
+
+      console.log(span1.nextElemnetSibling); //2
+      console.log(span2.previousElementSibling); //1
+
+      console.log(box.innerHTML);
+      console.log(box.innerText);
+      console.log(box.textContent);
+
+      span1.remove(); //span1 삭제되겠지?
+      box.removeChild(span2); //span3삭제되겠지?
+
+
+
+    </script>
+  </body>
+</html>

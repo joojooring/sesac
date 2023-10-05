@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트 리스너</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+        <style>
+            .container{
+            background-color: cadetblue;
+            width: 200px;
+            height: 200px;
+            margin-top:10px;
+        }
+
+
+</style>
+
+<script>
+    // 아래 코드는 container클래스를 가진 div 태그가 로드되기 전에 실행하게 됨
+    // console.log($(".container"))
+
+    $(document).ready(function(){
+        console.log($(".container"))
+      })
+</script>
+
+</head>
+<body>
+<div class="container"></div>
+
+<div class="container"></div>
+
+<input type="password" name="pw" />
+
+
+
+
+<script>
+$(".container").click(function(){
+    console.log(this); 
+    $(this).css("background-color", "pink")
+})
+
+
+//마우스 뗐을때 실행
+
+// $(".container").mouseout(function(){
+//     console.log(this);
+//     $(this).css("background color", "yellow")
+// })
+
+
+
+
+$(document).scroll(function(){
+    if(document.body.scrollHeight >= 350){{
+        console.log(this);
+        $(this).css("background color", "yellow")
+    }}
+})
+
+
+//keyup: 선택한 요소에서 키보드를 떼는 이벤트가 발생할 때
+//keydown: 키보드를 눌렀을 때 보통 enter 눌렀을 때 접속되게끔
+
+
+$("input[name=pw]").keydown(function(event){
+    console.log("key: ",event.key)
+    if(event.key == enter){
+    console.log("value: ", this.value)
+    }
+})
+
+
+</script>
+</body>
+</html>

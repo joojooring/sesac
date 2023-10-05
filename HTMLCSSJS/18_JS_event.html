@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트 리스너</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <!-- <script>
+        // 아래 코드는 container클래스를 가진 div 태그가 로드되기 전에 실행을 하게 됨.
+        console.log($(".container"));
+
+
+        // 로딩 이벤트 : html이 body태그내부까지 로드된 후 head태그가 실행할 코드 걸어준다.-->
+        <!-- // 
+        $(document).ready(function(){ //하고싶은 이벤트를 여기에다가 넣으면 됨
+            console.log($(".container"));
+
+        })
+
+        // =
+        // jquery3.0이상부터 권장되는 방식
+        $(function(){
+            console.log($(".container"));
+
+        })
+
+
+        </script> -->
+        <!-- //마우스이벤트 -->
+        <style>
+            .container{
+            background-color: cadetblue;
+            width: 200px;
+            height: 200px;
+            margin-top:10px;
+        }
+</style>
+
+</head>
+<body>
+<div class="container"></div>
+
+<div class="container"></div>
+
+<input type="password" name="pw" />
+
+
+
+
+<script>
+   
+    // $(".container").click(function(){
+    //     /* 이벤트가 걸린 요소를 this에 담음. */
+    //     console.log(this);
+    //     $(this).css("background-color", "black");
+    // })
+
+
+    //마우스가 올라갔을때 실행 .mouseover(fucntion(){})
+    $(".container").mouseover(function(){
+
+    })
+
+    //마우스를 뗐을때 실행 .mouseover(fucntion(){})
+        $(".container").mouseout(function(){
+
+    })
+
+
+    //hover : mouseover와 mouseout을 한번에 지정할 수 있음
+    // $(".container").hover(function(){}, function(){})
+    $(".container").hover(function(){// 마우스가 들어갔을 때
+        
+    }, function(){//마우스가 나갔을 때
+
+    })
+
+    $(document).scroll(function(){
+        if(document.body.scrollHeight >= "스크롤위치"){
+            //하고싶은 동작
+
+        }
+        console.log(document.body.scrollHeight);
+
+        console.log("방가방가")
+    })
+
+
+
+    // $(".container").click(function(){
+    //     /* 이벤트가 걸린 요소를 this에 담음. */
+    //     console.log(this);
+    //     $(this).css("background-color", "black");
+    // })
+
+
+    //키보드이벤트
+    //keydown: 선택한 요소에서 키보드를 눌렀을 때
+    //keyup : 선택한 요소에서 키보드를 떼는 이벤트가 발생할 경우
+    $("input[name=pw]").keyup(function(event){
+        console.log("key: ",event.key)
+        if(event.key == "Enter"){   //login()할때!!
+      //if(event.keyCode == 13) //enter가 keycode 13번임
+            console.log("value: ",this.value)
+
+        }
+    })
+
+    //on메서드 : 이벤트를 걸겠다. 그래서 이벤트 타입을 넣어야 됨
+
+    $("선택자").on("이벤트 타입", "핸들러 함수")
+    $(".container").on("keyup", function(event){
+        if(event.key == "Enter"){
+            console.log("value: ",this.value)
+        }
+    })
+
+    let container = document.getElementsByClassName("container")
+
+    //jQuery의 on과 비슷함 addeventlister("이벤트 타입", 함수(){})
+    //하나만 가능함!!!! addeventlister가
+    //on은 여러가지 요소에 대해 가능
+
+    for(let i = 0; i < container.length; i++){
+        container[i].addEventListener("click",function(){
+            this.style.backgroundColor = "red";
+        })
+    }
+    
+
+    
+</script>
+</body>
+</html>

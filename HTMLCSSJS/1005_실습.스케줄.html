@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <p>날짜 :  <input id="date" type="text"></p>
+    <p>내용 :  <input id="content" type="text"></p>
+    <input type="button" onclick="addSchedule()" value="작성" name="name" >
+
+
+    <h1>2022년 7월</h1>
+    <table cellspacing="30%"
+    cellpadding="30%">
+       <tr>
+        <td style="color:red">日</td>
+        <td>月</td>
+        <td>火</td>
+        <td>水</td>
+        <td>木</td>
+        <td>金</td>
+        <td style="color:blue">土</td>
+       </tr>
+
+       <td style="color:red"></td>
+       <td></td>
+       <td></td>
+       <td></td>
+       <td></td>
+       <td>1</td>
+       <td style="color:blue">2</td>
+      </tr>
+
+      <td style="color:red">3</td>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+      <td>7</td>
+      <td>8</td>
+      <td style="color:blue">9</td>
+     </tr>
+
+     <td style="color:red">10</td>
+     <td>11</td>
+     <td>12</td>
+     <td>13</td>
+     <td>14</td>
+     <td>15</td>
+     <td style="color:blue">16</td>
+    </tr>
+
+    <td style="color:red">17</td>
+    <td>18</td>
+    <td>19</td>
+    <td>20</td>
+    <td>21</td>
+    <td>22</td>
+    <td style="color:blue">23</td>
+   </tr>
+
+   <td style="color:red">24</td>
+   <td>25</td>
+   <td>26</td>
+   <td>27</td>
+   <td>28</td>
+   <td>29</td>
+   <td style="color:blue">30</td>
+  </tr>
+
+  <td style="color:red">31</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td style="color:blue"></td>
+ </tr>
+
+
+    </table>
+
+    <script>
+        let date;
+
+        $("td").on("click", function(){
+            console.log(this);
+            $("#date").val($(this).text());
+            date=this;        
+        });
+
+        function addSchedule(){
+            let content = $("#content").val()
+           $(date).append(content)
+        }
+
+        //  $("input[name=name]").click(function(addSchedule){
+            
+        //     console.log("value: ", this.value) 
+        //  })   
+
+//         box[0].addEventListener("click",function(){
+//             this.input.text();
+
+// })
+//         let box = document.getElementsByTagName("input");
+//         console.log(box);
+//         box[0].addEventListener("click",function(){
+
+//         })
+
+//  $("input[name=name]").click(function(event){
+//         console.log("click: ",event.click)
+//         if(event.key == "Enter"){   //login()할때!!
+//       //if(event.keyCode == 13) //enter가 keycode 13번임
+//             console.log("value: ",this.value)
+
+//         }
+//     })
+
+    </script>
+</body>
+</html>

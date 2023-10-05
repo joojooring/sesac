@@ -1,0 +1,47 @@
+.container{
+    width: 500px;
+    height: 500px;
+    background-color: beige;
+    display: flex;
+    justify-content: center;
+}
+
+.box{
+    width : 100px;
+    height: 100px;
+}
+
+.red{
+    background-color: red;
+}
+.orange{
+    background-color: orange;
+}
+.yellow{
+    background-color: yellow;
+}
+
+/* 세로정렬을 하고 싶을 때  */
+@media screen and (max-width: 500px) {
+    .container{
+        flex-direction: column;
+    }
+}
+
+
+
+/* @media 미디어유형 and (크기 규칙)  */
+@media screen and (min-width: 700px) {
+    /* min-width: 700px 이상일 경우 */
+    .container{
+        background-color: cornflowerblue;
+    }
+}
+
+/* @media 미디어유형 and (크기 규칙)  */
+@media screen and (max-width: 700px) {
+    /* max-width: 700px 이하일 경우 */
+    .yellow{
+        background-color: black;
+    }
+}

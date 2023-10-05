@@ -42,7 +42,7 @@
       header .inner .logo {
         color: white;
         font-size: 30px;
-        display: flex;
+        display: inline-flex;
 
         
       }
@@ -53,9 +53,32 @@
       }
 
       header .inner .menu li {
+        font-weight: bold;
+        margin-right: 20px;
       }
 
+
       /* 미디어 쿼리 작성 768px 이하일 때  */
+
+      @media screen and (max-width: 768px) {
+        header .inner .menu {
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: aliceblue;
+            font-weight:lighter;
+
+        }
+        header .inner .logo{
+            display:flex;
+            justify-content: center;
+        }
+        
+      }
+
+
     </style>
   </head>
   <body>

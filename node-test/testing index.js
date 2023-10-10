@@ -25,7 +25,31 @@
 
 
 
-const add = require("./testing math")
+const math = require("./testing math");
 
-const sum = add(5,10);
+// math = {
+//     add,
+//     minus,
+//     PI
+// };;
+
+const sum = math.add(5,10);
+const minusminus = math.minus(55,50);
+
 console.log(sum);
+console.log(minusminus);
+
+
+const { add, minus} = require("./testing math");
+
+
+const sumsum = add(10,10);
+console.log(sumsum);
+
+// const { add, minus } = require("./math.js");
+
+// const sum = add(2, 3);
+// console.log(sum);
+// console.log(PI); // 오류 발생
+
+

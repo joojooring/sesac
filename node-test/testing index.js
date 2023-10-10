@@ -16,6 +16,8 @@
 // console.log(sum);
 // console.log(math.PI);
 
+
+// 파일에서 한개의 식별자만 내보내는 경우
 // ----------------- case 1) ---------------
 // 파일에서 한개의 식별자만 내보내는 경우
 // const add = require("./math.js");
@@ -40,7 +42,15 @@ console.log(sum);
 console.log(minusminus);
 
 
-const { add, minus} = require("./testing math");
+// const { add, minus} = require("./testing math");
+const {add , minus} =require("./testing math")
+
+const sumsumsum = add(100,100);
+const minusminusminus = minus(500,200);
+
+console.log(sumsumsum);
+console.log(minusminusminus);
+
 
 
 const sumsum = add(10,10);

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <%=name %>
+    <!--ejs 태그 안에 오는 자바크립트 코드는 한줄로 끝나야 함.-->
+    <!--ejs 태그 안에 바로 =이 오면 = 뒤에 있는 값을 html로 노출 시킨다.-->
+    <% for(let i =0; i < product.length; i++){ %>
+        <div>상품 : <%=product[i] %> </div>
+        
+        
+    <% } %>
+
+        <!--ejs 태그 안에 바로 =이 오면 = 뒤에 있는 값을 html로 노출 시킨다.-->
+
+    <%="hello lily" %>
+
+        <!--ejs 태그 안에 바로 -이 오면 - 뒤에 있는 값을 html로 노출 시킨다. 태그를 인식해서 노출시킴-->
+    <%= "<div>안녕</div>" %>
+    <%= "=은 태그를 인식하지 못해서 그대로 html에 노출시켜" %>
+    <%- "<div>이건 마이너스일때야</div>" %>
+    <%- "<h1> -는 태그를 인식해 </h1>"  %>
+
+    <%-include("index.ejs") %> 
+
+    
+</body>
+</html>

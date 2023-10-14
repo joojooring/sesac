@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+        function chageColor(color){
+            return new Promise(function(resolve){
+                setTimeout(function(){
+                    document.body.style.backgroundColor = color
+
+                    resolve();
+                },1000)
+            })
+        };
+
+        // async function exec(){
+        //     await chageColor("red");
+        //     await chageColor("orange");
+        //     await chageColor("yellow");
+        //     await chageColor("green");
+        //     await chageColor("blue");
+        // } ;
+
+        // exec();
+
+        chageColor("red").then(()=>{
+            return chageColor("orange")
+        }).then(()=>{
+            return chageColor("yellow")
+        }).then(()=>{
+            return chageColor("green")
+        }).then(()=>{
+            return chageColor("blue")
+        });
+
+
+    </script>
+</body>
+</html>

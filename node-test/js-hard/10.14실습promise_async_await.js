@@ -1,4 +1,4 @@
-function call(name, callback){
+function call(name){
     return new Promise(function(resolve, reject){
         setTimeout(function() {
             console.log(name);        
@@ -9,7 +9,7 @@ function call(name, callback){
     })
 }
 
-function back(callback){
+function back(){
     return new Promise(function(resolve, reject){
         setTimeout(function() {
             console.log("back");        
@@ -20,7 +20,7 @@ function back(callback){
     })
 }
 
-function hell(callback){
+function hell(){
     return new Promise(function(resolve, reject){
         setTimeout(function() {
             let hell ="hell"

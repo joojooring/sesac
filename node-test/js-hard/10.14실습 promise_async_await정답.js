@@ -25,10 +25,15 @@ function call(name) {
   }
   
   async function exec() {
+    //call의 resolve 인자로 넘겨준 값이 res1에 담기게 됨 res1 ="kim"
     const res1 = await call("kim");
     console.log(res1, "반가워");
+     
+    //back resolve 인자로 넘겨준 값이 res2에 담기게 됨 res2="back"
     const res2 = await back();
     console.log(res2, "을 실행했구나");
+
+    //res3 = "hell"
     const res3 = await hell();
     console.log("여기는", res3);
   }

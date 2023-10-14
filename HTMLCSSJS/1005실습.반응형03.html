@@ -34,8 +34,10 @@
 
       /* 768px 보다 클때의 header */
       header .inner {
+        display: flex;
         background-color: lightblue;
         height: 100%;
+        align-items: center;
       }
 
       /* LOGO */
@@ -61,6 +63,10 @@
       /* 미디어 쿼리 작성 768px 이하일 때  */
 
       @media screen and (max-width: 768px) {
+
+        header .inner {
+          
+        }
         header .inner .menu {
 
             display: flex;
@@ -68,7 +74,7 @@
             justify-content: center;
             align-items: center;
             background-color: aliceblue;
-            font-weight:lighter;
+            
 
         }
         header .inner .logo{
@@ -76,8 +82,10 @@
             justify-content: center;
         }
         
+        header .inner .menu li{
+          font-weight: lighter;
+        }
       }
-
 
     </style>
   </head>

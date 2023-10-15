@@ -92,8 +92,7 @@ console.log(arr3);
 //rest 파라미터
 const values = [10,20,30];
 function get(a, ...rest) {
-    console.log(rest);
-    
+    console.log(rest); // [20,30]
 };
 get(...values);
 

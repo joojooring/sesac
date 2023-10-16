@@ -11,56 +11,53 @@
 // console.log(test());
 
 
-
-
-
 async function add(n1, n2) {
-    return new Promise ((resolve,reject)=>{
-        setTimeout(function() {
-            let result =n1 +n2;
-            
+    return new Promise((resolve, reject) => {
+        setTimeout(function () {
+            let result = n1 + n2;
+
             resolve(result);
         }, 1000);
-        
+
     })
 }
 
 function mul(n) {
-    return new Promise((resolve,reject)=>{
-        setTimeout(function() {
-            let result =n * 2;
-            
+    return new Promise((resolve, reject) => {
+        setTimeout(function () {
+            let result = n * 2;
+
             resolve(result);
             // reject("오류발생");
         }, 700);
-        
+
     });
 }
 
 function sub(n) {
-    return new Promise((resolve,reject)=>{
-        setTimeout(function() {
-            let result =n-1;
-            
+    return new Promise((resolve, reject) => {
+        setTimeout(function () {
+            let result = n - 1;
+
             resolve(result);
         }, 500);
-        
+
     })
 }
 
 
 
 async function exec() {
-    const x = await add(4,3); //x에 7
-    console.log("await 1 뒤 : ",x)
+    const x = await add(4, 3); //x에 7
+    console.log("await 1 뒤 : ", x)
     const y = await mul(x); //y에 14
-    console.log("await 2 뒤 : ",y)
+    console.log("await 2 뒤 : ", y)
 
     const z = await sub(y); //z에 13
-    console.log("await 3 뒤 : ",z)
+    console.log("await 3 뒤 : ", z)
 
 }
 
 exec();
 
-            
+

@@ -13,14 +13,7 @@ res.render("실습valid_index")
 
 app.post("/post", function(req,res){
     console.log(req.body);
-    res.render("result",{
-        id: req.body.id ,
-        pw: req.body.pw,
-        phonenumber: req.body.phonenumber ,
-        name: req.body.name,
-        gender: req.body.gender
-
-    })
+    res.send("회원가입 성공")
 });
 
 app.listen(PORT, function(){

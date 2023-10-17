@@ -1,51 +1,48 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
-<body>
-    <form>
-        <fieldset>
-            <legend>회원정보</legend>
-            ID : <input type="text" name="id" pattern="^([a-z0-9]){5,}$" required>
-            <br />
-            PW : <input type="password" name="pw" pattern="^([a-zA-Z0-9~!@#$%^&*-_+|/])$" required>
-            <br />
-
-            전화번호 : <input type="text"name="phonenumber" pattern="^010-[0-9]{4}-[0-9]{4}$"  required>
-            <!-- oninput="isPhonenumberValidate(this)" -->
-            <br />
-
-            이름 : <input type="text"name="name" required>
-            <br />
-
-            성별 : 여<input type="radio"name="gender" value="woman" required>
-            남<input type="radio"name="gender" value="man" required>
-
-        </fieldset>
+  </head>
+  <body>
+    <form action="/post" method="post">
+      <fieldset>
+        <legend>회원정보</legend>
+        ID : <input type="text" name="id" pattern="^([a-z0-9]){5,}$" required>
         <br />
-        <input type="button" value="회원가입" >
+        PW : <input type="password" name="pw" pattern="^([a-zA-Z0-9]){8,}$" required>
+        <br />
 
-        <script>
-            // function isPhonenumberValidate(phoneRule){
-            //     let phoneRule = /^010-[0-9]{4}-[0-9]{4}$/
-                // let value =el.value
-                // if(/^010-[0-9]{4}-[0-9]{4}$/.test(phoneRule)){
-                //     document.getElementById("checkphoneRuleMessage").innerText = "OK";
-                // }else{
-                //     document.getElementById("checkphoneRuleMessage").innerText = "re-try";
-                // }
+        전화번호 : <input type="text" name="phonenumber" pattern="^010-[0-9]{4}-[0-9]{4}$" required>
+        <br />
 
-                // if(regexphonenum.test(value)){
-                //     console.log("정규식 일치")
-                //     return true;
-                // }
-            //     return phoneRule.test(el)
-            // }
-        </script>
+        이름 : <input type="text" name="name" required>
+        <br />
+
+        성별 : 여<input type="radio" name="gender" value="woman" required>
+        남<input type="radio" name="gender" value="man" required>
+
+      </fieldset>
+      <br />
+      <input type="submit" value="회원가입">
+
+      <script>
+          function testIsOk(chk) {
+              var chk = 0;
+              if (newPassword1.search(/[0-9]/g) != -1) chk++;
+              if (newPassword1.search(/[a-z]/ig) != -1) chk++;
+              if (newPassword1.search(/[A-Z]/ig) != -1) chk++;
+              if (newPassword1.search(/[!@#$%^&*()?_~]/g) != -1) chk++;
+              if (chk < 4) {
+                alert("비밀번호는 숫자, 영문, 특수문자를 두가지이상 혼용하여야 합니다.");
+                return false;
+              }
+      
+              
+        }
+      </script>
 
     </form>
-</body>
+  </body>
 </html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <fieldset>
+            <legend>회원정보</legend>
+            ID : <input type="text" name="id" pattern="^([a-z0-9]){5,}$" required>
+            <br />
+            PW : <input type="password" name="pw" pattern="^([a-zA-Z0-9~!@#$%^&*-_+|/])$" required>
+            <br />
+
+            전화번호 : <input type="text"name="phonenumber" pattern="^010-[0-9]{4}-[0-9]{4}$"  required>
+            <!-- oninput="isPhonenumberValidate(this)" -->
+            <br />
+
+            이름 : <input type="text"name="name" required>
+            <br />
+
+            성별 : 여<input type="radio"name="gender" value="woman" required>
+            남<input type="radio"name="gender" value="man" required>
+
+        </fieldset>
+        <br />
+        <input type="button" value="회원가입" >
+
+        <script>
+            // function isPhonenumberValidate(phoneRule){
+            //     let phoneRule = /^010-[0-9]{4}-[0-9]{4}$/
+                // let value =el.value
+                // if(/^010-[0-9]{4}-[0-9]{4}$/.test(phoneRule)){
+                //     document.getElementById("checkphoneRuleMessage").innerText = "OK";
+                // }else{
+                //     document.getElementById("checkphoneRuleMessage").innerText = "re-try";
+                // }
+
+                // if(regexphonenum.test(value)){
+                //     console.log("정규식 일치")
+                //     return true;
+                // }
+            //     return phoneRule.test(el)
+            // }
+        </script>
+
+    </form>
+</body>
+</html>

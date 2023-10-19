@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+    <h1>axios get 회원가입</h1>
+
+    <form name="register">
+      
+      ID : <input type="text" name="id" pattern="^[a-z0-9]{4,}$" required><br />
+      PW : <input type="password" name="pw" pattern="^[a-z0-9]{4,}$" required><br />
+
+
+
+      <fieldset>
+        <legend>성별</legend>
+        <input type="radio" name="gender" value="man">남자
+        <input type="radio" name="gender" value="woman">여자
+
+      </fieldset>
+
+      <fieldset>
+        <legend> 생년월일</legend>
+
+        <select name="year">
+          <% for(let i = 1900; i<=2100 ; i++){%>
+          <option value="<%=i %>"><%=i %></option>
+
+          <%} %>
+        </select>년
+
+        <select name="month">
+          <% for(let i = 1; i<=12 ; i++){%>
+          <option value="<%=i %>"><%=i %></option>월
+
+          <%} %>
+        </select>월
+
+        <select name="day">
+          <% for(let i = 1; i<=31 ; i++){%>
+          <option value="<%=i %>"><%=i %></option>일
+
+          <%} %>
+        </select>일
+
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend> 관심사</legend>
+        <input type="checkbox" name="interest" value="travel">여행
+        <input type="checkbox" name="interest" value="fashion">패션
+        <input type="checkbox" name="interest" value="food">음식
+        <input type="checkbox" name="interest" value="music">음악
+
+
+      </fieldset>
+
+      <br />
+      <div>
+        <button type="button" onclick="axiosGet()">회원가입</button>
+        <button type="button" onclick="axiosPost()">post 유효성검사 회원가입</button>
+
+      </div>
+      <!-- 아래 두 줄은 일발(동기) 폼 전송 할 때 type submit-->
+      <!-- <input type="submit" /> -->
+      <!-- <button type="submit">제출</button> -->
+    </form>
+    <h3 id="result"></h3>
+
+    <script>
+
+        function getData(){
+            const form = document.forms["register"];
+
+            const interest =[]
+            console.log(form.interest)
+          for (let inter of form.interest){
+            if(inter.checked) interest.push(inter.value);
+           }
+            // interest : form.interest.value
+            // check된걸 읽어서 걔만 나오도록?
+
+
+           const data = {
+            id : form.id.value,
+            pw : form.pw.value,
+            gender : form.gender.value,
+            year : form.year.value,
+            month : form.month.value,
+            day : form. day.value,
+            interest : interest
+            // interest : form.interest.value
+            // check된걸 읽어서 걔만 나오도록?
+           }
+           return data
+        }
+
+        function axiosGet(){
+            const data = getData();
+            if (!data) return;
+            
+            axios({
+                method: "GET",
+                url : "/axios",
+                params : data
+            }).then((res)=>{
+                console.log("res.data", res.data)
+                const{id} = res.data;
+                $("#result").html(`회원가입 되었습니다. ${id}님 환영합니다.`)
+            })
+        }
+// ----------------------------실습02-----------------------------------
+
+        async function axiosPost() {
+           // axios
+      // form data 를 객체 형태로 잘 만들어서 {id: "", pw: ""} 
+      // axios 를 이용하여 서버로 
+
+
+          console.log(document.form)
+          const form = document.forms["register"]
+
+          const data = {
+            id: form.id.value,
+            pw: form.pw.value
+          }
+
+        const res = await axios({
+          method: "POST",
+          url: "/axios",
+          data: data, // post일 경우 서버에 데이터를 보낼 때, data 키에 담아서 보내면 됨.
+        })
+
+        $("#result").html(res.data.result)
+        console.log(res.data)
+       
+      }
+
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동적 폼 전송 실습</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <form name="register">
+      <label for="username">이름</label>
+      <input type="text" name="username" id="username" required />
+      <br />
+
+      <fieldset>
+        <legend>성별</legend>
+        <input type="radio" name="gender" id="male" value="male" checked />
+        <label for="male">남자</label>
+        <input type="radio" name="gender" id="female" value="female" />
+        <label for="female">여자</label>
+      </fieldset>
+      <br />
+
+      <fieldset>
+        <legend>생년월일</legend>
+        <select name="birthYear" id="year">
+          <% for (let i = 0; i < 50; i++) { %>
+          <option value="<%= 2010 - i %>"><%= 2010 - i %></option>
+          <% } %>
+        </select>
+        <label for="year">년</label>
+        <select name="birthMonth" id="month">
+          <% for (let i = 1; i < 13; i++) { %>
+          <option value="<%= i %>"><%= i %></option>
+          <% } %>
+        </select>
+        <label for="month">월</label>
+        <select name="birthDay" id="day">
+          <% for (let i = 1; i < 31; i++) { %>
+          <option value="<%= i %>"><%= i %></option>
+          <% } %>
+        </select>
+        <label for="day">일</label>
+      </fieldset>
+      <br />
+
+      <fieldset>
+        <legend>관심사</legend>
+        <input type="checkbox" name="interest" id="travle" value="travle" checked />
+        <label for="travle">여행</label>
+        <input type="checkbox" name="interest" id="fashion" value="fashion" />
+        <label for="fashion">패션</label>
+        <input type="checkbox" name="interest" id="food" value="food" />
+        <label for="food">음식</label>
+      </fieldset>
+
+      <br />
+
+      <button type="button" onclick="clickRegister();">회원가입</button>
+    </form>
+    <div class="register-result"></div>
+
+
+    <h2>실습 2. 로그인</h2>
+    <form name="login">
+      <fieldset>
+        <legend>ID</legend>
+        <input type="text" name="userid" />
+      </fieldset>
+      <fieldset>
+        <legend>Password</legend>
+        <input type="password" name="password" />
+      </fieldset>
+
+      <button type="button" onclick="clickLogin()">로그인</button>
+    </form>
+    <div class="login-result"></div>
+
+    <script>
+      function clickRegister() {
+        // document.forms = {
+        //     register: <form></form>,
+        //     login: <form></form>,
+        // }
+        const form = document.forms["register"]
+        // console.log("gender", form.gender)
+        // console.log("interest", form.interest.value)
+        const interest = []
+
+        for (let input of form.interest) {
+          // input의 type이 radio이거나, checkbox인 경우 input의 속성으로 checked라는 게 존재
+          if (input.checked) interest.push(input.value)
+        }
+
+        console.log(interest)
+
+        const data = {
+          username: form.username.value,
+          gender: form.gender.value,
+          year: form.year.value,
+          month: form.month.value,
+          day: form.day.value,
+          interest: interest
+        }
+
+        axios({
+          method: "GET",
+          url: "/register",
+          params: data
+        }).then((res) => {
+          console.log(res.data)
+          const {
+            username
+          } = res.data
+          document.querySelector(".register-result").innerHTML = `${username}님 환영합니다.`
+        }).catch((err) => {
+          console.log(err)
+        })
+      }
+
+      function clickLogin() {
+        const form = document.forms["login"];
+        const data = {
+          userid: form.userid.value,
+          password: form.password.value
+        }
+
+        // console.log(data); // 1차적으로 데이터 잘 만들어졌는지 확인
+
+        axios({
+          method: "POST",
+          url: "/login",
+          data: data
+        }).then((res) => {
+          // { isSuccess: ??, msg : ?? }
+          const {
+            isSuccess,
+            msg
+          } = res.data
+          console.log(isSuccess) // 2. 응답 잘 오는지 확인
+          const element = document.querySelector(".login-result");
+          element.innerHTML = msg;
+
+          const color = isSuccess ? "blue" : "red";
+          element.style.color = color
+        })
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 파일도 있는 폼 전송</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+<body>
+    <h2> 회원가입 </h2>
+
+    <form name ="dynamic-upload">
+        <input type="text" name="id" placeholder="아이디" ><br />
+        <input type="password" name="pw" placeholder="비밀번호" ><br />
+        <input type="text" name="name" placeholder="이름" ><br />
+        <input type="text" name="age" placeholder="나이" ><br />
+        <input type="file" name="userfile"> <br /><br />
+        <button type="submit">회원가입</button>
+        <button type="button"  onclick="dynamicUpload()">(동적 폼 전송)회원가입</button>
+        
+        <div id="dynamic-upload-result"></div>
+
+        <div id="result-info"></div>
+        <!-- <div id ="result-id"></div>
+        <div id ="result-pw"></div>
+        <div id ="result-name"></div>
+        <div id ="result-age"></div> -->
+
+    </form>
+
+    <script>
+        function dynamicUpload(){
+            const form = document.forms["dynamic-upload"];
+
+            const formData = new FormData();
+            console.log("files : ", form.userfile.files)
+            formData.append("userfile", form.userfile.files[0]);
+            formData.append("id", form.id.value);
+            formData.append("pw", form.pw.value);
+            formData.append("name", form.name.value);
+            formData.append("age", form.age.value);
+
+
+    // FormData 클래스는 HTML 폼 요소의 데이터를 쉽게 수집하고 전송하기 위해 사용
+    // FormData 객체를 생성해서 데이터를 추가하면 이를 서버로 전송할 준비가 된 형태로 만들수 있음
+    // 주어진 코드에서 formData.append("title1", form.tilte1.value)은
+    // 폼태그 요소 내의 title 필드값을 FormData 객체에 추가하는거고 
+    // 이 추가된 데이터는 나중에 서버로 전송될 때 함께 전달됨
+
+    // //일반적으로 웹 에서 폼을 사용해 사용자입력을 받고
+    // 이를 서버로 제출하거나 비동기적 처리하는데
+    // FormData 클래스는 이러한 과정을 단순화하고 파일 업로드 같은 복잡한 데이터도 쉽게 처리할 수 있게해줌
+
+            axios({
+                method: "post",
+                url : "/upload/dynamic",
+                data : formData,
+                headers : {
+                    "Content-type" : "multipart/form-data"
+                }
+
+                //axios를 사용하여 파일을 업로드할 때 headers를 추가하는 이유
+                //서버에게 올바른 데이터 형식을 알려주기 위함
+                //파일을 전송하기 위한 HTTP 요청은 일반적으로 multipart/form-data형식으로 데이터를 인코딩
+                //이게 있어야 파일 업로드가능하게 함
+                // HTTP 요청 헤더에 Content-type: multipart/form-data를 명시함으로써,
+                // 서버는 해당 요청이 멀티파트 폼 데이터임을 인식
+            }).then((res)=>{
+                console.log(res.data);
+                const result = document.getElementById("dynamic-upload-result")
+                    result.innerHTML = `<img src="/${res.data.src}" width="150"/>`;
+
+                    const resultInfo = document.getElementById("result-info");
+                    const infoHTML = `
+                           <strong><p>${res.data.id}</strong>님 환영합니다!</p>
+                           <p>비밀번호 : ${res.data.pw}</p>
+                           <p>이름 : ${res.data.name}</p>
+                           <p>나이 : ${res.data.age}</p>`;
+
+                           resultInfo.innerHTML = infoHTML;
+                // const resultId = document.getElementById("result-id");
+                //     resultId.innerHTML = res.data.id +"님 환영합니다!";
+                // const resultPw = document.getElementById("result-pw");
+                //     resultPw.innerHTML = "비밀번호 : "+ res.data.pw;
+                // const resultName = document.getElementById("result-name");
+                //     resultName.innerHTML ="이름 : "+ res.data.name;
+                // const resultAge = document.getElementById("result-age");
+                //     resultAge.innerHTML = "나이 : "+ res.data.age;
+
+
+            })
+
+
+        }
+
+    </script>
+
+</body>
+</html>

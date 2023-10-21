@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>업로드 기본설정</h2>
+
+    <!-- 파일전송시 enctype : multipart/form-data로 변경  -->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type = "file" name = "userfile"> <br />
+        <input type = "text" name = "title"> <br />
+        <button type="submit"> 파일 업로드</button>
+    </form>
+
+    <h2> multer storage 이용한 설정</h2>
+    <form action="/upload/detail" method="post" enctype="multipart/form-data">
+        <input type="file" name="userfile" /> <br />
+        <input type="text" name="title" /> <br />
+        <button type="submit">파일 업로드</button>
+    </form>
+
+    <h2>multer 파일 여러개 업로드 (하나의 input 이용)</h2>
+
+    <form action="/upload/array" method="post" enctype="multipart/form-data">
+        <!-- multiple속성: 하나의 input에서 여러개의 파일 선택할 수 있게 해줌 -->
+        <input type="file" name="userfile" multiple /> <br />
+        <input type="text" name="title" /> <br />
+        <button type="submit">파일 업로드</button>
+    </form>
+
+    <h2>multer 파일 여러개 업로드 (여러개의 input 이용)</h2>
+    <form action="/upload/fields" method="post" enctype="multipart/form-data">
+        <!-- multiple속성: 하나의 input에서 여러개의 파일 선택할 수 있게 해줌 -->
+        <input type="file" name="userfile1" multiple /> <br />
+        <input type="text" name="title1" /> <br />
+
+        <input type="file" name="userfile2" multiple /> <br />
+        <input type="text" name="title12" /> <br />
+
+
+        <button type="submit">파일 업로드</button>
+    </form>
+
+
+
+</body>
+</html>

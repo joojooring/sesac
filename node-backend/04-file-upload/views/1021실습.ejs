@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 파일도 있는 폼 전송</title>
+</head>
+<body>
+    <h2> 회원가입 </h2>
+
+    <form action="/upload/single" method="post" enctype="multipart/form-data">
+        <input type="text" name="id" placeholder="아이디" ><br />
+        <input type="password" name="pw" placeholder="비밀번호" ><br />
+        <input type="text" name="name" placeholder="이름" ><br />
+        <input type="text" name="age" placeholder="나이" ><br />
+        <input type="file" name="userfile"> <br /><br />
+        <button type="submit">회원가입</button>
+    </form>
+</body>
+</html>

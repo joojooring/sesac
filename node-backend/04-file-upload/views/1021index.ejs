@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파일 업로드</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h2>일반 폼 전송의 가장 기본적인 설정</h2>
+    <!-- 일반 폼 전송을 이용해서 파일업로드하기 (동적x) -->
+
+    <!-- 파일업로드는 post로 전송해야됨 -->
+    <!-- enctype : application/x-www-form-urlencoded 이 기본값-->
+    <!-- 파일을 전송하려면 enctype인코딩타입 : multipart/form-data로 변경해야 됨  -->
+    <!-- fetch 동적 폼 전송의 content-type 지정하는게 일반 폼 전송에서의 enctype-->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="userfile" /> <br />
+        <input type="text" name="title" /> <br />
+        <button type="submit">파일 업로드</button>
+    </form>
+
+    <h2>multer storage를 이용한 설정</h2>
+
+    <form action="/upload/detail" method="post" enctype="multipart/form-data">
+        <input type="file" name="userfile" /> <br />
+        <input type="text" name="title" /> <br />
+        <button type="submit">파일 업로드</button>
+    </form>
+
+    <h2>multer 파일 여러개 업로드 (하나의 input 이용)</h2>
+
+    <form action="/upload/array" method="post" enctype="multipart/form-data">
+        <!-- multiple속성: 하나의 input에서 여러개의 파일 선택할 수 있게 해줌 -->
+        <input type="file" name="userfile" multiple /> <br />
+        <input type="text" name="title" /> <br />
+        <button type="submit">파일 업로드</button>
+    </form>
+
+    <h2>multer 파일 여러개 업로드 (여러개의 input 이용)</h2>
+    <form action="/upload/fields" method="post" enctype="multipart/form-data">
+        <!-- multiple속성: 하나의 input에서 여러개의 파일 선택할 수 있게 해줌 -->
+        <input type="file" name="userfile1" multiple /> <br />
+        <input type="text" name="title1" /> <br />
+
+        <input type="file" name="userfile2" multiple /> <br />
+        <input type="text" name="title12" /> <br />
+
+
+        <button type="submit">파일 업로드</button>
+    </form>
+
+    <h2>동적 폼 전송(axios)을 이용한 파일 업로드</h2>
+    <form name="dynamic-upload">        <!-- multiple속성: 하나의 input에서 여러개의 파일 선택할 수 있게 해줌 -->
+        <input type="file" name="userfile1" multiple /> <br />
+        <input type="text" name="title1" /> <br />
+
+        <button type="button" onclick="dynamicUpload()">동적업로드</button>
+    </form>
+    <div id ="dynamic-upload-result"></div>
+    <!-- <img src=""> -->
+
+
+    <script>
+        function dynamicUpload(){
+            const form = document.forms["dynamic-upload"];
+
+            const formData = new FormData();
+            formData.append("title1", form.title1.value)
+            // type이 file인 input태그를 선택해서 files에 접근하면 file이 있음
+            // console.log("value",form.userfile1.value)
+            console.log("files",form.userfile1.files)
+            formData.append("userfile1",form.userfile1.files[0])
+
+            // formDate.append("userfile", form.userfile.files)
+
+            //아래 방식은 이미지 데이터를 정상적으로 처리할 수 없음
+            // const data ={
+            //     title : form.title.value,
+            //     // 파일선택할때는  userfile : form.userfile.value 가 안됨
+            // }
+            axios({
+                method: "post",
+                url : "/upload/dynamic",
+                data : formData,
+                headers: {
+                    "Content-type" : "multipart/form-data"
+                }
+            }).then((res)=>{
+                console.log(res.data)
+                const result = document.getElementById("dynamic-upload-result")
+                    result.innerHTML = `<img src="/${res.data.src}" width="150"/>`
+            })
+        }
+    </script>
+</body>
+</html>

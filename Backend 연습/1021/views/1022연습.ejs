@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h2>동적 폼 전송(axios)을 이용한 파일 업로드</h2>
+    <form name="dynamic-upload">
+      <input type="file" name="userfile" />
+      <br />
+      <input type="text" name="title" />
+      <br />
+      <button type="button" onclick="dynamicUpload()">업로드</button>
+    </form>
+    <div id="dynamic-upload-result">
+
+    </div>
+    <!-- <img src=""> -->
+
+
+    <script>
+        function dynamicUpload(){
+            const form = document.forms["dynamic-upload"];
+
+            const formData = new FormData();
+            formData.append("title", form.title.value);
+            // type이 file인 input태그를 선택해서 files에 접근하면 file이 있음
+            // console.log("value",form.userfile1.value)
+            // console.log("files",form.userfile.files)
+            formData.append("userfile", form.userfile.files[0])
+            // formDate.append("userfile", form.userfile.files)
+
+            //아래 방식은 이미지 데이터를 정상적으로 처리할 수 없음
+            // const data ={
+            //     title : form.title.value,
+            //     // 파일선택할때는  userfile : form.userfile.value 가 안됨
+            // }
+            axios({
+                method: "post",
+                url : "/upload/dynamic",
+                data : formData,
+                headers: {
+                    "Content-type" : "multipart/form-data"
+                }
+            }).then((res)=>{
+                console.log(res.data)
+                const result = document.getElementById("dynamic-upload-result")
+                    result.innerHTML = 
+                    `<p>이름 : ${form.title.value}</p>
+                    <img src="/${res.data.src}" width="150" >` 
+            })
+        }
+    </script>
+
+    </body>
+
+</html>

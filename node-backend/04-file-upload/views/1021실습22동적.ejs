@@ -35,6 +35,8 @@
 
             const formData = new FormData();
             console.log("files : ", form.userfile.files)
+            // type이 file인 input태그를 선택해서 files에 접근하면 file이 있음
+
             formData.append("userfile", form.userfile.files[0]);
             formData.append("id", form.id.value);
             formData.append("pw", form.pw.value);

@@ -12,6 +12,9 @@ const PORT = 8010;
 // 클라이언트가 uploads 폴더에 저장한 이미지 파일로 접근할 수 있도록 미들웨어 작성필요
 // dirname : 절대경로로 접근시켜줌
 
+app.set("view engine", "ejs");
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/uploads",express.static(__dirname+ "/uploads"));
 
 
@@ -55,9 +58,6 @@ const uploadDetail = multer({
 // limits 안에 fileSize(파일의 최대 크기)가 옴
 
 
-app.set("view engine", "ejs");
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 app.get("/", function (req, res) {
   res.render("1021index");

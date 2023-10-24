@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", function (req, res) {
-  res.render("index");
+  res.render("1019실습정답");
 });
 
 app.get("/register", function (req, res) {

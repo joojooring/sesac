@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ajax 동적폼전송 실습</title>
+    <!-- 아래는 ajax 사용위해 -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- 아래는 axios 사용위해 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
+
     <style>
         body {
             display: flex;
@@ -33,7 +37,10 @@
         <br />
         
         <div>
-            <button type="button" onclick="ajaxGet()">회원가입</button>
+            <button type="button" onclick="ajaxGet()">회원가입</button> <br /><br />
+            <button type="button" onclick="ajaxPost()">ajax post 전송</button><br /> <br />
+            <button type="button" onclick="axiosGet()">axios get 전송</button><br /> <br />
+
         </div>
     </form>
 
@@ -54,7 +61,7 @@
         
         function ajaxGet(){
             const form = document.forms["register"] ;
-            
+
             if (!form.checkValidity()) { // 사용자가 유효성검사를 통과하지 못한다면 다음 함수를 실행시켜줘
                     form.reportValidity(); //사용자에게 어떤 곳이 유효성검사를 통과하지 못했는지 report해줌
                     return false
@@ -69,12 +76,47 @@
                 success : function(result){
                         console.log(result);
                         const {name} = result;
-                        $("#result").html(`회원가입 완료! <span style="color: blue">${name}</span>님 환영합니다.`)
+                        $("#result").html(`회원가입 완료! <span style="color: blue">${result.name}</span>님 환영합니다.`)
                 }
             })
 
         }
 
+        function ajaxPost(){
+            const data = getData();
+            if (!data) return;
+
+            $.ajax({
+                type : "post",
+                url : "/ajax",
+                data : data,
+                success : function(result){
+                    console.log(result);
+                    $("#result").html(`ajax post로 회원가입 성공! <span style="color : blue">${result.name}</span>님 환영해요!`)
+                }
+            })
+        }
+
+        function axiosGet(){
+            const form = document.forms["register"]
+            if (!form.checkValidity()) { // 사용자가 유효성검사를 통과하지 못한다면 다음 함수를 실행시켜줘
+                    form.reportValidity(); //사용자에게 어떤 곳이 유효성검사를 통과하지 못했는지 report해줌
+                    return false
+                }
+
+            const data = getData();
+            if(!data) return ;
+
+            axios({
+                method : "GET",
+                url : "/axios",
+                params : data
+            }).then((res)=>{
+                console.log("res.data : ",res.data);
+                const {name} = res.data;
+                $("#result").html(`axios get성공! <span style="color : blue">${name}</span>님 환영해요!`)
+            })
+        }
     </script>
 </body>
 </html>

@@ -15,7 +15,14 @@ app.get ("/", function(req,res){
 app.get ("/ajax", function(req,res){
     res.send(req.query) ;
 })
+app.post ("/ajax", function(req,res){
+    res.send(req.body);
+})
+// 
 
+app.get("/axios", function(req,res){
+    res.send(req.query);
+})
 app.listen(PORT, function(){
     console.log(`Server Open : ${PORT}`);
 })

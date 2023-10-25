@@ -37,6 +37,7 @@
 
         if (!form.checkValidity()) { // checkValidity 폼의 유효성 검사를 해서 boolean 값 반환
           form.reportValidity(); // reportValidity: 유효성 검사를 통과하지 못 한 input에 대해 report
+          // 사용자에게 어떤 필드가 잘못되었는지 보여줌
           return false;
         }
 

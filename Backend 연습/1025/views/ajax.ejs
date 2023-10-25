@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax 동적폼전송 실습</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body style="background-color: rgb(170, 222, 243);">
+    <form name="register">
+        <h2 style="color : rgb(47, 47, 45)" >회원가입</h2>
+        <input type="text" name="id" placeholder="ID를 입력하세요." 
+                pattern="^[a-zA-Z0-9]{4,}$"
+                title="대소문자,숫자를 이용해 4글자 이상"
+                required />
+        <br />
+        <input type="password" name = "pw" placeholder="비밀번호를 입력하세요."
+                pattern="^[a-zA-Z0-9]{4,}$"
+                title="대소문자,숫자를 이용해 4글자 이상"
+                required />
+        <br />
+        <input type="text" name="name" placeholder="이름을 입력하세요."
+                required />
+        <br />
+        <br />
+        
+        <div>
+            <button type="button" onclick="ajaxGet()">회원가입</button>
+        </div>
+    </form>
+
+    <h3 id="result"></h3>
+
+    <script>
+        
+        function getData(){
+            const form = document.forms["register"] ;
+            const data = {
+                id : form.id.value,
+                pw : form.pw.value,
+                name : form.name.value
+            };
+            return data;
+        };
+        
+        
+        function ajaxGet(){
+            const form = document.forms["register"] ;
+            
+            if (!form.checkValidity()) { // 사용자가 유효성검사를 통과하지 못한다면 다음 함수를 실행시켜줘
+                    form.reportValidity(); //사용자에게 어떤 곳이 유효성검사를 통과하지 못했는지 report해줌
+                    return false
+                }
+            
+            const data = getData();
+
+            $.ajax({
+                type : "GET",
+                url : "/ajax",
+                data : data,
+                success : function(result){
+                        console.log(result);
+                        const {name} = result;
+                        $("#result").html(`회원가입 완료! <span style="color: blue">${name}</span>님 환영합니다.`)
+                }
+            })
+
+        }
+
+    </script>
+</body>
+</html>

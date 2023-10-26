@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동적 폼 전송 실습</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+
+    <h2>실습 1. 로그인</h2>
+    <form name="login">
+      <fieldset>
+        <legend>ID</legend>
+        <input type="text" name="userid" />
+      </fieldset>
+      <fieldset>
+        <legend>Password</legend>
+        <input type="password" name="password" />
+      </fieldset>
+
+      <button type="button" onclick="clickLogin()">로그인</button>
+
+    </form>
+    <div class="login-result"></div>
+
+
+    <h2>실습 2. mvc로그인</h2>
+    <form name="mvclogin">
+      <fieldset>
+        <legend>ID</legend>
+        <input type="text" name="userid" />
+      </fieldset>
+      <fieldset>
+        <legend>Password</legend>
+        <input type="password" name="password" />
+      </fieldset>
+      <fieldset>
+        <legend>Name</legend>
+        <input type="text" name="name" />
+      </fieldset>
+      <button type="button" onclick="clickArr()">로그인</button>
+
+    </form>
+    <div class="login-result2"></div>
+
+    <script>
+
+
+      function clickLogin() {
+        const form = document.forms["login"];
+        const data = {
+          userid: form.userid.value,
+          password: form.password.value
+        }
+
+        // console.log(data); // 1차적으로 데이터 잘 만들어졌는지 확인
+
+        axios({
+          method: "POST",
+          url: "/user/login",
+          data: data
+        }).then((res) => {
+          // { isSuccess: ??, msg : ?? }
+          const {
+            isSuccess,
+            msg
+          } = res.data
+          console.log(isSuccess) // 2. 응답 잘 오는지 확인
+          const element = document.querySelector(".login-result");
+          element.innerHTML = msg;
+
+          const color = isSuccess ? "blue" : "red";
+          element.style.color = color
+        })
+      }
+
+      function clickArr() {
+        const form = document.forms["mvclogin"];
+        const data = {
+          userid: form.userid.value,
+          password: form.password.value,
+          name : form.name.value
+        }
+
+        axios({
+          method: "POST",
+          url: "/user/mvclogin",
+          data: data
+        }).then((res) => {
+          // { isSuccess: ??, msg : ?? }
+          const {
+            isSuccess,
+            msg
+          } = res.data
+          console.log(isSuccess) // 2. 응답 잘 오는지 확인
+          const element = document.querySelector(".login-result2");
+          element.innerHTML = msg;
+
+          const color = isSuccess ? "blue" : "red";
+          element.style.color = color
+        })
+      }
+
+
+
+      
+    </script>
+  </body>
+</html>

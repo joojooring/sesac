@@ -11,7 +11,7 @@ function Visitor(Sequelize, DataTypes) {
             type : DataTypes.INTEGER,
             allowNull : false , //not null 일때는 false, true가 기본 값
             primaryKey : true, //false가 기본 값
-            autoIncrement : true //flase가 기본값
+            autoIncrement : true //false 기본값
         } ,
         username : { //varchar(10) not null
             type : DataTypes.STRING(10),

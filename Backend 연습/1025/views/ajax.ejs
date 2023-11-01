@@ -25,6 +25,19 @@
                 pattern="^[a-zA-Z0-9]{4,}$"
                 title="대소문자,숫자를 이용해 4글자 이상"
                 required />
+    <!-- input 태그의 pattern, minlength, required 이 속성은 form의 "submit" 이 일어날 때 동작함. -->
+    <!--  동적 폼 전송은 form 의 "submit" 을 이용하는 게 아님. -->
+    <!-- 따라서, javascript 코드 내에서 폼 유효성 검사를 하는 코드를 작성해야함.
+     방법 1) 
+     regex(Regular Expression :정규표현식)
+     const regex = /^[a-z0-9]{5,}$/
+     regex.test(form.id.value)
+     //regex.test(form.id.value) 코드는 form에서 id 값(form.id.value)이 위에서 설명한 정규표현식에 부합하는지를 검사하는 코드
+      만약 id 값이 위 조건에 맞으면 true를 반환하고, 그렇지 않으면 false를 반환
+
+     방법 2)
+     form.checkVaildity()와 form.reportVaildity() 를 이용해서 input에 작성된 유효성을 검증 -->
+
         <br />
         <input type="password" name = "pw" placeholder="비밀번호를 입력하세요."
                 pattern="^[a-zA-Z0-9]{4,}$"
@@ -40,6 +53,7 @@
             <button type="button" onclick="ajaxGet()">회원가입</button> <br /><br />
             <button type="button" onclick="ajaxPost()">ajax post 전송</button><br /> <br />
             <button type="button" onclick="axiosGet()">axios get 전송</button><br /> <br />
+            <button type="button" onclick="axiosPost()">axios post 전송</button><br /> <br />
 
         </div>
     </form>

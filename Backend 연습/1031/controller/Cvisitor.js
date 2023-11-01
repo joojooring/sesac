@@ -22,14 +22,21 @@ exports.visitor = (req, res) => {
 };
 
 // POST /visitor => 방명록 insert
-exports.postVisitor = (req, res) => {
+exports.postVisitor = async (req, res) => {
   
   const data ={
     username : req.body.username,
     comment : req.body.comment
   }
-  
-  Visitor.create(data).
+  const createVisitor  = await Visitor.create(data)
+  res.send(createVisitor);
+  // Visitor.create(data).then((result)=>{
+  //   console.log("create result : ", result);
+  //   res.send(result)
+  // }).catch((err)=>{
+  //   console.log(err);
+  //   res.status(500).send("오류발생");
+  // })
 };
 
 // DELETE /visitor/:id => 방명록 삭제

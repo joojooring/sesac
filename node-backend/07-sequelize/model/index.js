@@ -27,8 +27,8 @@ db.Sequelize = Sequelize;
 
 
 
-// const Visitor = require("./Visitor2")
-// db.Visitor = Visitor(sequelize, Sequelize)
+// const Visitor2 = require("./Visitor2")
+// db.Visitor2 = Visitor2(sequelize, Sequelize)
 // 위에랑 밑에랑 같은 코드임
 db.Visitor2 = require("./Visitor2")(sequelize, Sequelize);
 // db.Visitor에는 sequelize로 visitor테이블을 정의한 객체가 담겨있음

@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <title>로그인</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300&amp;display=swap'>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="/static/css/user.css">
+
+    <script>
+      function login() {
+        // api 명서서에 post 요청으로 user/signin 에 로그인을 하면 되고
+        // 담아서 보내는게 {userid, pw}
+        // 응답으로는 {result(boolean) : id? } 각각의 값이 어떤식으로 적힐지
+        const form = document.forms["form-login"];
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          console.log("reportValidity");
+
+          return false;
+        }
+        const data = {
+          userid: form.userid.value,
+          pw: form.pw.value
+        };
+        axios({
+          method: 'post',
+          url: '/user/login',
+          data: data
+        }).then((res) => {
+          if (res.data) {
+            alert("로그인 성공");
+
+            // 로그인 성공을 하면 회원정보 페이지로 가게끔(일반폼전송으로 - action이랑 method가 걸려있음)
+
+            const formInfo = document.forms["form-info"];
+            formInfo.id.value = res.data.id;
+            formInfo.submit();
+            
+          } else {
+            alert("로그인 실패");
+            // form.reset();
+          }
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div class="scene flex">
+      <section class="card">
+        <h1 class="card__heading">
+          <span> Welcome</span>
+        </h1>
+        <form name="form-info" action="/user/profile" method="POST">
+          <input type="hidden" name="id">
+        </form>
+        <form class="card__form" name="form-login">
+          <label for="ID" class="visually">ID :</label>
+          <div><input id="ID" class="card__input" type="text" name="userid" required /></div>
+          <label for="password" class="visually">Password :</label>
+          <input id="password" class="card__input" type="password" name="pw" required />
+          <button class="card__button" type="button" onclick="login();">
+            <span>Login</span>
+          </button>
+        </form>
+
+        <a href="/user/signup">Register</a>
+        <a href="/user/profile">Profile</a>
+
+      </section>
+    </div>
+  </body>
+</html>

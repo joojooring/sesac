@@ -9,6 +9,10 @@ app.use(express.urlencoded({ extended: true }));
 const router = require("./routes");
 app.use("/", router);
 
+const userRouter = require("./routes/user")
+app.use("/user", userRouter);
+
+
 app.get("*", function (req, res) {
   res.render("404");
 });

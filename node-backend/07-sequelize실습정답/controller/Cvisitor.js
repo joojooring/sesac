@@ -1,4 +1,4 @@
-const { Visitor } = require('../model')
+const { Visitor } = require('../model/Visitor')
 
 exports.home = (req, res) => {
   res.render('index')

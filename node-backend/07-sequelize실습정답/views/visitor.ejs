@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>방명록</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <form name="form-visitor">
+      <fieldset>
+        <legend>방명록 등록</legend>
+        <input type="text" name="username" placeholder="이름" />
+        <br />
+        <input type="text" name="comment" placeholder="내용" />
+        <br />
+
+        <div class="btn-group">
+          <button type="button" onclick="addVisitor()">등록</button>
+        </div>
+      </fieldset>
+    </form>
+    <div>
+      <table border="1" cellspacing="0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>작성자</th>
+            <th>방명록</th>
+            <th>수정</th>
+            <th>삭제</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let i = 0; i< data.length; i++) { %>
+          <tr id="tr_<%=data[i].id%>">
+            <td><%= data[i].id %></td>
+            <td><%= data[i].username %></td>
+            <td><%= data[i].comment %></td>
+            <td><button type="button" onclick="updateVisitor('<%= data[i].id %>')">수정</button></td>
+            <td><button type="button" onclick="deleteVisitor('<%= data[i].id %>')">삭제</button></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+
+    <script>
+      function addVisitor() {
+        // 서버에 보낼 데이터를 만들어야 함.
+        const form = document.forms["form-visitor"]
+        const data = {
+          username: form.username.value,
+          comment: form.comment.value
+        }
+
+        // axios를 이용해 데이터를 서버로 전송.
+        axios({
+          method: 'post',
+          url: '/visitor',
+          data: data
+        }).then((res) => {
+          // axios 응답을 받으면, table에 행 추가 (동적으로)
+          const {
+            id,
+            username,
+            comment
+          } = res.data
+
+          $("tbody").append(`<tr id="tr_${id}">
+            <td>${id}</td>
+            <td>${username}</td>
+            <td>${comment}</td>
+            <td><button type="button" onclick="updateVisitor(${id})">수정</button></td>
+            <td><button type="button" onclick="deleteVisitor(${id})">삭제</button></td>
+          </tr>`)
+        })
+
+      }
+
+
+      function deleteVisitor(id, TrElement) {
+        // id를 이용해서 url을 완성, 요청 보내기
+        axios({
+          method: 'delete',
+          url: `/visitor/${id}`
+        }).then((res) => {
+          console.log(res.data);
+
+          if (res.data.result) {
+            // 삭제할 td 태그가 필요함.
+            // $(TrElement).remove();
+            $(`#tr_${id}`).remove()
+          } else {
+            alert("존재하지 않는 방명록 입니다.")
+          }
+        })
+      }
+
+      function updateVisitor(id) {
+        axios({
+          method: 'get',
+          url: `/visitor/${id}`,
+        }).then((res) => {
+          const {
+            username,
+            comment
+          } = res.data
+
+          const form = document.forms['form-visitor'];
+          form.username.value = username;
+          form.comment.value = comment;
+
+          // [변경], [취소] 버튼 보이기
+          $(".btn-group").html(`
+            <button type='button' onclick='editDo(${id});'>변경</button>
+            <button type='button' onclick='editCancel();'>취소</button>
+          `)
+        });
+      }
+
+      function editDo(id) {
+        const form = document.forms['form-visitor'];
+
+        axios({
+            method: 'patch',
+            url: '/visitor',
+            data: {
+              id: id,
+              username: form.username.value,
+              comment: form.comment.value,
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            return res.data;
+          })
+          .then((data) => {
+            console.log($(`#tr_${id}`).children('td'));
+            $(`#tr_${id}`).children('td:eq(1)').text(form.username.value);
+            $(`#tr_${id}`).children('td:eq(2)').text(form.comment.value);
+
+            // 입력창 초기화
+            editCancel();
+          });
+      }
+
+      function editCancel() {
+        // (1) input 초기화
+        const form = document.forms['form-visitor'];
+        form.username.value = '';
+        form.comment.value = '';
+
+        // (2) [등록] 버튼 보이기
+        $(".btn-group").html(`<button type='button' onclick='addVisitor();'>등록</button>`);
+      }
+    </script>
+  </body>
+</html>

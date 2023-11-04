@@ -1,4 +1,4 @@
-const { User } = require('../model/User')
+const { User } = require('../model')
 
 exports.index = (req, res) => {
   res.render('user')
@@ -11,6 +11,9 @@ exports.post_signup = (req, res) => {
   User.create(req.body).then((result) => {
     console.log('User create:', result)
     res.send({ result: true })
+  }).catch((err)=>{
+    console.log("User create err : ", err)
+    res.send({result : false})
   })
 
   // User.post_signup(req.body, function () {
@@ -53,6 +56,10 @@ exports.profile = (req, res) => {
   //   else res.redirect('/user/signin')
   // })
 }
+
+
+// if문에서 검사할떄는 보통  1,0 / ture, false
+// 자바스크립트에선 null, undefined => false를 의미!
 
 exports.profile_edit = (req, res) => {
   User.update(req.body, {

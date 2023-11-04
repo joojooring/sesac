@@ -1,4 +1,5 @@
-const { Visitor } = require('../model/Visitor')
+const { Visitor } = require('../model')
+// model까지하면 index로 접근
 
 exports.home = (req, res) => {
   res.render('index')

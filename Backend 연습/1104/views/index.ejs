@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠키안내</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <button onclick="openPopup()">안내</button>
+
+    <script>
+        let popupWindow;
+
+        function openPopup() {
+        popupWindow = window.open("", "popupWindow", "width=300,height=200");
+  
+        const content = `
+        <h2>인터넷익스플로러(IE) 지원 종료 안내</h2>
+        <span>인터넷익스플로러(IE) 서비스 지원이</span>
+        <strong><u> 2022년 6월 15일 종료</u></strong>
+        <span>됨에 따라 안전하고 원활한 LH 청약센터 이용을 위해 크롬,사파리,엣지 등의 웹브라우저를 이용해주세요.</span>
+        <label>
+            <br /><br />
+        <input type="checkbox" id="checkbox">오늘그만보기
+        </label>
+        `;
+        
+        $(document).ready(function() {
+              $("#checkbox").change(function() {
+                if ($(this).is(":checked")) {
+                  // 체크박스가 선택되었을 때 서버로 쿠키 생성 요청 보내기
+                  $.get("/set", function(data) {
+                    console.log(data);
+                  });
+                }
+              });
+            });
+
+  popupWindow.document.write(content);
+  popupWindow.document.close();
+
+  // 체크박스 클릭 이벤트 리스너 등록
+  popupWindow.document.getElementById("checkbox").addEventListener("change", closePopup);
+}
+
+function closePopup() {
+  if (popupWindow) {
+    const popupCookie = Cookies.get("popup")
+
+    popupWindow.close();
+    popupWindow = null;
+  }
+}
+
+
+// const myModal = new bootstrap.Modal('#myModal')
+// myModal.show();
+    </script>
+
+    <!-- <div>
+        <script>
+            alert("인터넷 익스플로러(IE) 지원 종료 안내")
+        </script> -->
+    </div>
+</body>
+</html>

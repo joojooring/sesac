@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>세션 실습</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        background-color: rgb(32, 32, 32);
+        color: white;
+        padding: 20px;
+      }
+
+      nav>a {
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div>CODINGOn</div>
+      <% if (isLogin) { %>
+      <a href="/logout"> 로그아웃</a>
+      <% } else { %>
+      <a href="/login"> 로그인</a>
+      <% }  %>
+    </nav>
+
+    <h3>여기는 Home 입니다!</h3>
+
+    <% if (isLogin) { %>
+    <div><%=user%>님 환영합니다.</div>
+    <% } else { %>
+    <div>로그인을 하지 않으셨군요! 로그인을 진행해보세요!</div>
+    <% }  %>
+
+  </body>
+</html>

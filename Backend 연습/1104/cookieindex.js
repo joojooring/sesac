@@ -8,23 +8,25 @@ app.use(cookieParser()); // 이 코드가 쿠키를 해석하고 사용할 수 �
 
 
 app.get("/", (req,res)=>{
-    const noPopup = req.cookies.popup;
-    res.render("popup", {noPopup : noPopup})
+    const closePopup = req.cookies.popup;
+    res.render("popup", {closePopup : closePopup})
 })
-// req.cookies.popup 값을 noPopup 변수에 할당합니다.
+// req.cookies.popup 값을 closePopup 변수에 할당합니다.
 // req.cookies는 요청에 포함된 쿠키를 나타내는 객체입니다.
 // popup은 쿠키의 이름이며, 해당 이름으로 저장된 쿠키의 값을 가져옵니다.
-// 가져온 값은 noPopup 변수에 할당됩니다.
+// 가져온 값은 closePopup 변수에 할당됩니다.
 // popup 템플릿을 렌더링합니다.
-// res.render("popup", { noPopup: noPopup }) 코드를 사용하여 popup 템플릿을 렌더링합니다.
-// { noPopup: noPopup }는 템플릿에 전달되는 데이터입니다.
-// noPopup 변수의 값을 popup 템플릿에서 사용할 수 있도록 전달됩니다.
+// res.render("popup", { closePopup: closePopup }) 코드를 사용하여 popup 템플릿을 렌더링합니다.
+// { closePopup: closePopup }는 템플릿에 전달되는 데이터입니다.
+// closePopup 변수의 값을 popup 템플릿에서 사용할 수 있도록 전달됩니다.
 // 이 코드의 목적은 다음과 같습니다:
 
-// 클라이언트에서 서버로 GET 요청이 오면, 서버는 쿠키에서 popup 값을 가져와서 noPopup 변수에 저장합니다.
-// 그 후, 서버는 popup 템플릿을 렌더링하고, noPopup 값을 템플릿에 전달합니다.
-// 이를 통해 popup 템플릿에서는 noPopup 값에 따라 팝업 창을 제어할 수 있습니다.
-// 예를 들어, noPopup 값이 true이면 팝업 창을 표시하지 않고, false이면 팝업 창을 표시할 수 있습니다.
+// 클라이언트에서 서버로 GET 요청이 오면, 서버는 쿠키에서 popup 값을 가져와서 closePopup 변수에 저장합니다.
+// 팝업창을 끄는 변수선언
+// 그 후, 서버는 popup 템플릿을 렌더링하고, closePopup 값을 템플릿에 전달합니다.
+// 팝업창을 끄는 그 값을 render할 템플릿에 전달
+// 이를 통해 popup 템플릿에서는 closePopup 값에 따라 팝업 창을 제어할 수 있습니다.
+// 예를 들어, closePopup 값이 true이면 팝업 창을 표시하지 않고, false이면 팝업 창을 표시할 수 있습니다.
 // 따라서, 위의 코드는 클라이언트의 쿠키에 따라 팝업 창을 제어하는 기능을 구현한 것입니다.
 
 

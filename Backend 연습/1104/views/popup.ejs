@@ -32,9 +32,10 @@
     <div id="result"></div>
 
     <script>
-        console.log("<%=noPopup%>")
+        console.log("<%=closePopup%>")
       const myModal = new bootstrap.Modal('#popup')
-      if("<%=noPopup%>" !== "yes") 
+      if("<%=closePopup%>" !== "yes") 
+      // 팝업창을 끄는게 아니면
       myModal.show()
 
       // myModal.show()

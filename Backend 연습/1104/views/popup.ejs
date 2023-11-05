@@ -21,7 +21,7 @@
             ...
           </div>
           <div class="modal-footer">
-            <input type="checkbox" id="no-pupup" /> <label for="no-pupup">오늘 그만보기</label>
+            <input type="checkbox" id="no-popup" /> <label for="no-popup">오늘 그만보기</label>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="noPupup();">Close</button>
           </div>
         </div>
@@ -36,14 +36,14 @@
       myModal.show()
 
       function noPupup() {
-        const checkbox = document.getElementById("no-pupup");
+        const checkbox = document.getElementById("no-popup");
         if(checkbox.checked){
             axios({
                 method : "post",
                 url : "/setCookie"
             }).then((res)=>{
                 console.log(res.data);
-                // myModal.hide();
+                myModal.hide();
             })
         }
       }

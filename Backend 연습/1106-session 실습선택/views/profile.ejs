@@ -1,0 +1,104 @@
+<html>
+  <head>
+    <title>회원가입</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300&amp;display=swap'>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="/static/css/user.css">
+
+    <script>
+      function profileEdit() {
+        var form = document.getElementById("form_profile");
+        if (!form.checkValidity()) {
+          form.reportValidity();
+
+          return false;
+        }
+        let user = {
+          userid: form.userid.value,
+          pw: form.pw.value,
+          name: form.name.value
+        };
+        axios({
+          method: 'patch',
+          url: `/user/profile/edit/${form.id.value}`,
+          data: user
+        }).then((res) => {
+          if (res.data.result) {
+            alert("회원정보 수정 성공");
+          } else {
+            alert("알 수 없는 문제가 발생했습니다.");
+          }
+        }).catch((err) => {
+          alert("알 수 없는 문제가 발생했습니다.");
+        });
+      }
+
+      function profileDelete() {
+        var form = document.getElementById("form_profile");
+        if (!form.checkValidity()) {
+          form.reportValidity();
+
+          return false;
+        }
+
+        axios({
+          method: 'delete',
+          url: `/user/profile/delete/${form.id.value}`,
+        }).then((res) => {
+          if (res.data.result) {
+            alert("회원 탈퇴 성공");
+            document.location.href = "/user/signin";
+          } else {
+            alert("알 수 없는 문제가 발생했습니다.");
+          }
+        });
+      }
+
+      function logout() {
+        axios({
+          method: 'delete',
+          url: `/user/logout`,
+        }).then((res) => {
+          if (res.data.result) {
+            alert("로그아웃 성공");
+            document.location.href = "/user/signin";
+          } else {
+            alert("알 수 없는 문제가 발생했습니다.");
+          }
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div class="scene flex">
+      <section class="card">
+        <h1 class="card__heading">
+          <span> Welcome</span>
+        </h1>
+        <form class="card__form" id="form_profile">
+          <input type="hidden" name="id" value="<%=data.id%>" disabled />
+          <label for="userid" class="visually">ID :</label>
+          <div><input id="userid" class="card__input" type="text" name="userid" value="<%=data.userid%>" readonly /></div>
+          <label for="password" class="visually">Password :</label>
+          <input id="password" class="card__input" type="password" name="pw" value="<%=data.pw%>" required />
+          <label for="name" class="visually">Name :</label>
+          <input id="name" class="card__input" type="text" name="name" value="<%=data.name%>" required />
+          <button class="card__button" type="button" onclick="profileEdit();">
+            <span>Edit</span>
+          </button>
+          <button class="card__button" type="button" onclick="profileDelete();">
+            <span>Delete</span>
+          </button>
+          <button class="card__button" type="button" onclick="logout();">
+            <span>Logout</span>
+          </button>
+        </form>
+      </section>
+    </div>
+  </body>
+</html>

@@ -7,4 +7,5 @@ Sesac
 이건 새로운 파일이고 다시 올려볼거야
 
 
-- git branch test
+- git branch test (ex: 로그인 ui 완료)
+- git branch test (ex: 로그인 api 완료)

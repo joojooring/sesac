@@ -11,7 +11,7 @@ app.use( express.json() );
 // app.use('/user', router);
 
 app.get('/', (req,res) =>{
-    res.render("maptest_address");
+    res.render("mylocation_nearby");
 });
 
 app.get('*', (req,res) =>{

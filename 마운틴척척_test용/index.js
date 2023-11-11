@@ -11,7 +11,7 @@ app.use( express.json() );
 // app.use('/user', router);
 
 app.get('/', (req,res) =>{
-    res.render("mylocation_yellowmark_onclick");
+    res.render("marker_clickevent");
 });
 
 app.get('*', (req,res) =>{

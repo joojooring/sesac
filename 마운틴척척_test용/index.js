@@ -12,6 +12,7 @@ app.use( express.json() );
 
 app.get('/', (req,res) =>{
     res.render("소희님_map완료");
+
 });
 
 app.get('*', (req,res) =>{

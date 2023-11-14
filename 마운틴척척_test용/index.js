@@ -11,7 +11,7 @@ app.use( express.json() );
 // app.use('/user', router);
 
 app.get('/', (req,res) =>{
-    res.render("marker_clickevent");
+    res.render("소희님_map완료");
 });
 
 app.get('*', (req,res) =>{

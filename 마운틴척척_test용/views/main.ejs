@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>main page</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <!-- Bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="../static/main.css">
+</head>
+
+<body>
+  <!-- Bootstrap CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+
+  <a href="/main" style="color: black;">
+    <h1>My Place</h1>
+  </a>
+
+  <!-- nav바 -->
+  <nav class="navbar navbar-expand-sm py-3 bg-light bg-dark navbar-dark " style="max-width: 1200px; margin: 0 auto;">
+    <div class="container">
+      <li class="nav-item">
+        <a class="navbar-brand" href="#">내 위치 찾기</a>
+      </li>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="d-flex justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/main">홈</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">카테고리</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">찜</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./user/signin">로그인</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- main 이미지 -->
+  <div class="main-container">
+    <img
+      src="https://images.unsplash.com/photo-1580687581486-9d5aa7b902b3?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="전시회 이미지">
+    <div class="main-text">
+      <h2>연말연시는 MyPlace와 함께</h2>
+      <h4>내 주변 전시회를 찾아보세요</h4><br />
+      <a href="">주변 장소 보러 가기</a>
+
+      <!-- 이미지 4개 -->
+      <div class="main-select">
+        <div class="row">
+          <div class="col-4">
+            <a href="">
+              <img src="../static/img/exhibition.jpg" alt="이미지 1">
+            </a>
+            <p>전시회</p>
+          </div>
+          <div class="col-4">
+            <a href="">
+              <img src="../static/img/popup.jpg" alt="이미지 2">
+            </a>
+            <p>팝업스토어</p>
+          </div>
+          <div class="col-4">
+            <a href="">
+              <img src="../static/img/gallary.jpg" alt="이미지 3">
+            </a>
+            <p>미술관</p>
+          </div>
+          <div class="col-4">
+            <a href="">
+              <img src="../static/img/museum.jpg" alt="이미지 4">
+            </a>
+            <p>박물관</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 멀티 슬라이드 -->
+      <div class="recommend">
+        <p>추천 전시회</p>
+
+        <div class="slide_wrap">
+          <div class="slide_show">
+            <div class="slide_list">
+              <div class="slide">
+                <a href=""><img src="https://tistory1.daumcdn.net/tistory/3344040/skin/images/slideshow_5.jpg"
+                    alt="이미지"></a>
+              </div>
+              <div class="slide">
+                <a href=""><img src="https://tistory4.daumcdn.net/tistory/3344040/skin/images/slideshow_1.jpg"
+                    alt="이미지"></a>
+              </div>
+              <div class="slide">
+                <a href=""><img src="https://tistory1.daumcdn.net/tistory/3344040/skin/images/slideshow_4.jpg"
+                    alt="이미지"></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 버튼 -->
+          <div class="slide_btn">
+            <button class="prev"></button>
+            <button class="next"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 멀티 슬라이드
+    let slideWrap = $(".slide_wrap"),
+      slideShow = slideWrap.find(".slide_show"),
+      slideList = slideShow.find(".slide_list"),
+      slides = slideList.find(".slide"),
+      slideBtn = slideWrap.find(".slide_btn");
+
+    let slideCount = slides.length,
+      slideWidth = slides.innerWidth(),
+      showNum = 3,
+      num = 0,
+      currentIndex = 0,
+
+      slideCopy = $(".slide:lt(" + showNum + ")").clone();
+    slideList.append(slideCopy);
+
+    //이미지 왼쪽으로 움직이기
+    function backShow() {
+      if (num == 0) {
+        //시작
+        num = slideCount;
+        slideList.css("left", -num * slideWidth + "px");
+      }
+      num--;
+      slideList.stop().animate({
+        left: -slideWidth * num + "px"
+      }, 400);
+    }
+    //이미지 오른쪽으로 움직이기
+    function nextShow() {
+      if (num == slideCount) {
+        //마지막
+        num = 0;
+        slideList.css("left", num);
+      }
+      num++;
+      slideList.stop().animate({
+        left: -slideWidth * num + "px"
+      }, 400);
+    }
+
+    //왼쪽, 오른쪽 버튼 설정
+    slideBtn.on("click", "button", function () {
+      if ($(this).hasClass("prev")) {
+        //왼쪽 버튼을 클릭
+        backShow();
+      } else {
+        //오른쪽 버튼을 클릭
+        nextShow();
+      }
+    });
+  </script>
+</body>
+
+</html>

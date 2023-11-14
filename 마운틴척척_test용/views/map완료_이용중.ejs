@@ -1,11 +1,11 @@
 <!DOCTYPE html> <html> <head> <meta charset="utf-8" /> <title>다음 지도 API</title> </head> <body> <div id="map" style="width: 960px; height: 540px"></div> <button type="button" onclick="panTo()">내 위치</button>
   <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ac0bc7a26540e561b08d22a29e4ac4d6&libraries=services"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
     var mapContainer = document.getElementById("map");
     var mapOption = {
       center: new kakao.maps.LatLng(37.57756, 126.91243),
-      level: 3,
+      level: 4,
       mapTypeId: kakao.maps.MapTypeId.ROADMAP,
     };
     var map = new kakao.maps.Map(mapContainer, mapOption);
@@ -48,57 +48,35 @@
       var moveLatLon = new kakao.maps.LatLng(lat, lon);
       map.panTo(moveLatLon);
     }
-  
-    var positions = [
-      {
-        title: "서울특별시 용산구 한강대로23길 55",
-      },
-      {
-        title: "서울특별시 용산구 한강로2가 16-13",
-      },
-      {
-        title: "서울특별시 용산구 한강로2가 15번지 ",
-      },
-      {
-        title: "서울특별시 용산구 한강로3가 1-2",
-      },
-    ];
-  
-    var imageSrc =
-      "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-  
-  
-  
-      // // 마커에 클릭이벤트를 등록합니다
-      // function makeClickListener(map, marker, infowindow, address) {
-      //     return function () {
-      //     // 마커 위에 인포윈도우를 표시합니다
-      //     infowindow.setContent(address);
-      //     infowindow.open(map, marker);
-      //     };
-      // }
-  
-      //         // 마커 클릭 이벤트 핸들러로 주소 검색 함수를 호출
-      // kakao.maps.event.addListener(marker, "click", (function (marker, infowindow, latlng) {
-      // return function () {
-      //   geocodeAddress(marker, infowindow, latlng);
-  
-  
-          
-      // };
-      // })(marker, infowindow, positions[i].latlng));
-  
-  
-  
-  
-    for (var i = 0; i < positions.length; i++) {
-      geocodeAddress(positions[i].title);
+
+    function getMap () {
+
+      axios({
+        method: 'GET',
+          url: '/map/mapexhibition',
+          // data: data
+      }).then((res)=> {
+        markExhibition(res.data)
+      })
     }
-  
-    function geocodeAddress(address) {
+
+    getMap();
+
+    function markExhibition (positions) {
+      console.log(positions)
+
+      for (var i = 0; i < positions.length; i++) {
+        geocodeAddress(positions[i].g_name, positions[i].deadline, positions[i].website, positions[i].detailaddr);
+      }
+    }
+
+    function geocodeAddress(g_name, deadline, website, detailaddr) {
+      var imageSrc =
+      "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
       var geocoder = new kakao.maps.services.Geocoder();
   
-      geocoder.addressSearch(address, function (result, status) {
+      geocoder.addressSearch(detailaddr, function (result, status) {
         if (status === kakao.maps.services.Status.OK) {
           var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
   
@@ -117,7 +95,9 @@
           });
   
           var infowindow = new kakao.maps.InfoWindow({
-            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + address + '</div>',
+            // <a href="https://map.kakao.com/" style="color:blue" target="_blank">길찾기</a></div>`,
+            
+            content: '<div style="font-weight:bold;">' + g_name+`<a href=${website} style="color:blue" target="_blank"> 홈페이지</a>`+'<div style="width:400px;text-align:center;padding:10px 0;">' +`기간 : ` +deadline + '</div>'+ '</div>' +'<div style="width:500px;padding:20px 0;">' + detailaddr + '</div>' + `<a href="https://map.kakao.com/" style="color:blue" target="_blank">길찾기</a>`,
             removable: true,
           });
 
@@ -135,21 +115,14 @@
           // 마커 위에 인포윈도우를 표시합니다
           infowindow.open(map, marker);
 
-
-
-          // infowindow.open(map, marker);
-  
           map.setCenter(coords);
-  
-          
       }
-      
-        
       };
-      
     
     })}
   
     
   </script>
-  </body> </html> 
+  </body>
+  
+  </html> 

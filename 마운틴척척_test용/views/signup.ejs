@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signin</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300&amp;display=swap'>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="/static/signup.css">
+</head>
+<body>
+    <div class="signup-wrapper">
+        <h2>회원가입</h2>
+        <form id="form-register" name="form_register">
+
+            <label for="u_id" class="visually">아이디</label>
+            <div id="id_double">
+                <input type="text" name="u_id" placeholder="ID">
+                <button type="button"onclick="doubleCheck();">중복확인</button>
+            </div>
+
+            <p id="id_result"style="display: none; color: red;">중복된 아이디입니다.</p>
+
+            <label for="email" class="visually">이메일</label>
+            <input type="text" name="email" placeholder="Email">
+
+            <label for="password" class="visually">비밀번호</label>
+            <input type="password" name="password" placeholder="Password">
+
+            <label for="name" class="visually">이름</label>
+            <input type="text" name="name" placeholder="Name">
+
+            <button type="button" onclick="register()">회원가입</button>
+
+        </form>
+    </div>
+
+    
+    <script>
+        function doubleCheck() {
+            const form = document.forms["form_register"];
+
+            let user = {            
+                u_id: form.u_id.value,
+            };
+
+            axios({
+                method: 'post',
+                url: '/user/signupcheck',
+                data: user
+            }).then((res) => {
+                if(res.data.result== true) {
+                    document.getElementById("id_result").style.display='block';
+                } else {
+                    document.getElementById("id_result").style.display='none';
+                };
+            });
+        };
+
+        function register() {
+            const form = document.forms["form_register"];
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return false;
+            };
+
+            let user = {            
+                u_id: form.u_id.value,
+                email: form.email.value,
+                password: form.password.value,
+                name: form.name.value
+            };
+
+            axios({
+                method: 'post',
+                url: '/user/signup',
+                data: user
+            }).then((res) => {
+                alert("회원가입 성공");
+                document.location.href = "/user/signin"
+            });
+        }
+    </script>
+
+</body>
+</html>

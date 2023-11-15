@@ -5,7 +5,7 @@ function Heart(Sequelize, DataTypes) {
             // h_id, u_id, g_id
             h_id: {
                 type: DataTypes.INTEGER,
-                allowNull: true,
+                allowNull: false,
                 primaryKey: true,
                 autoIncrement: true,               
             },
@@ -17,6 +17,10 @@ function Heart(Sequelize, DataTypes) {
             g_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
+            },
+            heart_checked: {
+                type: DataTypes.BOOLEAN,
+                allowNull: true,
             },
         },
         {

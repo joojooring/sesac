@@ -25,6 +25,9 @@ function Heart(Sequelize, DataTypes) {
         },
         {
             tableName: "heart",
+            freezeTableName: true,
+            timestamps: false,
+    
         }
     )
 }

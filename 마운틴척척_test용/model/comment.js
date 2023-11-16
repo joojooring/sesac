@@ -25,6 +25,9 @@ function Comment(Sequelize, DataTypes){
         },
         {
             tableName: "comment",
+            freezeTableName: true,
+            timestamps: false,
+    
         }
     )
 }

@@ -3,6 +3,8 @@ const mainRouter = express.Router();
 const userRouter = express.Router();
 const galleryRouter = express.Router();
 const mapRouter = express.Router();
+const commentRouter = express.Router();
+
 
 
 // 메인페이지 관련
@@ -41,9 +43,27 @@ userRouter.delete("/profile/delete/:u_id", profile.profileDelete);
 const category = require("../controller/Clist");
 galleryRouter.get("/category", category.categoryPage);
 
+
+
+// comment 관련
+
+commentRouter.get("/commenthome", controller.home);
+
+commentRouter.get("/comment", controller.comment);
+// 방명록 등록
+commentRouter.post("/comment", controller.postComment);
+// 방명록 수정
+commentRouter.patch("/comment", controller.patchComment);
+
+// 방명록 하나 조회
+commentRouter.get("/comment/:id", controller.getCommentById);
+// 방명록 삭제
+commentRouter.delete("/comment/:id", controller.deleteComment);
+
 module.exports = {
   mainRouter,
   userRouter,
   galleryRouter,
-  mapRouter
+  mapRouter,
+  commentRouter
 };

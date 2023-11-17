@@ -1,0 +1,330 @@
+<!DOCTYPE html> 
+<html> 
+  <head> 
+    <meta charset="utf-8" /> 
+    <title>다음 지도 API</title> 
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <!-- Bootstrap icon CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../static/map.css">
+  </head> 
+  <body> 
+    <!-- 카카오맵 API 지도 -->
+    <div id="map" >
+      <button class="btn-top-myplace" type="button" onclick="panTo()">내 위치</button>
+    <!-- <div id="result"></div> -->
+    </div> 
+    
+
+
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ac0bc7a26540e561b08d22a29e4ac4d6&libraries=services"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <script>
+      var mapContainer = document.getElementById("map");
+      var mapOption = {
+        center: new kakao.maps.LatLng(37.57756, 126.91243),
+        level: 4,
+        mapTypeId: kakao.maps.MapTypeId.ROADMAP,
+      };
+      var map = new kakao.maps.Map(mapContainer, mapOption);
+      var lat, lon;
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          lat = position.coords.latitude;
+          lon = position.coords.longitude;
+          var locPosition = new kakao.maps.LatLng(lat, lon),
+            message = '<div style="padding:5px;">내 위치</div>';
+          displayMarker(locPosition, message);
+        });
+      } else {
+        var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
+          message = "geolocation을 사용할 수 없어요..";
+        displayMarker(locPosition, message);
+      }
+      function displayMarker(locPosition, message) {
+        var marker = new kakao.maps.Marker({
+          map: map,
+          position: locPosition,
+        });
+
+        var infowindow = new kakao.maps.InfoWindow({
+          content: message,
+          removable: true,
+        });
+        infowindow.open(map, marker);
+        map.setCenter(locPosition);
+      }
+      function panTo() {
+        var moveLatLon = new kakao.maps.LatLng(lat, lon);
+        map.panTo(moveLatLon);
+      }
+      function getMap () {
+        axios({
+          method: 'GET',
+            url: '/gallery/mapexhibition',
+        }).then((res)=> {
+          markExhibition(res.data)
+        })
+      }
+      getMap();
+      
+      async function markExhibition (positions) {
+        // console.log(positions)
+        for (var i = 0; i < positions.length; i++) {
+          await geocodeAddress(
+            positions[i].g_name, 
+            positions[i].deadline, 
+            positions[i].website, 
+            positions[i].detailaddr, 
+            i)
+        }
+      }
+
+      // marker에 배열을 안했더니 marker가 for문의 마지막 값만 찾아서 각각 찾게끔 배열로 걸어줌
+      let markerArr = [];
+
+      // geocodeAddress 주소찾는 함수가 시간이 걸려 비동기처리를 걸음
+      async function geocodeAddress(g_name, deadline, website, detailaddr, i) {
+        return new Promise((resolve, reject)=> {
+          var imageSrc =
+          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+          // let clickImageSrc = "https://youip.net/images/marker_kakao.png";
+
+          var geocoder = new kakao.maps.services.Geocoder();
+          geocoder.addressSearch(detailaddr, function (result, status) {
+            // console.log(i, status, kakao.maps.services.Status.OK) //배열에 뭐가 담기는지 확인을 위해 console 찍음
+            if (status === kakao.maps.services.Status.OK) {
+              var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                      // 마커 이미지의 이미지 크기 입니다
+              var imageSize = new kakao.maps.Size(24, 35);
+              // 마커 이미지를 생성합니다
+              var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+            
+
+              // marker 변수에 할당
+              var marker = new kakao.maps.Marker({
+                map: map,
+                position: coords,
+                image: markerImage, // 마커 이미지
+                clickable: true,
+              });
+
+              // 마커배열마다 마커를 넣어주기 위해 push
+              markerArr.push(marker)
+              
+              var infowindow = new kakao.maps.InfoWindow({
+                // changeHeartMarker함수에 checkbox를 담아야되기때문에 this를 넣고, 각배열의 index를 찾아가야되기때문에 i를 걸어줌
+                  content: `<label for="myCheckbox">찜하기</label>
+                            <input type="checkbox" id="myCheckbox" onchange="changeHeartMarker(this, ${i})"> 
+                            <div style="font-weight:bold;">${g_name}<br/>
+                            <button type="button" onclick="info('${g_name}<br />${deadline}<br />${detailaddr}')">더보기</button>
+                            <a href="https://map.kakao.com/" style="color:blue" target="_blank"><div style="width:400px;text-align:right;padding:10px 0;">길찾기</a></div>`,
+                  removable: true,
+              });
+              kakao.maps.event.addListener(
+                  marker,
+                  "click",
+                  makeClickListener(map, marker, infowindow, coords, markerImage)
+              );
+
+              resolve(); // 여기서 promise 걸려있는 함수 실행
+            } else {
+              markerArr.push({}) // 어디선가 오류가 나도 빈값으로라도 띄울 수 있게끔 하기위해서 else에도 resolve를 넣어줌
+              resolve();
+            }
+          })
+        })
+      }
+
+      // 마커에 클릭이벤트를 등록합니다
+      function makeClickListener(map, marker, infowindow, coords, markerImage) {
+          return function () {
+              // 마커 위에 인포윈도우를 표시합니다
+              infowindow.open(map, marker);
+              map.setCenter(coords);
+
+                }
+          };
+      
+
+      // onchage에 걸려있는 changeHeartMarker의 index를 써야되기때문에 변수로 index 넣어줌
+      function changeHeartMarker(objInput, index) {
+        // console.log(markerArr, index)
+        let clickimageSrc = 'https://youip.net/images/marker_kakao.png', // 마커이미지의 주소입니다    
+            clickimageSize = new kakao.maps.Size(50, 65), // 마커이미지의 크기입니다
+            clickimageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+        let clickmarkerImage = new kakao.maps.MarkerImage(clickimageSrc, clickimageSize, clickimageOption);
+
+        // console.log(objInput.checked)
+
+        let imageSrc =
+            "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+        let imageSize = new kakao.maps.Size(24, 35);
+            // 마커 이미지를 생성합니다
+        let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+
+        if (objInput.checked) { // marker 변수가 존재하고 체크된 경우에만 실행
+            clickmarkerImage.src = clickimageSrc;
+            markerArr[index].setImage(clickmarkerImage); // 외부에서 선언한 marker 변수 사용
+          } else {
+            imageSrc.src = markerImage;
+            markerArr[index].setImage(markerImage);
+          }
+      }
+
+      
+      function info(g_name, deadline, detailaddr) {
+        const result = document.getElementById("result")
+        result.innerHTML = g_name, deadline, detailaddr
+      }
+    </script>
+    <!-- 지도 끝 -->
+
+    <!-- Bootstrap CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+  crossorigin="anonymous"></script>
+
+<div class="test"></div>
+
+<div class="container">
+
+  <div class="sidebar">
+    <div class="toggle-btn btn-a" onclick="toggleSidebarA()"><a href="#"><i class="bi bi-list"></i></a></div>
+    <div class="toggle-btn btn-b" onclick="toggleSidebarB()"><a href="#"><i class="bi bi-heart-fill"></i></a></div>
+  </div>
+
+  <!-- 리스트 콘텐츠 영역 -->
+  <div class="content">
+    <div class="content-a">
+      <img
+        src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20210814_169%2F16289298437603fJGF_JPEG%2FLE7J43EfgHCeAcS_HvOtDc8G.jpeg.jpg">
+      <p>미분당 신촌본점</p>
+      <hr /><br />
+      <img
+        src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20210814_169%2F16289298437603fJGF_JPEG%2FLE7J43EfgHCeAcS_HvOtDc8G.jpeg.jpg">
+      <p>미분당 홍대점</p>
+      <hr /><br />
+      <img
+        src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20210814_169%2F16289298437603fJGF_JPEG%2FLE7J43EfgHCeAcS_HvOtDc8G.jpeg.jpg">
+      <p>미분당 가로수길점</p>
+      <hr /><br />
+      <img
+        src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20210814_169%2F16289298437603fJGF_JPEG%2FLE7J43EfgHCeAcS_HvOtDc8G.jpeg.jpg">
+      <p>미분당 강남점</p>
+      <hr /><br />
+      <img
+        src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20210814_169%2F16289298437603fJGF_JPEG%2FLE7J43EfgHCeAcS_HvOtDc8G.jpeg.jpg">
+      <p>미분당 명동점</p>
+      <hr /><br />
+      <img
+        src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20210814_169%2F16289298437603fJGF_JPEG%2FLE7J43EfgHCeAcS_HvOtDc8G.jpeg.jpg">
+      <p>미분당 안국점</p>
+      <hr /><br />
+      <img
+        src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20210814_169%2F16289298437603fJGF_JPEG%2FLE7J43EfgHCeAcS_HvOtDc8G.jpeg.jpg">
+      <p>미분당 여의도점</p>
+      <hr /><br />
+    </div>
+  </div>
+
+
+<!-- 주리 수정 중 -->
+<div class="scene flex">
+  <section class="card">
+    <h1 class="card__heading">
+      <span> Welcome</span>
+    </h1>
+    <form name="form-info" action="/gallery/mapexhibition" method="GET">
+      <img src="../static/img/2016080902202_0.jpg">
+      <div class="info">
+    </form>
+  </section>
+</div>
+
+
+
+<input type="button" value="아이콘" class="iconBtn" onclick="toggleInfoContainer()" />
+
+<script>
+  let infoContainer = document.querySelector('.info-container');
+  let container = document.querySelector('.container');
+  let content = document.querySelector('.content');
+
+
+  // 사이드바 메뉴 버튼을 토글
+  function toggleSidebarA() {
+    if (content.style.display === 'none') {
+      if (infoContainer.display === 'none') {
+        content.style.display = 'block'
+        console.log("content를 엽니다. 1")
+      } else {
+        content.style.display = 'block'
+        console.log("content를 엽니다. 2")
+        infoContainer.style.left = '470px'
+      }
+    } else {
+      if (infoContainer.display === 'block') {
+        content.style.display = 'none'
+        console.log("content를 닫습니다. 3")
+      } else {
+        content.style.display = 'none'
+        console.log("content를 닫습니다. 4")
+        infoContainer.style.left = '60px'
+      }
+    }
+  }
+
+  // 사이드바 하트(찜목록) 버튼을 토글
+  function toggleSidebarB() {
+    if (content.style.display === 'none') {
+      if (infoContainer.display === 'none') {
+        content.style.display = 'block'
+        console.log("content를 엽니다. 1")
+      } else {
+        content.style.display = 'block'
+        console.log("content를 엽니다. 2")
+        infoContainer.style.left = '470px'
+      }
+    } else {
+      if (infoContainer.display === 'block') {
+        content.style.display = 'none'
+        console.log("content를 닫습니다. 3")
+      } else {
+        content.style.display = 'none'
+        console.log("content를 닫습니다. 4")
+        infoContainer.style.left = '60px'
+      }
+    }
+  }
+  function toggleInfoContainer(g_name, deadline, detailaddr) {
+    if (infoContainer.style.display === 'block') {
+      if (content.style.display === 'block') {
+        infoContainer.style.display = 'none';
+      } else {
+        infoContainer.style.display = 'none';
+      }
+    } else {
+      if (content.style.display === 'none') {
+        infoContainer.style.display = 'block';
+      } else {
+        infoContainer.style.display = 'block'
+        infoContainer.style.left = '470px'
+      }
+    }
+  }
+
+</script>
+    
+    </body>
+    
+    </html>

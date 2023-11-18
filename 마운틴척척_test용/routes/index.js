@@ -12,9 +12,9 @@ const signin = require("../controller/Csignin");
 userRouter.get("/signin", signin.loginPage);
 userRouter.post("/signin", signin.postLogin);
 
-// 로그아웃 관련
-const logout = require("../controller/Cmain");
-mainRouter.post("/logout", main.logOut);
+// // 로그아웃 관련
+// const logout = require("../controller/Cmain");
+// mainRouter.post("/logout", main.logOut);
 
 // 회원가입 관련
 const signup = require("../controller/Csignup");
@@ -39,10 +39,9 @@ galleryRouter.get("/map", map.mapUiPage);
 galleryRouter.get("/maptest", map.mapPage);
 galleryRouter.get("/mapexhibition", map.getMap);
 
-// 추가
-galleryRouter.post("/info", map.postInfo);
 
-
+// 찜하기 관련
+galleryRouter.post("/heartgallery", map.heartGallery);
 
 
 // 카테고리 관련

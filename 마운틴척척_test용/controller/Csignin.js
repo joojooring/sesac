@@ -1,29 +1,44 @@
-const {User} = require("../model/index")
+const { User } = require('../model/index');
+const pwSalt = require("../model/pwSalt");
 exports.loginPage = (req, res) => {
-  res.render("signin");
+  res.render('signin');
 };
-
-exports.postLogin = async(req, res) => {
+// 암호화 추가하기
+exports.postLogin =  (req, res) => {
   User.findOne({
     where: {
       // 컬럼명 : 사용자가 적은값
       u_id: req.body.u_id,
-      password: req.body.password,
     },
   }).then((result) => {
-    console.log("findOne: ", result);
-    // session 적용전
-    // if(result) {
-    //   res.send({result: true}); 
-    // } else {
-    //   res.send({result: false});
-    // }
-
+    console.log("findONe 있냐? ", result);
     if(result) {
-      req.session.user = result.u_id
-      res.send({result: true, id: result.u_id});
+      pwSalt
+          .comparePassword(
+            req.body.password,
+            result.salt,
+            result.password,
+          )
+          .then((pwCorrect) => {
+            if(pwCorrect) {
+              // u_id 세션에 저장(로그인 했을때).
+              req.session.user = result.u_id;
+              console.log('postLogin: ', result);
+              console.log('session', req.session);
+              res.send({result: true, id: result.u_id});
+            } else {
+              res.send({result: false});
+            }
+          })
+          .catch((error) => {
+            console.log('password 에러: ', error);
+            res.send({result: false});
+          });
     } else {
-      res.send({result: false});
+        res.send({result: false});
     }
-  })
+  }).catch((error) => {
+    console.error('유저가 존재 안합니다.', error);
+    res.send({result: false});
+  });
 };

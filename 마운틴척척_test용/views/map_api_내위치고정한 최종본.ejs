@@ -21,7 +21,6 @@
     </div> 
     
 
-
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ac0bc7a26540e561b08d22a29e4ac4d6&libraries=services"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     
@@ -122,7 +121,7 @@
               var infowindow = new kakao.maps.InfoWindow({
                 // changeHeartMarker함수에 checkbox를 담아야되기때문에 this를 넣고, 각배열의 index를 찾아가야되기때문에 i를 걸어줌
                   content: `<label for="myCheckbox">찜하기</label>
-                            <input type="checkbox" id="myCheckbox" onchange="changeHeartMarker(this, ${i})"> 
+                            <input type="checkbox" id="myCheckbox" onchange="changeHeartMarker(this, '${i}','${g_name}'); checkboxIsChecked(this, '${i}', '${g_name}')"> 
                             <div style="font-weight:bold;">${g_name}<br/>
                             <button type="button" onclick="imgurlAdd('${imgurl}'); info('${g_name}', '${deadline}', '${detailaddr}', '${website}')">더보기</button>
                             <a href="https://map.kakao.com/" style="color:blue" target="_blank"><div style="width:400px;text-align:right;padding:10px 0;">길찾기</a></div>`,
@@ -155,7 +154,7 @@
       
 
       // onchage에 걸려있는 changeHeartMarker의 index를 써야되기때문에 변수로 index 넣어줌
-      function changeHeartMarker(objInput, index) {
+      function changeHeartMarker(objInput, index, g_name) {
         // console.log(markerArr, index)
         let clickimageSrc = 'https://youip.net/images/marker_kakao.png', // 마커이미지의 주소입니다    
             clickimageSize = new kakao.maps.Size(50, 65), // 마커이미지의 크기입니다
@@ -172,14 +171,30 @@
         let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
 
-        if (objInput.checked) { // marker 변수가 존재하고 체크된 경우에만 실행
+        if (objInput.checked) {
             clickmarkerImage.src = clickimageSrc;
-            markerArr[index].setImage(clickmarkerImage); // 외부에서 선언한 marker 변수 사용
+            markerArr[index].setImage(clickmarkerImage);
           } else {
             imageSrc.src = markerImage;
             markerArr[index].setImage(markerImage);
           }
       }
+
+      function checkboxIsChecked(checkbox, index, g_name) {
+        if (checkbox.checked) {
+          console.log(`Checkbox ${index}, ${g_name}가 체크되었습니다.`);
+
+        const infoContainer = document.querySelector('.info-container');
+            const infoImage = infoContainer.querySelector('#infoImage');
+            const result = infoContainer.querySelector('#result');
+
+
+        } else {
+          console.log(`Checkbox ${index}, ${g_name}가 체크 해제되었습니다.`);
+        }
+      }
+
+
 
       function imgurlAdd(imgurl){
         const infoImage = document.getElementById("infoImage");
@@ -189,15 +204,13 @@
         
       }
 
-
-
       function info(g_name, deadline, detailaddr, website) {
         const result = document.getElementById("result");
         result.innerHTML = `
-                          ${g_name} <br />
-                          ${deadline} <br />
-                          ${detailaddr} <br />
-                          ${website} <br />
+                          <div class="title">${g_name}</div>
+                          <div class="deadline">${deadline}</div>
+                          <div class="detailaddr">${detailaddr}</div>
+                          <div class="website">${website}</div>
                           `
       }
 
@@ -253,18 +266,14 @@
   </div>
 
   <!-- 정보창을 표시할 영역 -->
-  <div class="info-container">
-    <img src="" id="infoImage">
-    <div class="info">
-      <div id="result">
+    <div class="info-container">
+      <img src="" id="infoImage">
+      <div class="info">
+        <div id="result">
+        </div>
       </div>
     </div>
   </div>
-
-</div>
-
-
-<!-- <input type="button" value="아이콘" class="iconBtn" onclick="toggleInfoContainer()" /> -->
 
 <script>
   let infoContainer = document.querySelector('.info-container');
@@ -307,6 +316,7 @@
         infoContainer.style.left = '60px'
       }
     }
+    
   }
 
   // 정보창을 토글
@@ -327,8 +337,6 @@
     }
   }
 
-</script>
-    
+      </script>
     </body>
-    
-    </html>
+  </html>

@@ -17,6 +17,7 @@ create table gallery (
 	g_id int not null primary key auto_increment,
     g_name varchar(20) not null,
     address varchar(50) not null,
+    imgurl varchar(255) not null,
     deadline date not null,
     website varchar(30) not null,
     category varchar(10) not null

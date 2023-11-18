@@ -21,7 +21,6 @@
     </div> 
     
 
-
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ac0bc7a26540e561b08d22a29e4ac4d6&libraries=services"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     
@@ -82,15 +81,15 @@
             positions[i].deadline, 
             positions[i].website, 
             positions[i].detailaddr, 
+            positions[i].imgurl, 
             i)
         }
       }
-
       // marker에 배열을 안했더니 marker가 for문의 마지막 값만 찾아서 각각 찾게끔 배열로 걸어줌
       let markerArr = [];
 
       // geocodeAddress 주소찾는 함수가 시간이 걸려 비동기처리를 걸음
-      async function geocodeAddress(g_name, deadline, website, detailaddr, i) {
+      async function geocodeAddress(g_name, deadline, website, detailaddr, imgurl, i) {
         return new Promise((resolve, reject)=> {
           var imageSrc =
           "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
@@ -122,9 +121,9 @@
               var infowindow = new kakao.maps.InfoWindow({
                 // changeHeartMarker함수에 checkbox를 담아야되기때문에 this를 넣고, 각배열의 index를 찾아가야되기때문에 i를 걸어줌
                   content: `<label for="myCheckbox">찜하기</label>
-                            <input type="checkbox" id="myCheckbox" onchange="changeHeartMarker(this, ${i})"> 
+                            <input type="checkbox" id="myCheckbox" onchange="changeHeartMarker(this, '${i}','${g_name}'); checkboxIsChecked(this, '${i}', '${g_name}')"> 
                             <div style="font-weight:bold;">${g_name}<br/>
-                            <button type="button" onclick="info('${g_name}<br />${deadline}<br />${detailaddr}')">더보기</button>
+                            <button type="button" onclick="imgurlAdd('${imgurl}'); info('${g_name}', '${deadline}', '${detailaddr}', '${website}')">더보기</button>
                             <a href="https://map.kakao.com/" style="color:blue" target="_blank"><div style="width:400px;text-align:right;padding:10px 0;">길찾기</a></div>`,
                   removable: true,
               });
@@ -155,7 +154,7 @@
       
 
       // onchage에 걸려있는 changeHeartMarker의 index를 써야되기때문에 변수로 index 넣어줌
-      function changeHeartMarker(objInput, index) {
+      function changeHeartMarker(objInput, index, g_name) {
         // console.log(markerArr, index)
         let clickimageSrc = 'https://youip.net/images/marker_kakao.png', // 마커이미지의 주소입니다    
             clickimageSize = new kakao.maps.Size(50, 65), // 마커이미지의 크기입니다
@@ -181,11 +180,34 @@
           }
       }
 
-      
-      function info(g_name, deadline, detailaddr) {
-        const result = document.getElementById("result")
-        result.innerHTML = g_name, deadline, detailaddr
+      function checkboxIsChecked(checkbox, index, g_name) {
+        if (checkbox.checked) {
+          console.log(`Checkbox ${index}, ${g_name}가 체크되었습니다.`);
+        } else {
+          console.log(`Checkbox ${index}, ${g_name}가 체크 해제되었습니다.`);
+        }
       }
+
+
+
+      function imgurlAdd(imgurl){
+        const infoImage = document.getElementById("infoImage");
+        console.log(imgurl)
+        infoImage.src = imgurl;
+        toggleInfoContainer();
+        
+      }
+
+      function info(g_name, deadline, detailaddr, website) {
+        const result = document.getElementById("result");
+        result.innerHTML = `
+                          ${g_name} <br />
+                          ${deadline} <br />
+                          ${detailaddr} <br />
+                          ${website} <br />
+                          `
+      }
+
     </script>
     <!-- 지도 끝 -->
 
@@ -237,48 +259,35 @@
     </div>
   </div>
 
-
-<!-- 주리 수정 중 -->
-<div class="scene flex">
-  <section class="card">
-    <h1 class="card__heading">
-      <span> Welcome</span>
-    </h1>
-    <form name="form-info" action="/gallery/mapexhibition" method="GET">
-      <img src="../static/img/2016080902202_0.jpg">
+  <!-- 정보창을 표시할 영역 -->
+    <div class="info-container">
+      <img src="" id="infoImage">
       <div class="info">
-    </form>
-  </section>
-</div>
-
-
-
-<input type="button" value="아이콘" class="iconBtn" onclick="toggleInfoContainer()" />
+        <div id="result">
+        </div>
+      </div>
+    </div>
+  </div>
 
 <script>
   let infoContainer = document.querySelector('.info-container');
   let container = document.querySelector('.container');
   let content = document.querySelector('.content');
 
-
   // 사이드바 메뉴 버튼을 토글
   function toggleSidebarA() {
     if (content.style.display === 'none') {
       if (infoContainer.display === 'none') {
         content.style.display = 'block'
-        console.log("content를 엽니다. 1")
       } else {
         content.style.display = 'block'
-        console.log("content를 엽니다. 2")
         infoContainer.style.left = '470px'
       }
     } else {
       if (infoContainer.display === 'block') {
         content.style.display = 'none'
-        console.log("content를 닫습니다. 3")
       } else {
         content.style.display = 'none'
-        console.log("content를 닫습니다. 4")
         infoContainer.style.left = '60px'
       }
     }
@@ -289,24 +298,22 @@
     if (content.style.display === 'none') {
       if (infoContainer.display === 'none') {
         content.style.display = 'block'
-        console.log("content를 엽니다. 1")
       } else {
         content.style.display = 'block'
-        console.log("content를 엽니다. 2")
         infoContainer.style.left = '470px'
       }
     } else {
       if (infoContainer.display === 'block') {
         content.style.display = 'none'
-        console.log("content를 닫습니다. 3")
       } else {
         content.style.display = 'none'
-        console.log("content를 닫습니다. 4")
         infoContainer.style.left = '60px'
       }
     }
   }
-  function toggleInfoContainer(g_name, deadline, detailaddr) {
+
+  // 정보창을 토글
+  function toggleInfoContainer() {
     if (infoContainer.style.display === 'block') {
       if (content.style.display === 'block') {
         infoContainer.style.display = 'none';
@@ -323,8 +330,6 @@
     }
   }
 
-</script>
-    
+      </script>
     </body>
-    
-    </html>
+  </html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="/assets/css/star.css" rel="stylesheet"/>
+</head>
+<body>
+    <form class="mb-3" name="myform" id="myform" method="post">
+        <fieldset>
+            <span class="text-bold">별점을 선택해주세요</span>
+            <input type="radio" name="reviewStar" value="5" id="rate1"><label
+                for="rate1">★</label>
+            <input type="radio" name="reviewStar" value="4" id="rate2"><label
+                for="rate2">★</label>
+            <input type="radio" name="reviewStar" value="3" id="rate3"><label
+                for="rate3">★</label>
+            <input type="radio" name="reviewStar" value="2" id="rate4"><label
+                for="rate4">★</label>
+            <input type="radio" name="reviewStar" value="1" id="rate5"><label
+                for="rate5">★</label>
+        </fieldset>
+        <div>
+            <textarea class="col-auto form-control" type="text" id="reviewContents"
+                      placeholder="좋은 리뷰을 남겨주시면 큰 힘이 됩니다!"></textarea>
+        </div>
+    </form>						
+    
+    <script>
+        // 라디오 버튼 요소들을 가져옴
+        var radioButtons = document.querySelectorAll('input[type="radio"][name="reviewStar"]');
+
+        // 라디오 버튼 변경 이벤트 핸들러 함수
+        function handleRadioChange(event) {
+            // 선택된 값 출력
+            console.log(event.target.value);
+        }
+
+        // 라디오 버튼에 이벤트 리스너 추가
+        radioButtons.forEach(function(radioButton) {
+            radioButton.addEventListener('change', handleRadioChange);
+        });
+    </script>
+
+</body>
+</html>

@@ -87,6 +87,8 @@
           data: user,
         }).then((res) => {
           if (res.data.result == true) {
+            document.getElementById("id_result").textContent = "존재하는 아이디입니다.";
+            document.getElementById("id_result").style.color = "red";
             document.getElementById("id_result").style.display = "block";
           } else {
             document.getElementById("id_result").style.display = "none";

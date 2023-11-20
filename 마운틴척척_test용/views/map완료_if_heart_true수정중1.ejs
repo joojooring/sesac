@@ -175,5 +175,80 @@
       }
 
     </script>
+      <!-- 리스트 콘텐츠 영역 -->
+      <div class="content">
+        <div class="content-a">
+          <% for(let i = 0; i < data.length; i++){ %>
+            <% if (data[i].heart_checked) { %>
+          <img src="<%= data[i].imgurl %>" alt="박물관사진" />
+          <p><%=data[i].g_name %></p>
+          <hr />
+          <br />
+          <% } %>
+          <% } %>
+        </div>
+      </div>
+
+
+
+
+
+
+            <!-- 데이터를 표시할 컨테이너 -->
+            <form name="form_heart">
+              <div id="listHeart">
+                <% for(let i = 0; i < data.length; i++){ %>
+                <img src="<%= data[i].imgurl %>" alt="찜한갤러리" />
+                <p><%=data[i].g_name %></p>
+                <hr />
+                <br />
+                <% } %>
+              </div>
+
+                    <!-- <script>
+
+      function heartList() {
+        const form = document.forms["form_heart"]
+        const data = {
+          imgurl: form.imgurl.value,
+          g_name: form.g_name.value
+        }
+
+        axios({
+          method: "post",
+          url: "/gallery/heartgallery",
+          data: data,
+        }).then((res) => {
+          // const result = res.data.result;
+          const {
+            h_id,
+            g_id
+          } = res.data
+          if(result){ // heart_checked = true
+            const listHeart = document.getElementById("listHeart");
+            listHeart.innerHTML = `
+                                  <div class="imgurl">${imgurl}</div>
+
+            `
+
+            data.forEach((item) => {
+              const listItem = document.createElement("li");
+              listItem.textContent = item;
+              listContainer.appendChild(listItem);
+        });
+          } else { //heart_checked = false
+
+          }
+        }).catch((error) => {
+            console.log(error);
+        });
+      }
+      </script> -->
+
+
+
+
+      
+
     </body>
     </html>

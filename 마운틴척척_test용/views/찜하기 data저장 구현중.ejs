@@ -133,8 +133,11 @@
 
               var infowindow = new kakao.maps.InfoWindow({
                 // changeHeartMarker함수에 checkbox를 담아야되기때문에 this를 넣고, 각배열의 index를 찾아가야되기때문에 i를 걸어줌
-                content: `<label for="myCheckbox">찜하기</label>
-                            <input type="checkbox" id="myCheckbox" onchange="changeHeartMarker(this, '${i}','${g_name}'); checkboxIsChecked(this, '${i}', '${g_name}')"> 
+                content: `<label for="heart_checked">찜하기</label>
+                            <input type="checkbox" id="heart_checked" onchange="changeHeartMarker(this, '${i}','${g_name}');
+                             checkboxIsChecked(this, '${i}', '${g_name}'); 
+                             handleCheckboxChange(this)">
+                             
                             <div style="font-weight:bold;">${g_name}<br/>
                             <button type="button" onclick="imgurlAdd('${imgurl}'); info('${g_name}', '${deadline}', '${detailaddr}', '${website}')">더보기</button>
                             <a href="https://map.kakao.com/" style="color:blue" target="_blank"><div style="width:400px;text-align:right;padding:10px 0;">길찾기</a></div>`,
@@ -244,131 +247,68 @@
         </div>
       </div>
 
-      <!-- 리스트 콘텐츠 영역 -->
-      <div class="content">
-        <div class="content-a">
-          <% for(let i = 0; i < data.length; i++){ %>
-          <img src="<%= data[i].imgurl %>" alt="박물관사진" />
-          <p><%=data[i].g_name %></p>
-          <hr />
-          <br />
-          <% } %>
-        </div>
-      </div>
-
-
-
-
-
-      <!-- 정보창을 표시할 영역 -->
-      <div class="info-container">
-        <img src="" id="infoImage" />
-        <div class="info">
-          <div id="result"></div>
-          <hr />
-          <div id="comment" class="comment-container">
-            <div class="comment-text">
-              <p>방문자 리뷰 23</p>
-              <button type="button" onclick="changeComment()">리뷰 쓰기</button>
-            </div>
-            <!-- 리뷰 리스트 -->
-            <div id="list" class="comment-list">
-              <!--  for(let i = 0; i < 3; i++){ %>
-            <div class="comment-text">
-              <p>반짝반짝</p>
-              <p>⭐⭐⭐⭐⭐</p>
-            </div>
-            <p style="margin: 0 10px 0 10px">너무 좋은 전시였어요~</p>
-            <hr />
-             } %> -->
-            </div>
-            <!-- 리뷰 작성 -->
-            <div id="write" class="comment-write">
-              <p>별점을 표시해 주세요</p>
-              <p>⭐⭐⭐⭐⭐</p>
-              <form name="review">
-                <input
-                  name="commentText"
-                  class="comment-box"
-                  type="text"
-                  placeholder="리뷰를 써 주세요. (10자 이상)"
-                />
-                <div class="comment-btn">
-                  <button
-                    type="button"
-                    onclick="backCommentList(); searchComment();"
-                  >
-                    취소
-                  </button>
-                  <button type="button" onclick="getComment()">등록</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
+<!-- 이미지와 이름 표시 부분 -->
+    <!-- 리스트 콘텐츠 영역 -->
+    <div class="content">
+      <div class="content-a">
+        <img src="" alt="이미지">
+        <p></p>
+        <hr />
+        <br />
       </div>
     </div>
 
-    <!-- 리뷰 클릭이벤트 -->
-    <script>
-      const list = document.getElementById("list");
-      const write = document.getElementById("write");
+<script>
+  // 저장된 데이터 불러오는 함수
+  function fetchData() {
+    axios({
+        method : "GET",
+        url : "/gallery/heartlist",
+        data : data
+      })
+      .then((res) => {
+        
+        const data = res.data;
+        if (data && data.imgurl && data.g_name) {
+          const img = document.querySelector('img');
+          const p = document.querySelector('p');
+          img.src = data.imgurl;
+          p.textContent = data.g_name;
+        }
+      })
+      .catch((error) => {
+        console.error('데이터 불러오기 중 오류가 발생했습니다:', error);
+      });
+  }
 
-      function changeComment() {
-        list.style.display = "none";
-        write.style.display = "flex";
-      }
-
-      function backCommentList() {
-        list.style.display = "";
-        write.style.display = "none";
-      }
-
-      function getComment() {
-        const form = document.forms["review"];
-        // console.log(form.commentText.value);
-        const data = {
-          review: form.commentText.value,
-        };
-
-        axios({
-          method: "post",
-          url: "/gallery/comment",
-          data: data,
-        }).then((res) => {
-          form.commentText.value = "";
-          list.style.display = "";
-          write.style.display = "none";
+  // 체크박스 상태 변화를 처리하는 함수
+  function handleCheckboxChange(checkbox) {
+    const checked = checkbox.checked;
+    if (checked) {
+      axios({
+        method : "POST",
+        url : "/gallery/heartlist",
+        data : data
+      })
+        .then((res) => {
+          console.log('데이터가 성공적으로 저장되었습니다:', res.data);
+        })
+        .catch((error) => {
+          console.error('데이터 저장 중 오류가 발생했습니다:', error);
         });
-      }
+    } else {
+      console.log('체크가 해제되었습니다');
+    }
+  }
+</script>
 
-      function searchComment() {
-        const comment = document.getElementById("comment");
 
-        axios({
-          method: "post",
-          url: "/gallery/commentfind",
-        }).then((res) => {
-          for (let data of res.data.result) {
-            // console.log(data.u_id);
 
-            let comStar = "";
-            for (let i = 0; i < data.star; i++) {
-              comStar += "⭐";
-            }
 
-            let newDiv = document.createElement("div");
-            newDiv.innerHTML = `<div class="comment-text">
-                <p>${data.u_id}</p>
-                <p>${comStar}</p>
-                </div>
-                <p style="margin: 0 10px 0 10px">${data.review}</p>
-                <hr />`;
-            list.appendChild(newDiv);
-          }
-        });
-      }
-    </script>
+
+
+
+
 
     <script>
       let infoContainer = document.querySelector(".info-container");

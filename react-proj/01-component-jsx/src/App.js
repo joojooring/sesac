@@ -39,7 +39,9 @@ function App() {
       <br></br>
       <br></br>
 
-      <JustClassComponent text="마지막 실습" valid="공기가 답답해"></JustClassComponent>
+      <JustClassComponent text="마지막 실습" valid={()=>{
+        console.log("콘솔 띄우기 성공")
+      }}></JustClassComponent>
     </div>
   );
 }

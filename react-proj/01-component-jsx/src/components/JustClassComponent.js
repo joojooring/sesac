@@ -6,8 +6,8 @@ class JustClassComponent extends Component {
         return(
         <>
             <div>텍스트 : {this.props.text}, 내용은 : {this.props.valid}</div>
-            <button onClick={(valid)=>{
-        console.log("콘솔 띄우기 성공!",valid)
+            <button onClick={()=>{this.props.valid();
+        // console.log("콘솔 띄우기 성공!",valid)
     }}>버튼
     </button>
 
@@ -34,7 +34,7 @@ JustClassComponent.defaultProps = {
 
 JustClassComponent.propTypes = {
     text : Proptypes.string.isRequired,
-    // valid : Proptypes.string,
+    // valid : Proptypes.func.isRequired,
 
 }
 

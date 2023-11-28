@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>다음 지도 API</title>
+    <!-- Bootstrap CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <!-- Bootstrap icon CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"
+    />
+    <!-- jQuery CDN -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="../static/map.css" />
+  </head>
+
+  <body>
+    <!-- nav바 불러오기 -->
+    <%-include("navbar.ejs")%>
+
+    <!-- 카카오맵 API 지도 -->
+    <div id="map">
+      <button
+        class="btn-top-myplace comment-btn"
+        type="button"
+        onclick="panTo()"
+      >
+        내 위치
+      </button>
+      <!-- <div id="result"></div> -->
+    </div>
+
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ac0bc7a26540e561b08d22a29e4ac4d6&libraries=services"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+      var mapContainer = document.getElementById("map");
+      var mapOption = {
+        center: new kakao.maps.LatLng(37.53369071500842, 126.96329157378412),
+        level: 4,
+        mapTypeId: kakao.maps.MapTypeId.ROADMAP,
+      };
+      var map = new kakao.maps.Map(mapContainer, mapOption);
+
+      var markerPosition = new kakao.maps.LatLng(
+        37.53369071500842,
+        126.96329157378412
+      );
+      var marker = new kakao.maps.Marker({
+        position: markerPosition,
+      });
+      marker.setMap(map);
+
+      var iwContent = '<div style="padding:5px;">내위치!</div>',
+        iwPosition = new kakao.maps.LatLng(
+          37.53369071500842,
+          126.96329157378412
+        ),
+        iwRemoveable = true;
+
+      var infowindow = new kakao.maps.InfoWindow({
+        map: map, // 인포윈도우가 표시될 지도
+        position: iwPosition,
+        content: iwContent,
+        removable: iwRemoveable,
+      });
+
+      infowindow.open(map, marker);
+
+      function panTo() {
+        var moveLatLon = new kakao.maps.LatLng(
+          37.53369071500842,
+          126.96329157378412
+        );
+        map.panTo(moveLatLon);
+      }
+
+      function getMap() {
+        axios({
+          method: "GET",
+          url: "/gallery/mapexhibition",
+        }).then((res) => {
+          markExhibition(res.data);
+        });
+      }
+      getMap();
+
+      async function markExhibition(positions) {
+        // console.log(positions)
+        for (var i = 0; i < positions.length; i++) {
+          await geocodeAddress(
+            positions[i].g_name,
+            positions[i].deadline,
+            positions[i].website,
+            positions[i].detailaddr,
+            positions[i].imgurl,
+            positions[i].g_id,
+            i
+          );
+        }
+      }
+      // marker에 배열을 안했더니 marker가 for문의 마지막 값만 찾아서 각각 찾게끔 배열로 걸어줌
+      let markerArr = [];
+
+      // geocodeAddress 주소찾는 함수가 시간이 걸려 비동기처리를 걸음
+      async function geocodeAddress(
+        g_name,
+        deadline,
+        website,
+        detailaddr,
+        imgurl,
+        g_id,
+        i
+      ) {
+        return new Promise((resolve, reject) => {
+          var imageSrc =
+            "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+          // let clickImageSrc = "https://youip.net/images/marker_kakao.png";
+
+          var geocoder = new kakao.maps.services.Geocoder();
+          geocoder.addressSearch(detailaddr, function (result, status) {
+            // console.log(i, status, kakao.maps.services.Status.OK) //배열에 뭐가 담기는지 확인을 위해 console 찍음
+            if (status === kakao.maps.services.Status.OK) {
+              var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+              // 마커 이미지의 이미지 크기 입니다
+              var imageSize = new kakao.maps.Size(24, 35);
+              // 마커 이미지를 생성합니다
+              var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+              // marker 변수에 할당
+              var marker = new kakao.maps.Marker({
+                map: map,
+                position: coords,
+                image: markerImage, // 마커 이미지
+                clickable: true,
+              });
+
+              // 마커배열마다 마커를 넣어주기 위해 push
+              markerArr.push(marker);
+
+              var infowindow = new kakao.maps.InfoWindow({
+                // changeHeartMarker함수에 checkbox를 담아야되기때문에 this를 넣고, 각배열의 index를 찾아가야되기때문에 i를 걸어줌
+                content: `<label for="myCheckbox">찜하기</label>
+                            <input type="checkbox" id="myCheckbox" onchange="changeHeartMarker(this, '${i}','${g_name}'); checkboxIsChecked(this, '${i}', '${g_name}')
+                            handleCheckboxChange(this, ${g_id}); heartGalleryRequest(${g_id}); heartUser();"> 
+                            <div style="font-weight:bold;">${g_name}<br/>
+                            <button type="button" onclick="imgurlAdd('${imgurl}'); info('${g_name}', '${deadline}', '${detailaddr}', '${website}', '${g_id}'); searchComment();">더보기</button>
+                            <a href="https://map.kakao.com/" style="color:blue" target="_blank"><div style="width:400px;text-align:right;padding:10px 0;">길찾기</a></div>`,
+                removable: true,
+              });
+              kakao.maps.event.addListener(
+                marker,
+                "click",
+                makeClickListener(map, marker, infowindow, coords, markerImage)
+              );
+
+              resolve(); // 여기서 promise 걸려있는 함수 실행
+            } else {
+              markerArr.push({}); // 어디선가 오류가 나도 빈값으로라도 띄울 수 있게끔 하기위해서 else에도 resolve를 넣어줌
+              resolve();
+            }
+          });
+        });
+      }
+
+      // 마커에 클릭이벤트를 등록합니다
+      function makeClickListener(map, marker, infowindow, coords, markerImage) {
+        return function () {
+          // 마커 위에 인포윈도우를 표시합니다
+          infowindow.open(map, marker);
+          map.setCenter(coords);
+        };
+      }
+
+      // onchage에 걸려있는 changeHeartMarker의 index를 써야되기때문에 변수로 index 넣어줌
+      function changeHeartMarker(objInput, index, g_name) {
+        // console.log(markerArr, index)
+        let clickimageSrc = "https://youip.net/images/marker_kakao.png", // 마커이미지의 주소입니다
+          clickimageSize = new kakao.maps.Size(50, 65), // 마커이미지의 크기입니다
+          clickimageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+        let clickmarkerImage = new kakao.maps.MarkerImage(
+          clickimageSrc,
+          clickimageSize,
+          clickimageOption
+        );
+
+        // console.log(objInput.checked)
+
+        let imageSrc =
+          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+        let imageSize = new kakao.maps.Size(24, 35);
+        // 마커 이미지를 생성합니다
+        let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+        if (objInput.checked) {
+          clickmarkerImage.src = clickimageSrc;
+          markerArr[index].setImage(clickmarkerImage);
+        } else {
+          imageSrc.src = markerImage;
+          markerArr[index].setImage(markerImage);
+        }
+      }
+
+    //   체크박스 상태확인
+      function checkboxIsChecked(checkbox, index, g_name) {
+        if (checkbox.checked) {
+          console.log(`Checkbox ${index}, ${g_name}가 체크되었습니다.`);
+
+          const infoContainer = document.querySelector(".info-container");
+          const infoImage = infoContainer.querySelector("#infoImage");
+          const result = infoContainer.querySelector("#result");
+        } else {
+          console.log(`Checkbox ${index}, ${g_name}가 체크 해제되었습니다.`);
+        }
+      }
+
+      function imgurlAdd(imgurl) {
+        const infoImage = document.getElementById("infoImage");
+        // console.log(imgurl);
+        infoImage.src = imgurl;
+        toggleInfoContainer();
+      }
+
+      function info(g_name, deadline, detailaddr, website, g_id) {
+        const result = document.getElementById("result");
+        result.innerHTML = `
+                          <div class="title">${g_name}</div>
+                          <div class="deadline">${deadline}</div>
+                          <div class="detailaddr">${detailaddr}</div>
+                          <div class="website">
+                            <a href="${website}" target="_blank">웹사이트</a>                           
+                          </div>
+                          <div id="galleryId" style="display:none;">${g_id}</div>
+                          `;
+      }
+    </script>
+    <!-- 지도 끝 -->
+
+    <!-- Bootstrap CDN -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"></script> -->
+
+    <div class="container-a">
+      <div class="sidebar">
+        <div class="toggle-btn btn-a" onclick="toggleSidebar('a')">
+          <a href="#"><i class="bi bi-list"></i></a>
+        </div>
+        <div class="toggle-btn btn-b" onclick="toggleSidebar('b')">
+          <a href="#"><i class="bi bi-heart-fill"></i></a>
+        </div>
+      </div>
+
+      <!-- 리스트 콘텐츠 영역 -->
+      <div class="content">
+        <div class="content-a">
+          <% for(let i=0; i < data.length; i++){ %>
+          <img src="<%= data[i].imgurl %>" alt="박물관사진" />
+          <p><%=data[i].g_name %></p>
+          <hr />
+          <br />
+          <% } %>
+        </div>
+
+        <div class="content-b">찜목록은 로그인 후 사용가능합니다</div>
+      </div>
+
+      <script>
+        heartUser();
+
+        // 서버로 갤러리 찜목록 요청 (g_id를 파라미터로 이용)
+        function heartGalleryRequest(g_id) {
+          axios({
+            method: "GET",
+            url: "/gallery/heartgallery",
+            params: {
+              g_id: g_id,
+              // heart_checked: true,
+            },
+          }).then((res) => {
+            console.log(res.data);
+          });
+        }
+
+        // 서버로부터  찜목록 가져와서 해당내용 화면에 표시
+        function heartUser() {
+          axios({
+            method: "GET",
+            url: "/gallery/heartuser",
+          })
+            .then((res) => {
+              if (res.data.login == false) {
+              } else {
+                const data = res.data;
+
+                const contentContainer = document.querySelector(".content-b");
+                contentContainer.innerHTML = ""; // 기존 내용 초기화
+                if (data && data.length > 0) {
+                  for (let i = 0; i < data.length; i++) {
+                    const img = document.createElement("img");
+                    img.src = data[i].imgurl;
+
+                    const p = document.createElement("p");
+                    p.textContent = data[i].g_name;
+
+                    const hr = document.createElement("hr");
+
+                    const contentItem = document.createElement("div");
+                    // contentItem.className = 'content-item';
+                    contentItem.appendChild(img);
+                    contentItem.appendChild(p);
+                    contentItem.appendChild(hr);
+
+                    contentContainer.appendChild(contentItem);
+                  }
+                }
+              }
+            })
+            .catch((error) => {
+              console.error("데이터 불러오기 중 오류가 발생했습니다:", error);
+            });
+        }
+
+        // 체크박스 상태 변화에 따라 찜목록 추가, 삭제
+        function handleCheckboxChange(checkbox, g_id) {
+          const checked = checkbox.checked;
+          const data = {
+            g_id: g_id,
+          };
+
+          if (checked) {
+            axios({
+              method: "POST",
+              url: "/gallery/heartlist",
+              data: data,
+            })
+              .then((res) => {
+                if (res.data.login == false) {
+                  alert("로그인 후 사용 가능합니다");
+                } else {
+                  alert("찜 완료!");
+                }
+              })
+              .catch((error) => {
+                console.error("데이터 저장 중 오류가 발생했습니다:", error);
+              });
+          } else {
+            axios({
+              method: "DELETE",
+              url: `/gallery/heartlist/${g_id}`,
+            })
+              .then((res) => {
+                if (res.data.login == false) {
+                  alert("로그인 후 사용 가능합니다");
+                } else {
+                  alert("찜 삭제!");
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+          heartUser();
+        }
+      </script>
+
+      <!-- 정보창을 표시할 영역 -->
+      <div class="info-container">
+        <img src="" id="infoImage" />
+        <div class="info">
+          <div id="result-box">
+            <div id="result"></div>
+            <hr />
+          </div>
+          <div id="comment" class="comment-container">
+            <div class="comment-text">
+              <div style="font-weight: bold">방문자 리뷰</div>
+              <button
+                type="button"
+                class="comment-btn"
+                onclick="changeComment()"
+              >
+                리뷰 쓰기
+              </button>
+            </div>
+            <!-- 리뷰 리스트 -->
+            <div id="list" class="comment-list"></div>
+            <!-- 리뷰 작성 -->
+            <div id="write" class="comment-write">
+              <p>별점을 표시해 주세요</p>
+              <form name="review" class="mb-3" id="myform">
+                <fieldset>
+                  <input
+                    type="radio"
+                    name="reviewStar"
+                    value="5"
+                    id="rate1"
+                  /><label for="rate1">★</label>
+                  <input
+                    type="radio"
+                    name="reviewStar"
+                    value="4"
+                    id="rate2"
+                  /><label for="rate2">★</label>
+                  <input
+                    type="radio"
+                    name="reviewStar"
+                    value="3"
+                    id="rate3"
+                  /><label for="rate3">★</label>
+                  <input
+                    type="radio"
+                    name="reviewStar"
+                    value="2"
+                    id="rate4"
+                  /><label for="rate4">★</label>
+                  <input
+                    type="radio"
+                    name="reviewStar"
+                    value="1"
+                    id="rate5"
+                  /><label for="rate5">★</label>
+                </fieldset>
+                <textarea
+                  name="commentText"
+                  class="comment-box"
+                  type="text"
+                  placeholder="리뷰를 써 주세요."
+                  cols="30"
+                  rows="10"
+                  maxlength="250"
+                ></textarea>
+                <div class="comment-button">
+                  <button
+                    type="button"
+                    class="comment-btn"
+                    onclick="backCommentList()"
+                  >
+                    취소
+                  </button>
+                  <button
+                    type="button"
+                    class="comment-btn"
+                    onclick="getComment()"
+                  >
+                    등록
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 리뷰 클릭이벤트 -->
+    <script>
+      const list = document.getElementById("list");
+      const write = document.getElementById("write");
+
+      // 별 체크
+      // 라디오 버튼 요소들을 가져옴
+      let star = 0;
+      var radioButtons = document.querySelectorAll(
+        'input[type="radio"][name="reviewStar"]'
+      );
+      // 라디오 버튼 변경 이벤트 핸들러 함수
+      function handleRadioChange(event) {
+        // 선택된 값 출력
+        console.log("star value", event.target.value);
+        star = event.target.value;
+      }
+      // 라디오 버튼에 이벤트 리스너 추가
+      radioButtons.forEach(function (radioButton) {
+        radioButton.addEventListener("change", handleRadioChange);
+      });
+
+      function changeComment() {
+        list.style.display = "none";
+        list.innerHTML = "";
+        write.style.display = "flex";
+      }
+
+      // 리뷰 작성 취소
+      let infoOpen = false;
+      function backCommentList() {
+        infoOpen = false;
+        searchComment();
+        list.style.display = "";
+        write.style.display = "none";
+      }
+
+      // 리뷰 작성
+      function getComment() {
+        const form = document.forms["review"];
+        const g_id = document.getElementById("galleryId");
+
+        if (form.commentText.value.length == 0) {
+          alert("리뷰를 입력해주세요.");
+          form.commentText.focus();
+          return false;
+        }
+
+        const data = {
+          review: form.commentText.value,
+          g_id: parseInt(g_id.innerText),
+          star: parseInt(star),
+        };
+
+        infoOpen = false;
+        axios({
+          method: "post",
+          url: "/gallery/comment",
+          data: data,
+        }).then((res) => {
+          if (res.data.login == false) {
+            alert("로그인 후 이용 가능합니다");
+          }
+          searchComment();
+          form.commentText.value = "";
+          list.style.display = "";
+          write.style.display = "none";
+        });
+      }
+
+      // 리뷰 조회
+      function searchComment() {
+        const g_id = document.getElementById("galleryId");
+
+        let data = {
+          g_id: parseInt(g_id.innerText),
+        };
+
+        if (list.innerHTML == "" && infoOpen == false) {
+          infoOpen = true;
+          axios({
+            method: "post",
+            url: "/gallery/commentfind",
+            data: data,
+          }).then((res) => {
+            for (let data of res.data.result) {
+              // console.log(data.u_id);
+
+              let comStar = "";
+              for (let i = 0; i < data.star; i++) {
+                comStar += "⭐";
+              }
+
+              let newDiv = document.createElement("div");
+              newDiv.innerHTML = `<div class="comment-list-text">
+                <p>${data.u_id}</p>
+                <p>${comStar}</p>
+                </div>
+                <p style="margin: 0 10px 0 10px">${data.review}</p>
+                <hr />`;
+              list.appendChild(newDiv);
+            }
+          });
+        } else {
+          list.innerHTML = "";
+          infoOpen = false;
+        }
+      }
+    </script>
+
+    <script>
+      let infoContainer = document.querySelector(".info-container");
+      let container = document.querySelector(".container");
+      let content = document.querySelector(".content");
+      let currentMode = ""; // 현재 선택된 모드(a or b)를 저장
+
+      // 사이드바 버튼을 토글
+      function toggleSidebar(mode) {
+        if (content.style.display === "none") {
+          // 현재 content가 숨겨져 있다면
+          $(".content").css("display", "block"); // .contetn를 block으로 하고,
+          $(".content > div").css("display", "none"); // .content > div를 none으로 하고,
+          $(".content-" + mode).css("display", "block"); // .content-(none)을 block으로 한다
+
+          $(".info-container").css("right", "470px"); // 정보창을 우로 470px 이동
+          $("#map").css("left", "450px"); // 지도를 우로 470px 이동
+
+          console.log("1");
+
+          currentMode = mode; // 현재 모드 업데이트
+        } else {
+          // 현재 content가 보여져 있다면
+          // mode가 같으면, .content를 none으로 하고,
+          // mode가 다르면, .content를 black, mode를 토글한다
+          if (mode === "a") {
+            $(".content").css("display", "block");
+            $(".content-a").css("display", "block");
+            $(".content-b").css("display", "none");
+          } else if (mode === "b") {
+            infoContainer.style.display = "none";
+
+            $(".content").css("display", "block");
+            $(".content-b").css("display", "block");
+            $(".content-a").css("display", "none");
+          }
+        }
+      }
+
+      // 정보창을 토글
+      function toggleInfoContainer() {
+        if (infoContainer.style.display === "block") {
+          // 정보창이 보여져 있다면
+          infoContainer.style.display = "none";
+          $("#map").css("left", "450px");
+          $("#map").css("width", "2050px");
+
+          console.log("infoContainer를 닫습니다 3");
+        } else {
+          if (content.style.display === "none") {
+            // 정보창이 숨겨져 있고, content가 숨겨져 있다면
+            infoContainer.style.display = "block";
+            $(".info-container").css("transform", "translateX(60px)");
+            $("#map").css("left", "470px");
+
+            console.log("infoContainer를 엽니다 1");
+          } else {
+            infoContainer.style.display = "block";
+            infoContainer.style.left = "470px";
+            $("#map").css("left", "880px");
+            $("#map").css("width", "1620px");
+            console.log("infoContainer를 엽니다 4");
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

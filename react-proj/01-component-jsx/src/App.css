@@ -1,0 +1,16 @@
+/* BEM 네이밍 규칙 block elements method */
+/* .FuncComponent__test-css--active {
+
+}
+
+.ClassComponent__ */
+
+.test-css {
+    background-color: yellow;
+    font-size: 40px;
+}
+
+.title-css {
+    background-color:aliceblue;
+    font-size : 50px;
+}

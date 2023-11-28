@@ -14,3 +14,22 @@
     background-color:aliceblue;
     font-size : 50px;
 }
+
+.Section__section {
+    margin-bottom: 20px;
+    border : 2px solid blue;
+
+}
+
+.Section__title {
+    color : red;
+
+}
+
+.Food__content {
+    color : red;
+}
+
+.Book__text {
+    background-color: ivory;
+}

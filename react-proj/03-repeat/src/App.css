@@ -1,0 +1,7 @@
+.scroll-box {
+  width : 300px;
+  height :300px;
+  overflow-y:auto;
+  background-color: blue;
+  color : yellow;
+}

@@ -1,0 +1,82 @@
+$color-main: red;
+
+
+// style코드 블록을 함수처럼 하나로 묶어두고,
+@mixin box-width($size){
+    width: $size;
+    height: $size;
+}
+
+// 사용시에는 include를 이용
+.box1 {
+    @include box-width(100px);
+    background-color : blue;
+}
+
+// 사용시에는 include를 이용
+.box2 {
+    @include box-width(200px);
+    background-color : yellow;
+    }
+
+.scss-parents {
+    color: $color-main;
+    // width : 100px;
+    // background-color : aqua;
+}
+
+
+// sass의 중첩
+.scss-parents{
+    ul{
+        background-color: black;
+        color : white;
+    }
+
+    &:hover {
+        cursor : pointer;
+    }
+
+}
+
+.btn {
+    padding:10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: pink;
+}
+
+// 확장
+.btn-primary{
+    @extend .btn;
+    background-color : aqua;
+    }
+
+
+
+
+
+
+
+// 믹스인
+.origin-sass{
+    display: flex;
+    .box{
+        @include box-width(100px);
+
+        &.red {
+            background-color: red;
+        }
+        &.orange {
+            background-color: orange;
+        }
+        &.yellow {
+            background-color: yellow;
+        }
+        &.green {
+            background-color: green;
+        }
+    }
+}
+
+// 원래 css의 중첩.scss-parents > ul {}

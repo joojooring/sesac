@@ -1,3 +1,5 @@
+@import "./media";
+
 $color-main: red;
 
 
@@ -76,7 +78,45 @@ $color-main: red;
         &.green {
             background-color: green;
         }
+        &.blue {
+            background-color: blue;
+        }
+        &.purple {
+            background-color: purple;
+        }
     }
 }
 
 // 원래 css의 중첩.scss-parents > ul {}
+
+
+// @mixin tablet {
+//     @media screen and (max-width: 768px) {
+//         .origin-sass{
+//             display: block;
+//         }
+
+//     }
+// }
+
+// 모니터 해상도가 다를때 기준을 정해주는게 좋다.
+// 태블릿일 때는 768px
+
+// @mixin tablet {
+//     @media screen and (max-width: 768px) {
+//         @content;
+//     }
+// }
+// @mixin은 css에서 묶어두고 싶은 코드블럭을 정의할 떄 사용
+// @include는 정의한 @mixin을 사용할 떄
+// @content는 부속 기능 중 하나. 정의할 떄 @content 키워드 적은 곳에 뭐가 들어가는지를 보면 됨-사용할떄, 중괄호 안에 적은 내용
+
+@include tablet(){
+    .origin-sass{
+        display: block;
+    }
+
+}
+
+
+// 핸드폰일 때는 500px

@@ -3,6 +3,7 @@ import './App.css';
 import CssModule from "./components/CssModule"
 import SassComponent from "./components/SassComponent"
 import StyledComponent from "./components/StyledComponent"
+import Larva from "./components/larvasass"
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   <hr />
   <SassComponent />
   <StyledComponent />
+  <Larva />
 
 </div>  );
 }

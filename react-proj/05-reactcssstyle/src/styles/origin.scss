@@ -2,7 +2,6 @@
 
 $color-main: red;
 
-
 // style코드 블록을 함수처럼 하나로 묶어두고,
 @mixin box-width($size){
     width: $size;

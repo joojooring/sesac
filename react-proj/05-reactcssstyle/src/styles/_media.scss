@@ -1,5 +1,49 @@
+$break-md : 768px;
+
+
 @mixin tablet {
     @media screen and (max-width: 768px) {
         @content;
     }
+};
+
+
+// sass에서 문자보간 : #{}
+@mixin aaa($id,$pos){
+    @keyframes ani#{$id} {
+        from {
+            top: 0px;
+        }
+        to {
+            top: $pos;
+    
+        }
+    }
+    
 }
+
+@include aaa(1,30px);
+@include aaa(2,50px);
+@include aaa(3,100px);
+
+
+
+// @keyframes ani1 {
+//     from {
+//         top: 0px;
+//     }
+//     to {
+//         top: 30px;
+
+//     }
+// }
+
+// @keyframes ani2 {
+//     from {
+//         top: 0px;
+//     }
+//     to {
+//         top: 50px;
+
+//     }
+// }

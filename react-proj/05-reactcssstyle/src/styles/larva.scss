@@ -1,0 +1,73 @@
+// $color-main: blue;
+
+@mixin larva-width($size){
+    width : $size;
+    height : $size;
+    position : relative;
+}
+
+@mixin larva-hardsize(){
+    border-radius : 50%;
+    position: absolute;
+}
+
+@mixin larva-position($topposi,$leftposi){
+    top : $topposi;
+    left : $leftposi;
+}
+
+.larva {
+    position: relative;
+
+    .body {
+        @include larva-width(100px);
+        @include larva-hardsize;
+    }
+
+    .body.body1 {
+        @include larva-position(100px, 100px);
+        background-color: rgb(0, 0, 166);
+        .eye{
+            .eye-white{
+                @include larva-width(30px);
+                @include larva-hardsize();
+                @include larva-position(15px,15px );
+                background-color: white;
+            }
+            .eye-black{
+                @include larva-width(20px);
+                @include larva-hardsize();
+                @include larva-position(19px,15px );
+                background-color: black;
+
+            }
+        }
+    }
+
+    .body.body2 {
+        @include larva-position(150px, 160px);
+        background-color: rgb(36, 61, 206);
+    }
+
+    .body.body3 {
+        @include larva-position(190px, 200px);
+        background-color: rgb(52, 118, 231);
+    }
+
+    .body.body4 {
+        @include larva-position(240px, 220px);
+        background-color: rgb(47, 146, 233);
+    }
+
+    .body.body5 {
+        @include larva-position(280px, 280px);
+        background-color: rgb(140, 191, 253);
+        z-index: 10;
+    }
+
+    .grass {
+        position: absolute;
+        top: 260px;
+        left: 0;
+    }
+}

@@ -1,0 +1,29 @@
+:root {
+  --height-header : 30px;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+main{
+  margin-top: var(--height-header);
+}
+.Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  height: var(--height-header);
+  width: 100%;
+  background-color: aquamarine;
+  top:0
+}
+
+.Header >nav {
+  display: flex;
+}
+
+.Header >nav >div {
+  margin-left : 15px;
+}

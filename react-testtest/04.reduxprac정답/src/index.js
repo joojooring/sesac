@@ -1,3 +1,5 @@
+// ----------3. 최상단 index.js파일에 store 넣고, 만든 reducer 반영
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -16,7 +18,6 @@ const store = configureStore({reducer: rootReducer}, composeWithDevTools())
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-
   <App />
   </Provider>
 

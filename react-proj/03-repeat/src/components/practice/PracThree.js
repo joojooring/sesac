@@ -11,20 +11,24 @@ function PracThree () {
 
     const addText = () => {
 
-        const newObj = {id : list.length, title: newTitle, username : newUsername}
+        const
+        
+         newObj = {id : list.length, title: newTitle, username : newUsername}
         const newList = list.concat(newObj)
-        setList(newList)
+        setList(newList);
         setNewTitle("");
         setNewUsername("");
     }
 
     return(
         <>
+        <fieldset>
         <label>
             작성자 : <input type="text" value={newUsername} onChange={(e)=>{setNewUsername(e.target.value)}}></input>
             제목 : <input type="text" value={newTitle} onChange={(e)=>{setNewTitle(e.target.value)}}></input>
         <button onClick={addText}>작성</button>
         </label>
+        </fieldset>
 
         <table border="1" cellSpacing="0">
 

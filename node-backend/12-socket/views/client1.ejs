@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <h3>소켓 연습</h3>
+    <button onclick="hello()">안녕</button>
+
+    <button onclick="entry()">입장</button>
+    <script>
+        // io(ip랑 port번호) 
+        const socket = io()
+        // socket을 이용해 데이터 전송하는 함수 : emit
+        // socket을 이용해 데이터 수신하는 이벤트 : on
+
+
+        function hello(){
+            // (전송할 이벤트 이름[, 전송할 데이터])
+            // [, 전송할 데이터]의 형태는 자유롭게 (문자열, 숫자, 객체 ... 다 가능)
+            socket.emit("helloooooo", {msg : "안녕하세요~~반갑습니다."})
+        }
+
+        // socket.on을 함수밖에 둔 이유? 함수 안에 두면 이벤트가 여러번 발생하게 됨
+        socket.on("byebye", (res)=>{
+            console.log("클라이언트측 콘솔에 찍힘: ",res)
+        })
+
+
+        function entry(){
+            socket.emit("entryStart")
+        }
+
+        socket.on("notice", (res)=>{
+            // alert(res.msg)
+            console.log(res.msg)
+        })
+    </script>
+    
+</body>
+</html>

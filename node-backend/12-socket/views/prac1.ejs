@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실습1</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <h1>Hello World</h1>
+    <button onclick="hello()">hello</button>
+    <button onclick="study()">study</button>
+    <button onclick="bye()">bye</button>
+    <br /> 
+    <div id="result">
+        <!-- <h4 class="result1"></h4>
+        <h4 class="result2"></h4>
+        <h4 class="result3"></h4> -->
+
+    </div>
+    <script>
+        const socket= io();
+
+        function hello(){
+            socket.emit("hello", {msg: "hello : 반가워요"})
+        };
+
+        socket.on("hello", (res)=>{
+            const result = document.getElementById("result")
+            result.innerHTML = `<h4 >${res.msg}</h4>`
+        })
+
+
+
+        function study(){
+            socket.emit("study", {msg : "study : 공부합시다."})
+        }
+
+        socket.on("study", (res)=>{
+            const result = document.getElementById("result")
+            result.innerHTML = `<h4 >${res.msg}</h4>`
+
+        })
+
+        function bye(){
+            socket.emit("bye", {msg : "bye : 잘가라."})
+
+        }
+
+        socket.on("bye", (res)=>{
+            const result = document.getElementById("result")
+            result.innerHTML = `<h4 >${res.msg}</h4>`
+
+        })
+
+    </script>
+</body>
+</html>

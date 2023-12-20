@@ -30,10 +30,24 @@ const initSocketConnect = ()=>{
 // 마운트시에 socket이 connect할 수 있도록 만들어주려면 useEffect
 useEffect(()=>{
     initSocketConnect();
-    socket.on("notice", (res)=> {
-        const newChatList = [...chatList,{type : "notice", content:res.msg}]
-    })
+
+    // 마운트 시점에만 한 번 읽고 만다.
+    // 마운트 시점에 chatlist만 이용하게 됨
+    // socket.on("notice", (res)=>{
+    //     const newChatList = [...chatList, {type : "notice", content : res.msg}]
+    //     setChatList(newChatList);
+    // })
 },[])
+
+useEffect(()=>{
+    const notice = (res)=> {
+        const newChatList = [...chatList,{type : "notice", content:res.msg}]
+    
+        setChatList(newChatList);
+    }
+    socket.on("notice", notice)
+    return () => socket.off("notice", notice)
+},[chatList])
 
 const sendMsg = () => {}
     return(

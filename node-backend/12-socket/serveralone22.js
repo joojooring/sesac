@@ -17,7 +17,10 @@ const io = require("socket.io")(server, {
 });
 
 io.on("connection", (socket)=>{
-    io.emit("notice", {msg : `${socket.id}님이 입장하셨습니다.`})
+    // io.emit("notice", {msg : `${socket.id}님이 입장하셨습니다.`})
+    socket.on("entry", (res)=>{
+        io.emit("notice", {msg : `${res.userId}님이 입장하셨습니다.`})
+    })
 })
 
 

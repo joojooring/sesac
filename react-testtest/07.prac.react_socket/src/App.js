@@ -1,10 +1,12 @@
 import './App.css';
-import PracChat from './components/Pracchat';
+import Chatting1 from './components/Chatting1';
+// import PracChat from './components/Pracchat';
 
 function App() {
   return (
     <div className="App">
-      <PracChat />
+      {/* <PracChat /> */}
+      <Chatting1 />
     </div>
   );
 }

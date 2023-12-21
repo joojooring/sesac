@@ -25,6 +25,8 @@ const userIdArr = {}
 // {"socket.id" : "userIda", "socket.id" : "userIdb", "socket.id" : "userIdc" }
 
 
+// 사용자리스트 업데이트 함수 : 클라이언트가 입장하거나 퇴장할 때마다 사용자 리스트를 실시간으로 유지하기 위함
+// userIdArr는 현재 입장한 모든 사용자의 Socket id와 user id를 포함
 const updateUserList = ()=>{
     io.emit("userList", userIdArr)
 }

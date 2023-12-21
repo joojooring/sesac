@@ -40,6 +40,13 @@ export default function Chatting1() {
     //   setChatList(newChatList);
     // });
 
+    socket.on("error", (res)=>{
+      alert(res.msg);
+    });
+
+    socket.on("entrySuccess", (res)=>{
+      setUserId(res.userId)
+    })
     
   }, []);
 
@@ -62,6 +69,7 @@ export default function Chatting1() {
     socket.on("notice", notice);
     return () => socket.off("notice", notice);
   }, [chatList]);
+  // 변할 수 있는 값을 의존성 배열에 넣어야됨
 
   const sendMsg = () => {};
 
@@ -70,7 +78,7 @@ export default function Chatting1() {
     socket.emit("entry", {userId: userIdInput});
     // [실습 3-2] 바로 userid에 값을 넣지 말고 success받으면 실행/ error를 받으면 alert를 받기
     
-    setUserId(userIdInput);
+    // setUserId(userIdInput);
   }
   return (
     <>

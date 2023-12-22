@@ -8,40 +8,93 @@ const cors = require("cors");
 app.use(cors());
 
 const io = require("socket.io")(server, {
-    cors: {
-        origin: "http://localhost:3000"
-    }
+  cors: {
+    origin: "http://localhost:3000"
+  }
 });
 
-const userIdArr = {}
+const chatRooms = {}; // 채팅방을 저장할 객체
+const userIdArr = []; // 사용자 아이디를 저장할 배열
 
-const updateUserList = ()=>{
-    io.emit("userList", userIdArr)
-}
+const updateUserList = (roomId) => {
+  io.to(roomId).emit("userList", Object.values(chatRooms[roomId].users));
+};
 
-// 비밀메세지(단체방에서 개인톡으로)위해 dm을 추가
-io.on("connection", (socket)=>{
-    socket.on("sendMsg", (res)=>{
-        if(res.dm === "all") io.emit("chatchat", {userId : res.userId, msg : res.msg})
-        else {
-            io.to(res.dm).emit("chatchat", {userId: res.userId, msg : res.msg, dm: true})
-            socket.emit("chatchat", {userId : res.userId, msg : res.msg, dm : true})
+io.on("connection", (socket) => {
+  socket.on("sendMsg", (res) => {
+    const { roomId, dm, userId, msg } = res;
+    if (dm === "all") {
+      io.to(roomId).emit("chatchat", { userId: userId, msg: msg });
+    } else {
+      io.to(roomId).to(dm).emit("chatchat", {
+        userId: userId,
+        msg: msg,
+        dm: true
+      });
+      socket.emit("chatchat", { userId: userId, msg: msg, dm: true });
+    }
+  });
+
+  socket.on("entry", (res) => {
+    const { roomId, userId } = res;
+    if (!chatRooms[roomId]) {
+      chatRooms[roomId] = {
+        users: {} // 각 채팅방의 사용자 목록을 저장할 객체
+      };
+    }
+    const roomUsers = chatRooms[roomId].users;
+    if (Object.values(roomUsers).includes(userId)) {
+      socket.emit("error", {
+        msg: "중복된 아이디가 존재하여 입장이 불가합니다."
+      });
+    } else {
+      socket.join(roomId);
+      io.to(roomId).emit("notice", { msg: `${userId}님이 입장하셨습니다.` });
+      socket.emit("entrySuccess", { userId: userId });
+      roomUsers[socket.id] = userId;
+      updateUserList(roomId);
+
+      if (!userIdArr.includes(userId)) {
+        userIdArr.push(userId);
+      }
+    }
+  });
+
+  socket.on("leave", (roomId) => {
+    const roomUsers = chatRooms[roomId].users;
+    const userId = roomUsers[socket.id];
+    delete roomUsers[socket.id];
+    updateUserList(roomId);
+    socket.leave(roomId);
+    io.to(roomId).emit("notice", { msg: `${userId}님이 퇴장하셨습니다.` });
+
+    const index = userIdArr.indexOf(userId);
+    if (index !== -1) {
+      userIdArr.splice(index, 1);
+    }
+  });
+
+  socket.on("disconnect", () => {
+    for (const roomId in chatRooms) {
+      const roomUsers = chatRooms[roomId].users;
+      if (roomUsers.hasOwnProperty(socket.id)) {
+        const userId = roomUsers[socket.id];
+        delete roomUsers[socket.id];
+        updateUserList(roomId);
+        socket.leave(roomId);
+        io.to(roomId).emit("notice", { msg: `${userId}님이 퇴장하셨습니다.` });
+
+        const index = userIdArr.indexOf(userId);
+        if (index !== -1) {
+          userIdArr.splice(index, 1);
         }
-    })
-    socket.on("entry", (res)=> {
-        if(Object.values(userIdArr).includes(res.userId)){
-            socket.emit("error", {msg : "중복된 아이디가 존재하여 입장이 불가합니다."})
-        }else{
-            io.emit("notice", {msg : `${res.userId}님이 입장하셨습니다.`})
-            socket. emit("entrySuccess", {userId : res.userId})
-            userIdArr[socket.id] = res.userId; // socketid랑 userid를 일치시켜서 저장
-            updateUserList()
-        }
-    })
-})
-
+        
+        break;
+      }
+    }
+  });
+});
 
 server.listen(PORT, function () {
-    console.log(`Server Open : ${PORT}`);
-
+  console.log(`Server Open : ${PORT}`);
 });

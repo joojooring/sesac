@@ -51,3 +51,30 @@
 .input-container > input {
     flex-grow:1;
 }
+
+
+.chat-room {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+  
+  .chat-room span {
+    margin-right: 10px;
+  }
+  
+  .chat-room button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .chat-room button:hover {
+    background-color: #45a049;
+  }
+  

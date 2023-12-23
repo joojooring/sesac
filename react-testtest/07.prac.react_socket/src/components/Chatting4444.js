@@ -18,11 +18,30 @@ const [chatList, setChatList] = useState([
 const [userList, setUserList] = useState({})
 const [dmTo, setDmTo] = useState("all")
 
+const [chattingroom, setChattingRoom] = useState("")
+const [channelName, setChannelName] = useState({})
 
 const initSocketConnect = ()=>{
     console.log("??????",socket.connected)
     if(!socket.connected) socket.connect()
 }
+
+// const channelNameListOptions = useMemo(()=>{
+//     //userList 객체를 기반으로 하는 옵션 리스트 계산
+//     // userList 객체의 각 키와 값에 대해 조건을 검사, 조건에 맞는 옵션 요소를 options배열에 추가
+//     // for ...in문은 객체의 속성을 반복하여 해당 속성의 키를 변수에 할당해서 반복 작업을 수행
+//     // 해당 속성의 키 값을 사용해서 option요소를 생성, options 배열에 추가하게끔 함
+//     // key : userList의 key값 (socket.id)
+//     // userList[key] : userList의 value값(user id)
+//     const options = []
+//     for (const key in channelName){
+//         if(channelName[key] === chattingroom) continue;
+//         options.push(<option key={key} value={key}>{channelName[key]}</option>)
+//     }
+//     return options
+// },[channelName])
+
+
 
 useEffect(()=>{
     // initSocketConnect();
@@ -32,6 +51,8 @@ useEffect(()=>{
 
     socket.on("entrySuccess", (res)=>{
         setUserId(res.userId)
+        setChattingRoom(res.roomId);
+        setChannelName(res.roomId)
     })
 
     socket.on("userList", (res)=>[
@@ -73,7 +94,7 @@ const sendMsg = () => {
 const entryChat = () => {
     // 1. 입장할 떄 실행시키겠다.
     initSocketConnect();
-    socket.emit("entry", {userId: userIdInput})
+    socket.emit("entry", {userId: userIdInput, roomId : chattingroom, channelName: channelName})
     // setUserId(userIdInput)
 }
 
@@ -118,19 +139,46 @@ useEffect(()=>{
 
 
 
+
     return(
         <>
-        <h3>실습 3-1, 3-2, 3-3</h3>
-        <ul>
-            <li>닉네임 입력 후 입장시키게끔</li>
-            <li>닉네임 중복 방지하기</li>
-            <li>퇴장시키기</li>
+            <div className="chat-room">
+                <table>
+                    <tr>
+                        <td>채널명</td>
+                        <td><input type="text" value={chattingroom} onChange={(e)=>setChattingRoom(e.target.value)}></input></td>
+                    </tr>
+                    <tr>
+                        <td>이름</td>
+                        <td><input type="text" value={userIdInput} onChange={(e)=>setUserIdInput(e.target.value)}></input></td>
+                    </tr>
 
-        </ul>
+                </table>
+                <button onClick={entryChat}>입장</button>
+            </div>
+
+            <div className="chat-exist-room">
+                <select value={channelName} onChange={(e)=>setChannelName(e.target.value)}>
+                    <option value="all">전체</option>
+                    {/* {channelNameListOptions} */}
+                </select>
+                <table>
+                    <tr>
+                    <td>채널명</td>
+                    {/* <td>{channelName[chattingroom]}</td>                     */}
+                    </tr>
+                    {/* <tr>
+                    <td>입장 채널</td>
+                    <td>{channelName}</td>
+                    </tr> */}
+                </table>
+            </div>
+
 
         {userId ? 
         (
             <>
+                <div>채널명 : {chattingroom}</div>
                 <div>{userId}님 환영합니다.</div>
                 <div className="chat-container">
                     {chatList.map((chat,i)=>  {

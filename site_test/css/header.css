@@ -1,0 +1,68 @@
+/* header{
+    width: 100%;
+    height: 100%;
+
+} */
+
+
+.tapname {
+    width: 100%;
+    height: 50px;
+    /* padding-top: 10px;
+    padding-bottom: 10px; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    /* 글자를 위 아래 중앙에 두려면 align-items에 두면 됨 */
+    align-items: center; 
+    background-color: grey;
+    color: white;
+}
+.tapname *:nth-child(7):hover {
+    color: red;
+}
+
+.tapname *:nth-child(2):hover {
+    color: red;
+}
+.tapname *:nth-child(3):hover {
+    color: red;
+}
+.tapname *:nth-child(4):hover {
+    color: red;
+}
+
+.tapname *:nth-child(6):hover {
+    color: red;
+}
+
+/* div{
+    position: relative;
+} */
+
+#btn-header1{
+    position: absolute;
+    border-radius: 15px;
+    height: 30px;
+    width: 150px;
+    background-color: yellow;
+    font-weight: bold;
+}
+
+#btn-home{
+    /* position: absolute; */
+
+    border-radius: 15px;
+    height: 45px;
+    width: 150px;
+    background-color: yellow;
+    font-weight: bold;
+    z-index: 50;
+}
+
+#btn-home *:nth-child(1):hover{
+    background-color: white;
+}
+#btn-home *:nth-child(2):hover{
+    background-color: white;
+}

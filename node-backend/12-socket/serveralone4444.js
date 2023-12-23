@@ -5,6 +5,7 @@ const server = http.createServer(app);
 const PORT = 8000;
 
 const cors = require("cors");
+// const { channel } = require("diagnostics_channel");
 app.use(cors());
 
 const io = require("socket.io")(server, {
@@ -39,7 +40,8 @@ io.on("connection", (socket) => {
     const { roomId, userId } = res;
     if (!chatRooms[roomId]) {
       chatRooms[roomId] = {
-        users: {} // 각 채팅방의 사용자 목록을 저장할 객체
+        users: {}, // 각 채팅방의 사용자 목록을 저장할 객체
+        channelName: "" // 채널명을 저장하는 속성
       };
     }
     const roomUsers = chatRooms[roomId].users;
@@ -50,7 +52,11 @@ io.on("connection", (socket) => {
     } else {
       socket.join(roomId);
       io.to(roomId).emit("notice", { msg: `${userId}님이 입장하셨습니다.` });
-      socket.emit("entrySuccess", { userId: userId });
+      socket.emit("entrySuccess", { userId: userId , channel : roomId, channelName: chatRooms[roomId].channelName});
+      console.log("룸룸룸룸룸룸룸룸룸룸",roomId)
+
+    // 채널명을 저장하는 channelName 속성 추가
+      chatRooms[roomId].channelName = roomId
       roomUsers[socket.id] = userId;
       updateUserList(roomId);
 
